@@ -1,0 +1,31 @@
+# ───────────────────────────────────────────────────────────────────
+# Allow-list deploy. NOTHING in this folder is published to GitHub Pages
+# unless it is explicitly listed below. So any PDFs, reports, notes, or
+# scratch files you keep here stay on your computer and never reach the
+# public site — even ones you add later.
+#
+# To publish a new top-level file/folder, add another "!/name" line.
+# ───────────────────────────────────────────────────────────────────
+
+# 1) Ignore everything at the project root by default
+/*
+
+# 2) ...then publish ONLY the web app:
+!/.gitignore
+!/.nojekyll
+!/index.html
+!/progress.html
+!/shared/
+!/Linear_Equations_App/
+!/Linear_Functions_App/
+!/Nonlinear_Functions_App/
+!/Systems_and_Expressions_App_v2/
+!/Proportionality_App/
+!/Statistical_Reasoning_App/
+!/Core_Geometry_App/
+!/Analytical_Geometry_App/
+!/Data_Analysis_Probability_App/
+
+# OS cruft, even inside published folders
+.DS_Store
+Thumbs.db

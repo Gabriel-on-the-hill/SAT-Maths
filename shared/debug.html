@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MathProgress — Debug</title>
+<style>
+  body { font-family: ui-monospace, Menlo, Consolas, monospace; background:#0f172a; color:#e2e8f0; padding:24px; line-height:1.6; }
+  h1 { color:#38bdf8; }
+  h2 { color:#818cf8; margin-top:28px; border-bottom:1px solid #334155; padding-bottom:6px; }
+  button { background:#1e293b; color:#e2e8f0; border:1px solid #475569; border-radius:6px; padding:6px 12px; margin:4px 2px; cursor:pointer; }
+  button:hover { border-color:#38bdf8; }
+  pre { background:#1e293b; padding:12px; border-radius:6px; overflow:auto; white-space:pre-wrap; }
+  .pass { color:#22c55e; }
+  .fail { color:#ef4444; }
+  .label { color:#94a3b8; }
+</style>
+</head>
+<body>
+<h1>MathProgress · Debug Console</h1>
+<p class="label">Run smoke tests, inspect the ledger, reset state.</p>
+
+<h2>Actions</h2>
+<button onclick="runTests()">Run smoke tests</button>
+<button onclick="dump()">Dump ledger</button>
+<button onclick="seedSample()">Seed sample data</button>
+<button onclick="MathProgress.reset(); dump();">Reset all progress</button>
+
+<h2>Output</h2>
+<pre id="out">Click "Run smoke tests" to begin.</pre>
+
+<script src="progress.js"></script>
+<script>
+const out = document.getElementById('out');
+function log(msg, cls) {
+  const line = cls ? `<span class="${cls}">${msg}</span>` : msg;
+  out.innerHTML += line + '\n';
+}
+function clearLog() { out.innerHTML = ''; }
+
+function assert(cond, msg) {
+  if (cond) log('  ✓ ' + msg, 'pass');
+  else log('  ✗ ' + msg, 'fail');
+  return cond;
+}
+
+function runTests() {
+  clearLog();
+  log('=== Test 1: empty ledger ===');
+  MathProgress.reset();
+  assert(MathProgress.getRecord('LF', 'q1').attempts === 0, 'fresh record has 0 attempts');
+  assert(MathProgress.tierFor('LF', 'q1') === 'unseen', 'unanswered question is unseen tier');
+
+  log('\n=== Test 2: correct answer increments ===');
+  MathProgress.recordAnswer('LF', 'q1', true, 'guided', 30000);
+  let r = MathProgress.getRecord('LF', 'q1');
+  assert(r.correct === 1, 'correct = 1');
+  assert(r.wrong === 0, 'wrong = 0');
+  assert(r.attempts === 1, 'attempts = 1');
+  assert(r.totalTimeMs === 30000, 'totalTimeMs recorded');
+  assert(MathProgress.tierFor('LF', 'q1') === 'learning', 'one-correct -> learning tier');
+
+  log('\n=== Test 3: mastery threshold ===');
+  MathProgress.recordAnswer('LF', 'q1', true, 'guided', 25000);
+  assert(MathProgress.tierFor('LF', 'q1') === 'mastered', 'two correct -> mastered');
+
+  log('\n=== Test 4: exam weighting ===');
+  MathProgress.reset();
+  MathProgress.recordAnswer('LF', 'q2', true, 'exam', 0);
+  r = MathProgress.getRecord('LF', 'q2');
+  assert(r.correct === 2, 'exam correct counts double');
+  assert(MathProgress.tierFor('LF', 'q2') === 'mastered', 'one exam correct -> already mastered');
+
+  log('\n=== Test 5: wrong tier and decrement ===');
+  MathProgress.reset();
+  MathProgress.recordAnswer('LF', 'q3', false, 'guided', 60000);
+  assert(MathProgress.tierFor('LF', 'q3') === 'wrong', 'first wrong -> wrong tier');
+  MathProgress.recordAnswer('LF', 'q3', true, 'guided', 50000);
+  r = MathProgress.getRecord('LF', 'q3');
+  assert(r.wrong === 1 && r.correct === 1, 'correct + wrong both 1 after recovery');
+
+  log('\n=== Test 6: cross-app isolation ===');
+  MathProgress.reset();
+  MathProgress.recordAnswer('LF', 'shared_id', true, 'guided', 0);
+  MathProgress.recordAnswer('NF', 'shared_id', false, 'guided', 0);
+  assert(MathProgress.tierFor('LF', 'shared_id') === 'learning', 'LF state unaffected by NF');
+  assert(MathProgress.tierFor('NF', 'shared_id') === 'wrong', 'NF state unaffected by LF');
+
+  log('\n=== Test 7: prioritize ===');
+  MathProgress.reset();
+  MathProgress.recordAnswer('LF', 'm', true, 'guided'); MathProgress.recordAnswer('LF', 'm', true, 'guided');
+  MathProgress.recordAnswer('LF', 'w', false, 'guided');
+  const qs = [{ id: 'm' }, { id: 'u' }, { id: 'w' }];
+  const ordered = MathProgress.prioritize('LF', qs).map(q => q.id);
+  assert(ordered[0] === 'w', 'wrong tier comes first');
+  assert(ordered[ordered.length - 1] === 'm', 'mastered tier comes last');
+  assert(ordered.includes('u'), 'unseen included');
+
+  log('\n=== Test 8: summary ===');
+  const s = MathProgress.summary('LF', ['m', 'u', 'w']);
+  assert(s.total === 3, 'total = 3');
+  assert(s.mastered === 1, 'mastered = 1');
+  assert(s.struggling === 1, 'struggling = 1');
+  assert(s.unseen === 1, 'unseen = 1');
+
+  log('\n=== Test 9: getMissed ===');
+  const checkFn = (userAns, q) => userAns === q.correctAnswer;
+  const sessionQs = [{ id: 'a', correctAnswer: 1 }, { id: 'b', correctAnswer: 2 }, { id: 'c', correctAnswer: 3 }];
+  const userAns = [1, 9, 3]; // missed 'b'
+  const missed = MathProgress.getMissed(sessionQs, userAns, checkFn);
+  assert(missed.length === 1 && missed[0].id === 'b', 'getMissed returns only b');
+
+  log('\n=== Test 10: export/import roundtrip ===');
+  MathProgress.reset();
+  MathProgress.recordAnswer('LF', 'export_q', true, 'guided', 1000);
+  const json = MathProgress.exportData();
+  MathProgress.reset();
+  assert(MathProgress.tierFor('LF', 'export_q') === 'unseen', 'reset cleared data');
+  MathProgress.importData(json);
+  assert(MathProgress.tierFor('LF', 'export_q') === 'learning', 'import restored state');
+
+  log('\nDone.', 'pass');
+  log('Ledger after tests:');
+  log(JSON.stringify(JSON.parse(localStorage.getItem('edutrack_math_progress_v1') || '{}'), null, 2));
+}
+
+function dump() {
+  clearLog();
+  const raw = localStorage.getItem('edutrack_math_progress_v1');
+  log('Raw localStorage["edutrack_math_progress_v1"]:');
+  log(raw ? JSON.stringify(JSON.parse(raw), null, 2) : '(empty)');
+}
+
+function seedSample() {
+  MathProgress.reset();
+  MathProgress.recordAnswer('Linear_Functions_App', '113b938e', true,  'guided', 45000);
+  MathProgress.recordAnswer('Linear_Functions_App', '78391fcc', false, 'guided', 90000);
+  MathProgress.recordAnswer('Linear_Functions_App', '17d80dc3', true,  'exam',   30000);
+  MathProgress.recordAnswer('Linear_Functions_App', '17d80dc3', true,  'exam',   25000);
+  dump();
+}
+</script>
+</body>
+</html>

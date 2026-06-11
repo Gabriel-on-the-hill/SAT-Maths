@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../shared/gate.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Equations — Edutrack Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="app">
+        <div class="card">
+            <header>
+                <div class="brand">
+                    <div class="app-icon">ƒ</div>
+                    <div class="brand-text">
+                        <div class="app-name">EDUTRACK HUB</div>
+                        <div class="lesson-name">Linear Equations (One Variable)</div>
+                    </div>
+                </div>
+                <div id="timerDisplay" class="timer-badge" hidden>15:00</div>
+                <button id="globalHomeBtn" class="nav-icon-btn home-btn" title="Return to Home">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- 1. Start Screen -->
+            <div id="startScreen">
+                <div id="resumeBanner" hidden style="display:flex;align-items:center;gap:12px;background:rgba(56,189,248,0.1);border:1px solid var(--primary, #38bdf8);border-radius:8px;padding:12px 16px;margin-bottom:20px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:200px;font-weight:600;">📍 In progress — <span id="resumeLabel"></span></div>
+                    <button id="resumeBtn" class="btn-primary" style="padding:8px 16px;">Resume</button>
+                    <button id="resumeDiscardBtn" class="btn-secondary" style="padding:8px 16px;">Discard</button>
+                </div>
+                <h1 class="fade-in">Select a Concept Module</h1>
+
+                <div class="student-info fade-in-delay">
+                    <label>Name: <input type="text" id="studentName" placeholder="E.g., Tracy"></label>
+                    <label>Date: <input type="date" id="studentDate"></label>
+                </div>
+
+                <div class="toggles-container fade-in-delay">
+                    <div class="mode-toggle">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="examModeToggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="mode-label">Enable Exam Mode (No Feedback, Timer)</span>
+                    </div>
+
+                    <div class="mode-toggle">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="hardModeToggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="mode-label">Hard Questions Only</span>
+                    </div>
+
+                    <div class="mode-toggle">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="smartModeToggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="mode-label" title="Show questions you got wrong before, first. Then unseen, then mastered.">Smart Mode (drill weak questions first)</span>
+                    </div>
+                </div>
+
+                <div class="modules-grid fade-in-delay">
+                    <button class="module-btn" data-module="guided">
+                        <h3>Section A: Guided Practice</h3>
+                        <p>In-Class, Tutor-Led (8-10 Qs)</p>
+                    </button>
+                    <button class="module-btn" data-module="independent">
+                        <h3>Section B: Independent Practice</h3>
+                        <p>Solo, In-Session (6-8 Qs)</p>
+                    </button>
+                    <button class="module-btn" data-module="homework">
+                        <h3>Section C: Homework</h3>
+                        <p>Deliberate Practice (10 Qs, Self-Check)</p>
+                    </button>
+                    <button class="module-btn btn-exam" data-module="exam">
+                        <h3>Final Assessment</h3>
+                        <p>Full Exam Module (10-15 Qs)</p>
+                    </button>
+                </div>
+
+                <div class="fade-in-delay" style="margin-top: 24px;">
+                    <div style="text-align:center;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted,#94a3b8);margin-bottom:10px;">— Personalised sets —</div>
+                    <div id="tierPreview" style="text-align:center;font-size:0.85rem;margin-bottom:10px;"></div>
+                    <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
+                        <button id="freshGuidedBtn" style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:rgba(255,255,255,0.04);border:1px solid var(--border, rgba(255,255,255,0.12));border-radius:10px;color:var(--text-main, #f1f5f9);font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;">
+                            🚀 Fresh Guided Set
+                            <span style="font-weight:400;color:var(--text-muted,#94a3b8);font-size:0.82rem;">10 questions, easy → hard progression</span>
+                        </button>
+                        <button id="freshIndependentBtn" style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:rgba(255,255,255,0.04);border:1px solid var(--border, rgba(255,255,255,0.12));border-radius:10px;color:var(--text-main, #f1f5f9);font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;">
+                            🔄 Fresh Independent Set
+                            <span style="font-weight:400;color:var(--text-muted,#94a3b8);font-size:0.82rem;">8 balanced questions you haven't seen recently</span>
+                        </button>
+                        <div id="weakAreaCta" hidden>
+                            <button id="weakAreaBtn" style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:linear-gradient(135deg, rgba(56,189,248,0.18), rgba(129,140,248,0.18));border:1px solid var(--primary, #38bdf8);border-radius:10px;color:var(--text-main, #f1f5f9);font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;">
+                                🎯 Weak-Area Set
+                                <span style="font-weight:400;color:var(--text-muted,#94a3b8);font-size:0.82rem;">10 questions drawn from your trouble spots</span>
+                            </button>
+                        </div>
+                        <button id="freshExamBtn" style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.4);border-radius:10px;color:var(--text-main, #f1f5f9);font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;">
+                            🎓 Fresh Final Assessment
+                            <span style="font-weight:400;color:var(--text-muted,#94a3b8);font-size:0.82rem;">15 questions, archetype-proportional, exam conditions</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="fade-in-delay" style="margin-top: 28px; text-align: center;">
+                    <a href="./concept.html" style="display: inline-block; padding: 10px 22px; border: 1px solid var(--border, rgba(255,255,255,0.1)); border-radius: 8px; color: var(--text-muted, #94a3b8); text-decoration: none; font-size: 0.92rem; font-weight: 600;">
+                        📖 Concept Guide — Master the 8 archetypes before drilling
+                    </a>
+                </div>
+            </div>
+
+            <!-- 2. Concept Introduction Screen -->
+            <section id="introScreen" hidden>
+                <div class="intro-header">
+                    <div class="intro-icon">💡</div>
+                    <h2>Before You Begin: Linear Essentials</h2>
+                </div>
+
+                <div class="intro-content" id="playlistIntro">
+                    <!-- Dynamic Concept Cards Injected Here -->
+                </div>
+
+                <div class="intro-footer">
+                    <button class="primary-btn" id="startPracticeBtn">Ready? Let's Go →</button>
+                    <button class="nav-btn" id="introBackBtn">← Back</button>
+                </div>
+            </section>
+
+            <!-- 3. Quiz Area -->
+            <section id="quiz" hidden>
+                <div class="quiz-header">
+                    <div id="progress" class="muted">Question 1 of 10</div>
+                    <div class="header-right">
+                        <div id="difficultyBadge" class="difficulty-badge">Medium</div>
+                    </div>
+                </div>
+
+                <div id="slideContent" class="slide-content">
+                    <div id="questionText" class="question"></div>
+                    <div id="optionsGrid" class="options-grid"></div>
+                </div>
+
+                <!-- Feedback Area (Only in Practice/Homework) -->
+                <div id="feedbackArea" class="feedback-panel" hidden>
+                    <div id="feedbackStatus" class="status-indicator"></div>
+                    <div id="explanationText" class="explanation"></div>
+                </div>
+
+                <div class="controls">
+                    <button id="prevSlideBtn" class="btn-secondary" disabled>← Previous</button>
+                    <button id="nextSlideBtn" class="btn-primary">Next Question →</button>
+                </div>
+            </section>
+
+            <!-- 3. End Screen -->
+            <div id="endScreen" hidden>
+                <div class="end-content">
+                    <div class="completion-icon">🎓</div>
+                    <h2 id="endScreenTitle">Module Complete!</h2>
+                    <p id="endScreenSubtitle" class="muted">Great job! You have completed this conceptual module.</p>
+                    <div id="endScreenScore" class="score-display">Score: 0 / 10</div>
+                    <div id="highScoreDisplay" class="difficulty-badge diff-hard"
+                        style="margin-top: 10px; font-size: 0.9rem;"></div>
+                </div>
+
+                <div id="dbSyncStatus"
+                    style="text-align: center; margin-bottom: 20px; font-weight: 600; font-size: 0.95rem; display: none;">
+                </div>
+
+                <div id="breakdown" style="margin: 20px auto 0; max-width: 640px; text-align: left; padding: 0 20px;"></div>
+                <div class="end-actions">
+                    <button id="copyBtn" class="btn-primary" style="background: var(--success); color: #fff;">📋 Copy My
+                        Score & Work</button>
+                    <button id="retryMissedBtn" class="btn-primary" hidden>🎯 Drill the <span id="retryMissedCount">0</span> you missed</button>
+                    <button id="reviewBtn" class="btn-secondary">Review Answers</button>
+                    <button id="returnMenuBtn" class="btn-secondary">Return to Menu</button>
+                </div>
+                <div id="submitMsg" class="submit-msg"></div>
+            </div>
+
+            <!-- 4. Review Screen -->
+            <section id="reviewScreen" hidden>
+                <div class="quiz-header">
+                    <button id="reviewBackBtn" class="nav-icon-btn">← End Screen</button>
+                    <div class="header-right">
+                        <div id="reviewProgress" class="muted">Review: Question 1 of 10</div>
+                    </div>
+                </div>
+                <div id="reviewContent" class="slide-content">
+                    <div id="reviewQuestionText" class="question"></div>
+                    <div id="reviewOptions" class="options-grid"></div>
+                </div>
+                <div class="feedback-panel">
+                    <div id="reviewFeedbackStatus" class="status-indicator"></div>
+                    <div id="reviewExplanationText" class="explanation"></div>
+                </div>
+                <div class="controls">
+                    <button id="reviewPrevBtn" class="btn-secondary">← Previous</button>
+                    <button id="reviewNextBtn" class="btn-primary">Next Review →</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="../shared/progress.js"></script>
+    <script src="../shared/session.js"></script>
+    <script src="data/questions.js"></script>
+    <script src="../shared/breakdown.js"></script>
+    <script src="../shared/tier-preview.js"></script>
+    <script>window.APP_CONFIG = { appId: 'Linear_Equations_App' };</script>
+    <script src="../shared/engine.js"></script>
+</body>
+
+</html>

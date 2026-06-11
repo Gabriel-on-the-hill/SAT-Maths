@@ -1,0 +1,178 @@
+[
+    {
+        "id": "90eed2e5",
+        "difficulty": "Easy",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/easy_90eed2e5.png",
+        "answer": "",
+        "explanation": "Choice C is correct. Because a random sample of the city council was polled, the proportion of the sample who supported the bill is expected to be approximately equal to the proportion of the total city council who supports the bill. Since 6 of the 20 polled, or 30%, supported the bill, it can be estimated that , or 15, city council members support the bill. Choice A is incorrect. This is the number of city council members in the sample who supported the bill. Choice B is incorrect and may result from a computational error. Choice D is incorrect. This is the number of city council members in the sample of city council members who were not polled.",
+        "type": "grid-in",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "2c76bcce",
+        "difficulty": "Easy",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/easy_2c76bcce.png",
+        "answer": "A",
+        "explanation": "Choice A is correct. It's given that the estimated mean weight of all handbags made by the company on a particular day is , with an associated margin of error of . It follows that plausible values for the mean weight are between and . Therefore, the most plausible conclusion is that the mean weight of all handbags made by the company on that day is between and . Choice B is incorrect and may result from conceptual or calculation errors. Choice C is incorrect and may result from conceptual or calculation errors. Choice D is incorrect and may result from conceptual or calculation errors.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "e7d9649f",
+        "difficulty": "Easy",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/easy_e7d9649f.png",
+        "answer": "B",
+        "explanation": "Choice B is correct. Let x be the number of people in the entire town that would be expected to name chocolate. Since the sample of 50 people was selected at random, it is reasonable to expect that the proportion of people who named chocolate as their favorite ice-cream flavor would be the same for both the sample and the town population. Symbolically, this can be expressed as . Using cross multiplication, ; solving for x yields 2,083. The choice closest to the value of 2,083 is choice B, 2,100. Choices A, C, and D are incorrect and may be the result of errors when setting up the proportion, solving for the unknown, or incorrectly comparing the choices to the number of people expected to name chocolate, 2,083.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "f4b3672a",
+        "difficulty": "Easy",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/easy_f4b3672a.png",
+        "answer": "C",
+        "explanation": "Choice C is correct. The mean of the 5 samples is trees per acre. The best estimate for the total number of trees in the forest is the product of the mean number of trees per acre in the sample and the total number of acres in the forest. This is (56)(253) = 14,168, which is between 13,500 and 14,500. Choice A is incorrect and may result from multiplying the minimum number of trees per acre in the sample, 45, by the number of acres, 253. Choice B is incorrect and may result from multiplying the median number of trees per acre in the sample, 52, by the number of acres, 253. Choice D is incorrect and may result from multiplying the maximum number of trees per acre in the sample, 73, by the number of acres, 253.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "0108ac2d",
+        "difficulty": "Easy",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/easy_0108ac2d.png",
+        "answer": "C",
+        "explanation": "Choice C is correct. It\u2019s given that an estimated 38% of sampled students at the school were in support of a menu change, with a margin of error of 5.5%. It follows that the percent of the students at the school who support a menu change is 38% plus or minus 5.5%. The lower bound of this estimation is , or 32.5%. The upper bound of this estimation is , or 43.5%. Therefore, plausible values of the percent of the students at the school who support a menu change are between 32.5% and 43.5%. Choice A is incorrect. This is the percent of the sampled students at the school who support a menu change. Choices B and D are incorrect and may result from misinterpreting the margin of error.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "6a305cd0",
+        "difficulty": "Easy",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/easy_6a305cd0.png",
+        "answer": "C",
+        "explanation": "Choice C is correct. It\u2019s given that the mean of the data from a random sample of a population is 37, with an associated margin of error of 3. The most appropriate conclusion that can be made is that the mean of the entire population will fall between 37, plus or minus 3. Therefore, the population mean is between and . Choice A is incorrect. While it\u2019s an appropriate conclusion that the population mean is as low as , or 34, it isn\u2019t appropriate to conclude that the population mean is less than 34. Choice B is incorrect. While it\u2019s an appropriate conclusion that the population mean is as high as , or 40, it isn\u2019t appropriate to conclude that the population mean is greater than 40. Choice D is incorrect. It isn\u2019t an appropriate conclusion that the population mean is less than 34 or greater than 40.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "53d97af5",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_53d97af5.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. The sample of 150 largemouth bass was selected at random from all the largemouth bass in the pond, and since 30% of the fish in the sample weighed more than 2 pounds, it can be concluded that approximately 30% of all largemouth bass in the pond weigh more than 2 pounds. Choices A, B, and C are incorrect. Since the sample contained 150 largemouth bass, of which 30% weighed more than 2 pounds, this result can be generalized only to largemouth bass in the pond, not to all fish in the pond.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "f8f79e11",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_f8f79e11.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. The given estimated mean has an associated margin of error because from sample data, the population mean can\u2019t be determined precisely. Rather, from the sample mean, an interval can be determined within which it\u2019s plausible that the population\u2019s mean is likely to lie. Since the estimated mean is 4.5 miles with an associated margin of error of 0.5 miles, it follows that between miles and miles, or between 4 and 5 miles, is plausibly the mean distance hiked for all visitors. Choices A, B, and C are incorrect. Based on the estimated mean, no determination can be made about the number of miles hiked for all visitors to the park.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "e03f3477",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_e03f3477.png",
+        "answer": "B",
+        "explanation": "Choice B is correct. It's given that based on a sample selected at random, it's estimated that of all adults who own televisions use their televisions to watch nature shows, with an associated margin of error of . Subtracting the margin of error from the estimate and adding the margin of error to the estimate gives an interval of plausible values for the true percentage of adults who own televisions who use their televisions to watch nature shows. This means it's plausible that between , or , and , or , of all adults who own televisions use their televisions to watch nature shows. Therefore, of the given choices, the most plausible conclusion is that between and of all adults who own televisions use their televisions to watch nature shows. Choice A is incorrect and may result from conceptual errors. Choice C is incorrect. To make a plausible conclusion about all adults who own televisions, the sample must be selected at random from all adults who own televisions, not just those who use their televisions to watch nature shows. Choice D is incorrect. Since the sample was selected at random from all adults who own televisions, a plausible conclusion can be made about all adults who own televisions.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "fc46af57",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_fc46af57.png",
+        "answer": "B",
+        "explanation": "Choice B is correct. It was estimated that 15% of the beads in the bag are red. Since the bag contains 10,000 beads, it follows that there are an estimated red beads. It\u2019s given that the margin of error is 2%, or beads. If the estimate is too high, there could plausibly be red beads. If the estimate is too low, there could plausibly be red beads. Therefore, the most plausible statement of the actual number of red beads in the bag is . Choices A and D are incorrect and may result from misinterpreting the margin of error. It\u2019s unlikely that more than 1,700 beads or fewer than 1,300 beads in the bag are red. Choice C is incorrect because 200 is the margin of error for the number of red beads, not the lower bound of the range of red beads.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "f04d40b2",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_f04d40b2.png",
+        "answer": "C",
+        "explanation": "Choice C is correct. It\u2019s given that an estimated of people in the population support the legislation, with an associated margin of error of . Subtracting and adding the margin of error from the estimate gives an interval of plausible values for the true percentage of people in the population who support the legislation. Therefore, it\u2019s plausible that between and of people in this population support the legislation. The corresponding numbers of people represented by these percentages in the population can be calculated by multiplying the total population, , by and by , which gives and , respectively. It follows that any value in the interval to is a plausible value for the total number of people in the population who support the proposed legislation. Of the choices given, only is in this interval. Choice A is incorrect. This is the number of people in the sample, rather than in the population, who support the legislation. Choice B is incorrect. This is the number of people in the sample who do not support the legislation. Choice D is incorrect. This is a plausible value for the total number of people in the population who do not support the proposed legislation.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "89f8d08a",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_89f8d08a.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. It\u2019s given that the manager took a random selection of the receipts of 80 customers from a total of 1,500. It\u2019s also given that of those 80 receipts, 20 showed that the customer had purchased fruit. This means that an appropriate estimate of the fraction of customers who purchased fruit is , or . Multiplying this fraction by the total number of customers yields . Therefore, the best estimate for the number of customers who purchased fruit is 375. Choices A and B are incorrect because an exact number of customers can\u2019t be known from taking a random selection. Additionally, choice A may also be the result of a calculation error. Choice C is incorrect and may result from a calculation error.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "9ee22c16",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_9ee22c16.png",
+        "answer": "3",
+        "explanation": "The correct answer is 3,540. According to the table, of 400 voters randomly sampled, the total number of men and women who plan to vote for Candidate A is . The best estimate of the total number of voters in the town who plan to vote for Candidate A is the fraction of voters in the sample who plan to vote for Candidate A, , multiplied by the total voter population of 6000. Therefore, the answer is .",
+        "type": "grid-in",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "85939da5",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_85939da5.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. The given margin of error of 3% indicates that the actual percent of all US teens who are heavy texters is likely within 3% of the estimate of 30%, or between 27% and 33%. Therefore, it is unlikely, or doubtful, that the percent of all US teens who are heavy texters would be 35%. Choice A is incorrect. The margin of error doesn\u2019t provide any information about the accuracy of reporting in the study. Choice B is incorrect. Based on the estimate and given margin of error, it is unlikely that the percent of all US teens who are heavy texters would be less than 27%, but it is possible. Choice C is incorrect. While the percent of all US teens who are heavy texters is likely between 27% and 33%, any value within this interval is equally likely. We can\u2019t be certain that the value is exactly 33%.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "308084c5",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_308084c5.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. Sample size is an appropriate reason for the margin of error to change. In general, a smaller sample size increases the margin of error because the sample may be less representative of the whole population. Choice A is incorrect. The margin of error will depend on the size of the sample of recorded votes, not the number of votes that could not be recorded. In any case, the smaller number of votes that could not be recorded for sample A would tend to decrease, not increase, the comparative size of the margin of error. Choice B is incorrect. Since the percent in favor for sample A is the same distance from 50% as the percent in favor for sample B, the percent of favorable responses doesn\u2019t affect the comparative size of the margin of error for the two samples. Choice C is incorrect. If sample A had a larger margin of error than sample B, then sample A would tend to be less representative of the population. Therefore, sample A is not likely to have a larger sample size.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "9ba3e283",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_9ba3e283.png",
+        "answer": "C",
+        "explanation": "Choice C is correct. It is given that 34.6% of 26 students in Mr. Camp\u2019s class reported that they had at least two siblings. Since 34.6% of 26 is 8.996, there must have been 9 students in the class who reported having at least two siblings and 17 students who reported that they had fewer than two siblings. It is also given that the average eighth-grade class size in the state is 26 and that Mr. Camp\u2019s class is representative of all eighth-grade classes in the state. This means that in each eighth-grade class in the state there are about 17 students who have fewer than two siblings. Therefore, the best estimate of the number of eighth-grade students in the state who have fewer than two siblings is 17 \u00d7 (number of eighth-grade classes in the state), or . Choice A is incorrect because 16,200 is the best estimate for the number of eighth-grade students in the state who have at least, not fewer than, two siblings. Choice B is incorrect because 23,400 is half of the estimated total number of eighth-grade students in the state; however, since the students in Mr. Camp\u2019s class are representative of students in the eighth-grade classes in the state and more than half of the students in Mr. Camp\u2019s class have fewer than two siblings, more than half of the students in each eighth- grade class in the state have fewer than two siblings, too. Choice D is incorrect because 46,800 is the estimated total number of eighth-grade students in the state.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    }
+]

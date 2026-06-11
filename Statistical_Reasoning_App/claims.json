@@ -1,0 +1,123 @@
+[
+    {
+        "id": "9bf4c545",
+        "difficulty": "Easy",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/easy_9bf4c545.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. The members of the city council wanted to assess opinions of all city residents. To gather an unbiased sample, the council should have used a random sampling design to select subjects from all city residents. The given survey introduced a sampling bias because the 500 city residents surveyed were all dog owners. This sample is not representative of all city residents because not all city residents are dog owners. Choice A is incorrect because when the sampling method isn\u2019t random, there is no guarantee that the survey results will be reliable; hence, they cannot be generalized to the entire population. Choice B is incorrect because a larger sample of residents who are dog owners would not correct the sampling bias. Choice C is incorrect because a survey sample of entirely non\u2013dog owners would likely have a biased opinion, just as a sample of dog owners would likely have a biased opinion.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "82dfb646",
+        "difficulty": "Easy",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/easy_82dfb646.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. The sample was selected from a group of people who indicated that they liked the book. It is inappropriate to generalize the result of the survey beyond the population from which the participants were selected. Choice D is the most appropriate inference from the survey results because it describes a conclusion about people who liked the book, and the results of the survey indicate that most people who like the book disliked the movie. Choices A, B, and C are incorrect because none of these inferences can be drawn from the survey results. Choices A and B need not be true. The people surveyed all liked the book on which the movie was based, which is not necessarily true of all people who go see movies or all people who read books. Thus, the people surveyed are not representative of all people who go see movies or all people who read books. Therefore, the results of this survey cannot appropriately be extended to at least 95% of people who go see movies or to at least 95% of people who read books. Choice C need not be true because the sample includes only people who liked the book, and so the results do not extend to people who dislike the book.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "37930b2a",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_37930b2a.png",
+        "answer": "A",
+        "explanation": "Choice A is correct. The purpose of surveying a random sample of residents is to approximate the percent of the town residents that are satisfied with the concession stand. The sample doesn\u2019t necessarily get the same result as surveying every resident of the town, nor would another sample necessarily have identical results. Therefore, although it\u2019s possible that either statement I or statement II could prove true by surveying every resident of the town, these statements cannot be proven true solely based on the results of the sample. Choice B is incorrect because surveying a sample of the town residents may not have the same result as surveying all the town residents. Choices C and D are incorrect because surveying a different sample of residents could yield different results.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "b4f5a7ca",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_b4f5a7ca.png",
+        "answer": "C",
+        "explanation": "Choice C is correct. Selecting a sample at random when conducting a survey allows the results to be generalized to the population from which the sample was selected, but not beyond this population. In this situation, the population that the sample was selected from is history professors from the California State Universities. Therefore, the largest population to which the results of the survey can be generalized is all history professors at all California State Universities. Choices A, B, and D are incorrect. Since the sample was selected at random from history professors from the California State Universities, the results of the survey can\u2019t be generalized to all professors in the United States, all history professors in the United States, or all professors at all California State Universities. All three of these populations may use different texts and therefore may name different publishers.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "642519d7",
+        "difficulty": "Medium",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/medium_642519d7.png",
+        "answer": "A",
+        "explanation": "Choice A is correct. Statement I need not be true. The fact that 78% of the 1,000 adults who were surveyed responded that they were satisfied with the air quality in the city does not mean that the exact same percentage of all adults in the city will be satisfied with the air quality in the city. Statement II need not be true because random samples, even when they are of the same size, are not necessarily identical with regard to percentages of people in them who have a certain opinion. Statement III need not be true for the same reason that statement II need not be true: results from different samples can vary. The variation may be even bigger for this sample since it would be selected from a different city. Therefore, none of the statements must be true. Choices B, C, and D are incorrect because none of the statements must be true.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "1ea09200",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_1ea09200.png",
+        "answer": "B",
+        "explanation": "Choice B is correct. Selecting a sample of a reasonable size at random to use for a survey allows the results from that survey to be applied to the population from which the sample was selected, but not beyond this population. In this case, the population from which the sample was selected is all fourth-grade students at a certain school. Therefore, the results of the survey can be applied to all fourth-grade students at the school. Choice A is incorrect. The results of the survey can be applied to the 40 students who were surveyed. However, this isn\u2019t the largest group to which the results of the survey can be applied. Choices C and D are incorrect. Since the sample was selected at random from among the fourth-grade students at a certain school, the results of the survey can\u2019t be applied to other students at the school or to other fourth-grade students who weren\u2019t represented in the survey results. Students in other grades in the school or other fourth-grade students in the country may feel differently about announcements than the fourth-grade students at the school.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "7d68096f",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_7d68096f.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. It's given that the organizer selected teams at random from all trivia teams in the tournament. A table is also given displaying the information for the teams in the sample that practiced for at least hours per week. Selecting a sample of a reasonable size at random to use for a survey allows the results from that survey to be applied to the population from which the sample was selected, but not beyond this population. Thus, only the sampling method information is necessary to determine the largest population to which the results of the study can be generalized. Since the organizer selected the sample at random from all trivia teams in the tournament, the largest population to which the results of the study can be generalized is all trivia teams in the tournament. Choice A is incorrect. The sample was selected at random from all trivia teams in the tournament, not just from the teams that scored an average of or more points per round. Assessment SAT Test Math Domain Problem-Solving and Data Analysis Skill Evaluating statistical claims: Observational studies and experiments Difficulty",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "7ce2830a",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_7ce2830a.png",
+        "answer": "B",
+        "explanation": "Choice B is correct. The largest group to which the results of a study can be generalized is the population from which the random sample was chosen. In this case, the psychologist chose a random sample from all students at one particular middle school. Therefore, the largest group to which the results can be generalized is all the students at the school. Choice A is incorrect because this isn\u2019t the largest group the results can be generalized to. Choices C and D are incorrect because these groups are larger than the population from which the random sample was chosen. Therefore, the sample isn\u2019t representative of these groups.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "aa43b41f",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_aa43b41f.png",
+        "answer": "B",
+        "explanation": "Choice B is correct. In order for the poll results from a sample of a population to represent the entire population, the sample must be representative of the population. A sample that is randomly selected from a population is more likely than a sample of the type described to represent the population. In this case, the people who responded were people with access to cable television and websites, which aren\u2019t accessible to the entire population. Moreover, the people who responded also chose to watch the show and respond to the poll. The people who made these choices aren\u2019t representative of the entire population of the United States because they were not a random sample of the population of the United States. Choices A, C, and D are incorrect because they present reasons unrelated to whether the sample is representative of the population of the United States.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "4a422e3e",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_4a422e3e.png",
+        "answer": "C",
+        "explanation": "Choice C is correct. In order to use a sample mean to estimate the mean for a population, the sample must be representative of the population (for example, a simple random sample). In this case, Tabitha surveyed 20 families in a playground. Families in the playground are more likely to have children than other households in the community. Therefore, the sample isn\u2019t representative of the population. Hence, the sampling method is flawed and may produce a biased estimate. Choices A and D are incorrect because they incorrectly assume the sampling method is unbiased. Choice B is incorrect because a sample of size 20 could be large enough to make an estimate if the sample had been representative of all the families in the community.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    },
+    {
+        "id": "6fca0144",
+        "difficulty": "Hard",
+        "domain": "Algebra",
+        "skill": "Statistical_Reasoning_App",
+        "question_image": "assets/hard_6fca0144.png",
+        "answer": "D",
+        "explanation": "Choice D is correct. When a study uses a randomly selected sample, the largest group to which the results of the study can be applied is the population from which the sample was selected. It's given that the scientist randomly selected the trees from the baobab trees in a certain habitat that were years old. Therefore, the largest group to which the results of this study can be applied is all the baobab trees that were years old in this habitat. Choice A is incorrect. Since the sample was randomly selected from a population, the results can be applied to a larger group than the sample. Choice B is incorrect. The sample was selected from a population of baobab trees that were years old, not years old. Choice C is incorrect. The sample was selected from a certain tree habitat in South Africa, not from all the baobab trees that were years old in South Africa.",
+        "type": "multiple-choice",
+        "desmos_strategy": ""
+    }
+]

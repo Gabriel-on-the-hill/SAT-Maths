@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <script src="./shared/gate.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Progress — Edutrack Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg-depth: #0f172a;
+    --bg-surface: #1e293b;
+    --primary: #38bdf8;
+    --accent: #818cf8;
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: rgba(255, 255, 255, 0.1);
+    --font-heading: 'Outfit', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: var(--font-heading);
+    background: var(--bg-depth);
+    background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 30px 20px 60px;
+    line-height: 1.5;
+}
+.page { max-width: 1000px; margin: 0 auto; }
+.top-nav { margin-bottom: 20px; }
+.top-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+}
+.top-nav a:hover { color: var(--primary); }
+
+h1 {
+    font-size: 2.2rem;
+    margin: 0 0 6px 0;
+    background: linear-gradient(to right, #fff, var(--text-muted));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.lead { color: var(--text-muted); margin: 0 0 28px; }
+
+/* Summary cards */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+}
+.summary-card {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+}
+.summary-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+.summary-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+.summary-value.muted { color: var(--text-muted); font-size: 1rem; }
+
+/* Filters */
+.filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.filters select {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.filters select:focus { outline: 2px solid var(--primary); }
+
+/* App sections */
+.app-section {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+}
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+.app-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+.app-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+table.sessions {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+table.sessions th {
+    text-align: left;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 6px 10px 8px;
+    border-bottom: 1px solid var(--border);
+}
+table.sessions td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+table.sessions tr:last-child td { border-bottom: none; }
+table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+.pct {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 48px;
+    text-align: center;
+}
+.pct-low { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
+.pct-mid { background: rgba(251, 191, 36, 0.15); color: var(--warning); }
+.pct-hi  { background: rgba(74, 222, 128, 0.15); color: var(--success); }
+
+.variant-tag {
+    font-size: 0.74rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+    margin-left: 6px;
+}
+.variant-weak-area { background: rgba(56, 189, 248, 0.15); color: var(--primary); }
+.variant-fresh    { background: rgba(129, 140, 248, 0.15); color: var(--accent); }
+.variant-retry    { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
+.variant-exam     { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
+
+.muted { color: var(--text-muted); }
+.empty-state {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.utility-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    gap: 10px;
+}
+.utility-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+}
+.utility-btn:hover { color: var(--text-main); border-color: var(--text-muted); }
+.utility-btn.danger:hover { color: var(--danger); border-color: var(--danger); }
+
+@media (max-width: 600px) {
+    h1 { font-size: 1.7rem; }
+    .summary-value { font-size: 1.3rem; }
+    table.sessions { font-size: 0.82rem; }
+    table.sessions th, table.sessions td { padding: 6px 6px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="top-nav"><a href="./index.html">← Edutrack Hub</a></div>
+    <h1>📊 My Progress</h1>
+    <p class="lead" id="lead">Loading…</p>
+
+    <div class="summary-grid" id="summary"></div>
+
+    <div class="filters">
+        <select id="filterApp"><option value="">All apps</option></select>
+        <select id="filterPeriod">
+            <option value="all">All time</option>
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+            <option value="90">Last 90 days</option>
+        </select>
+        <select id="filterStudent"><option value="">All students</option></select>
+    </div>
+
+    <div id="appSections"></div>
+
+    <div class="utility-bar">
+        <button class="utility-btn" id="exportBtn">Export as JSON</button>
+        <button class="utility-btn danger" id="clearBtn">Clear history</button>
+    </div>
+</div>
+
+<script src="./shared/session.js"></script>
+<script>
+(function () {
+    const VARIANT_LABEL = {
+        'standard-guided': 'Section A: Guided',
+        'standard-independent': 'Section B: Independent',
+        'standard-homework': 'Section C: Homework',
+        'standard-exam': 'Final Assessment',
+        'standard-practice': 'Practice',
+        'weak-area': 'Weak-Area Set',
+        'fresh-guided': 'Fresh Guided',
+        'fresh-independent': 'Fresh Independent',
+        'fresh-exam': 'Fresh Final Assessment',
+        'retry-missed': 'Retry Missed'
+    };
+    const VARIANT_CLASS = {
+        'weak-area': 'variant-weak-area',
+        'fresh-guided': 'variant-fresh',
+        'fresh-independent': 'variant-fresh',
+        'fresh-exam': 'variant-exam',
+        'standard-exam': 'variant-exam',
+        'retry-missed': 'variant-retry'
+    };
+
+    function labelForEntry(e) {
+        const key = e.variant === 'standard' ? ('standard-' + (e.module || 'practice')) : e.variant;
+        return VARIANT_LABEL[key] || (e.module || 'Session');
+    }
+    function variantClass(e) {
+        const key = e.variant === 'standard' ? ('standard-' + (e.module || 'practice')) : e.variant;
+        return VARIANT_CLASS[key] || '';
+    }
+    function prettyApp(appId) {
+        return (appId || '').replace(/_App.*$/, '').replace(/_v\d+$/i, '').replace(/_/g, ' ');
+    }
+    function fmtDate(ts) {
+        if (!ts) return '—';
+        const d = new Date(ts);
+        const now = new Date();
+        const sameDay = d.toDateString() === now.toDateString();
+        const yesterday = new Date(now.getTime() - 86400000).toDateString() === d.toDateString();
+        const time = d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        if (sameDay) return 'Today ' + time;
+        if (yesterday) return 'Yesterday ' + time;
+        return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' ' + time;
+    }
+    function fmtDuration(ms) {
+        if (!ms || ms < 1000) return '—';
+        const totalSec = Math.round(ms / 1000);
+        const min = Math.floor(totalSec / 60);
+        const sec = totalSec % 60;
+        if (min === 0) return sec + 's';
+        if (min < 60) return min + 'm ' + (sec ? sec + 's' : '');
+        const hr = Math.floor(min / 60);
+        return hr + 'h ' + (min % 60) + 'm';
+    }
+    function pctClass(p) {
+        if (p < 0.5) return 'pct pct-low';
+        if (p < 0.75) return 'pct pct-mid';
+        return 'pct pct-hi';
+    }
+    function fmtPct(score, gradable) {
+        if (!gradable) return '—';
+        const p = score / gradable;
+        return '<span class="' + pctClass(p) + '">' + Math.round(p * 100) + '%</span>';
+    }
+    function escapeHtml(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+
+    function render() {
+        const all = (window.MathSession && window.MathSession.getHistory) ? window.MathSession.getHistory() : [];
+
+        // Populate app + student filter dropdowns
+        const appFilter = document.getElementById('filterApp');
+        const studentFilter = document.getElementById('filterStudent');
+        const periodFilter = document.getElementById('filterPeriod');
+        if (appFilter.children.length === 1) {
+            const apps = Array.from(new Set(all.map(e => e.appId))).sort();
+            apps.forEach(a => {
+                const opt = document.createElement('option');
+                opt.value = a; opt.textContent = prettyApp(a);
+                appFilter.appendChild(opt);
+            });
+        }
+        if (studentFilter.children.length === 1) {
+            const students = Array.from(new Set(all.map(e => e.studentName).filter(Boolean))).sort();
+            students.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s; opt.textContent = s;
+                studentFilter.appendChild(opt);
+            });
+            if (students.length === 1) studentFilter.value = students[0];
+        }
+
+        // Apply filters
+        const fApp = appFilter.value;
+        const fStudent = studentFilter.value;
+        const fPeriod = periodFilter.value;
+        const periodMs = (fPeriod === 'all') ? 0 : Number(fPeriod) * 86400000;
+        const cutoff = periodMs ? Date.now() - periodMs : 0;
+
+        let entries = all;
+        if (fApp) entries = entries.filter(e => e.appId === fApp);
+        if (fStudent) entries = entries.filter(e => e.studentName === fStudent);
+        if (cutoff) entries = entries.filter(e => (e.completedAt || 0) >= cutoff);
+
+        // Summary
+        document.getElementById('lead').textContent = entries.length === 0
+            ? 'No completed sessions yet — finish one in any app and they\'ll show up here.'
+            : entries.length + ' session' + (entries.length === 1 ? '' : 's') + ' shown.';
+
+        const totalSessions = entries.length;
+        const totalScore = entries.reduce((a, b) => a + (b.score || 0), 0);
+        const totalGradable = entries.reduce((a, b) => a + (b.gradable || 0), 0);
+        const totalTime = entries.reduce((a, b) => a + (b.durationMs || 0), 0);
+        const apps = new Set(entries.map(e => e.appId)).size;
+        const avgPct = totalGradable ? totalScore / totalGradable : 0;
+
+        const summary = document.getElementById('summary');
+        summary.innerHTML = [
+            ['Sessions', totalSessions],
+            ['Apps practised', apps],
+            ['Total time', fmtDuration(totalTime)],
+            ['Average score', totalGradable ? Math.round(avgPct * 100) + '%' : '—']
+        ].map(([label, value]) =>
+            '<div class="summary-card">' +
+            '<div class="summary-label">' + escapeHtml(label) + '</div>' +
+            '<div class="summary-value">' + escapeHtml(value) + '</div>' +
+            '</div>'
+        ).join('');
+
+        // Group by appId
+        const sections = document.getElementById('appSections');
+        if (entries.length === 0) {
+            sections.innerHTML = '<div class="empty-state">No sessions match your filters.<br><br>Once you complete a session in any app, it\'ll appear here automatically.</div>';
+            return;
+        }
+        const byApp = {};
+        entries.forEach(e => {
+            if (!byApp[e.appId]) byApp[e.appId] = [];
+            byApp[e.appId].push(e);
+        });
+        const appOrder = Object.keys(byApp).sort((a, b) => {
+            const aLatest = Math.max.apply(null, byApp[a].map(x => x.completedAt || 0));
+            const bLatest = Math.max.apply(null, byApp[b].map(x => x.completedAt || 0));
+            return bLatest - aLatest;
+        });
+
+        sections.innerHTML = appOrder.map(appId => {
+            const list = byApp[appId].slice().sort((a, b) => (b.completedAt || 0) - (a.completedAt || 0));
+            const appScore = list.reduce((a, b) => a + (b.score || 0), 0);
+            const appGradable = list.reduce((a, b) => a + (b.gradable || 0), 0);
+            const appTime = list.reduce((a, b) => a + (b.durationMs || 0), 0);
+            return '' +
+                '<div class="app-section">' +
+                '  <div class="app-header">' +
+                '    <h2 class="app-title">' + escapeHtml(prettyApp(appId)) + '</h2>' +
+                '    <div class="app-meta">' + list.length + ' sessions · ' +
+                       (appGradable ? Math.round((appScore / appGradable) * 100) + '% avg' : '—') +
+                       ' · ' + fmtDuration(appTime) + '</div>' +
+                '  </div>' +
+                '  <table class="sessions">' +
+                '    <thead><tr>' +
+                '      <th>When</th><th>Section</th><th>Score</th><th>%</th>' +
+                '      <th>Missed</th><th>Time</th>' +
+                '    </tr></thead>' +
+                '    <tbody>' +
+                list.map(e =>
+                    '<tr>' +
+                    '<td>' + escapeHtml(fmtDate(e.completedAt)) + '</td>' +
+                    '<td>' + escapeHtml(labelForEntry(e)) +
+                        (variantClass(e) && e.variant !== 'standard' ? ' <span class="variant-tag ' + variantClass(e) + '">' + escapeHtml(e.variant) + '</span>' : '') +
+                    '</td>' +
+                    '<td>' + (e.score || 0) + ' / ' + (e.gradable || 0) +
+                        (e.ungraded ? ' <span class="muted">(' + e.ungraded + ' ungraded)</span>' : '') + '</td>' +
+                    '<td>' + fmtPct(e.score || 0, e.gradable || 0) + '</td>' +
+                    '<td>' + (e.missed || 0) + '</td>' +
+                    '<td>' + escapeHtml(fmtDuration(e.durationMs)) +
+                        ((e.gradable || 0) > 0 && (e.durationMs || 0) > 0
+                            ? ' <span class="muted">· ' + Math.round((e.durationMs / 1000) / e.gradable) + 's/q</span>'
+                            : '') + '</td>' +
+                    '</tr>'
+                ).join('') +
+                '    </tbody>' +
+                '  </table>' +
+                '</div>';
+        }).join('');
+    }
+
+    function init() {
+        document.getElementById('filterApp').addEventListener('change', render);
+        document.getElementById('filterPeriod').addEventListener('change', render);
+        document.getElementById('filterStudent').addEventListener('change', render);
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const data = window.MathSession.getHistory();
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'edutrack-progress-' + new Date().toISOString().slice(0, 10) + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            if (confirm('Clear all session history on this device? This cannot be undone.')) {
+                window.MathSession.clearHistory();
+                render();
+            }
+        });
+        render();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+})();
+</script>
+</body>
+</html>

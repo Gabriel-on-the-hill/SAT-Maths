@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="./shared/gate.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edutrack Hub — Math Apps</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-depth: #0f172a;
+            --bg-surface: #1e293b;
+            --primary: #38bdf8;
+            --accent: #818cf8;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+            --font-heading: 'Outfit', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-heading);
+            background-color: var(--bg-depth);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .hub-container {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .hub-icon {
+            font-size: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0 0 10px 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-card .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .app-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+        }
+
+        .app-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .fade-in-delay {
+            animation: fadeIn 0.6s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        @media (max-width: 600px) {
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mastery dashboard */
+        .overall-progress {
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            padding: 18px 24px;
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+        .overall-progress.empty { opacity: 0.6; }
+        .overall-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .overall-progress-label { color: var(--text-muted); font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; }
+        .overall-progress-counts { font-weight: 600; }
+        .overall-progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+        .overall-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.6s ease-out;
+        }
+        .app-card .mastery-strip {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .app-card .mastery-counts {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .app-card .mastery-counts .mastered { color: #4ade80; font-weight: 600; }
+        .app-card .mastery-counts .struggling { color: #f87171; font-weight: 600; }
+        .app-card .mastery-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .app-card .mastery-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #38bdf8);
+            width: 0%;
+        }
+        .app-card .mastery-strip.unstarted { opacity: 0.5; font-style: italic; }
+
+        /* Cards with a concept guide link become a positioned div container
+           holding a primary anchor + a small secondary anchor. The whole-card
+           click still works because card-main spans the visible card area. */
+        .app-card.with-guide {
+            padding: 0;
+            cursor: default;
+        }
+        .app-card.with-guide:hover { transform: none; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .app-card .card-main {
+            padding: 30px 30px 18px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+            border-radius: 16px 16px 0 0;
+        }
+        .app-card.with-guide:hover .card-main {
+            transform: translateY(-3px);
+        }
+        .app-card .card-guide-link {
+            text-align: center;
+            padding: 10px 30px 18px;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .app-card .card-guide-link a {
+            color: var(--text-muted);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--text-muted);
+            padding-bottom: 1px;
+        }
+        .app-card .card-guide-link a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hub-container fade-in">
+        <div class="hub-icon">∑</div>
+        <h1>EDUTRACK HUB</h1>
+        <p class="subtitle fade-in-delay">Select a learning module to begin your journey.</p>
+        <div class="fade-in-delay" style="text-align:center;margin-top:-20px;margin-bottom:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <a href="./progress.html" style="display:inline-block;padding:6px 14px;color:var(--text-muted);text-decoration:none;font-size:0.88rem;border:1px solid var(--border);border-radius:999px;">📊 My Progress</a>
+            <span id="examCountdown" style="display:none;padding:6px 14px;color:var(--text-muted);font-size:0.88rem;border:1px solid var(--border);border-radius:999px;"></span>
+            <button id="settingsToggle" style="padding:6px 14px;color:var(--text-muted);background:none;font-size:0.88rem;border:1px solid var(--border);border-radius:999px;cursor:pointer;font-family:inherit;">⚙ Settings</button>
+        </div>
+
+        <div id="settingsPanel" class="fade-in-delay" hidden style="max-width:420px;margin:0 auto 24px;padding:16px 20px;background:rgba(56,189,248,0.06);border:1px solid var(--border);border-radius:12px;text-align:left;font-size:0.9rem;">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <label style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                    <span>SAT test date</span>
+                    <input type="date" id="setSatDate" style="padding:6px 10px;background:var(--bg-surface);color:var(--text-main);border:1px solid var(--border);border-radius:8px;">
+                </label>
+                <label style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                    <span>Exam timer (seconds / question)</span>
+                    <input type="number" id="setTimerPerQ" min="10" max="600" step="5" placeholder="90" style="width:90px;padding:6px 10px;background:var(--bg-surface);color:var(--text-main);border:1px solid var(--border);border-radius:8px;">
+                </label>
+                <button id="settingsSave" style="align-self:flex-end;padding:8px 18px;background:linear-gradient(90deg,var(--primary),var(--accent));color:#0f172a;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-family:inherit;">Save</button>
+                <div id="settingsMsg" style="min-height:16px;font-size:0.82rem;color:var(--primary);"></div>
+            </div>
+        </div>
+
+        <div id="overallProgress" class="overall-progress empty" hidden>
+            <div class="overall-progress-header">
+                <span class="overall-progress-label">Your mastery</span>
+                <span class="overall-progress-counts">
+                    <span id="overallMastered">0</span> / <span id="overallTotal">0</span> mastered
+                    · <span id="overallStruggling">0</span> struggling
+                    · <span id="overallPct">0</span>%
+                </span>
+            </div>
+            <div class="overall-progress-bar">
+                <div id="overallFill" class="overall-progress-fill"></div>
+            </div>
+            <div style="margin-top:14px;text-align:right;">
+                <a href="./progress.html" style="display:inline-block;color:var(--primary);text-decoration:none;font-size:0.88rem;font-weight:600;">📊 See full session history →</a>
+            </div>
+        </div>
+
+        <div class="app-grid fade-in-delay">
+            <div class="app-card with-guide" data-app="Linear_Equations_App">
+                <a href="./Linear_Equations_App/index.html" class="card-main">
+                <div class="icon">⚙️</div>
+                <h3>Linear Equations<br>(One Variable)</h3>
+                <p>Master algebraic mechanics and foundational problem solving.</p>
+                <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Linear_Equations_App/concept.html">📖 Concept Guide</a></div>
+            </div>
+
+            <div class="app-card with-guide" data-app="Linear_Functions_App">
+                <a href="./Linear_Functions_App/index.html" class="card-main">
+                    <div class="icon">📈</div>
+                    <h3>Linear Functions</h3>
+                    <p>Slope and Y-Intercept interpretation, equations from graphs, and models.</p>
+                    <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Linear_Functions_App/concept.html">📖 Concept Guide</a></div>
+            </div>
+
+            <div class="app-card with-guide" data-app="Nonlinear_Functions_App">
+                <a href="./Nonlinear_Functions_App/index.html" class="card-main">
+                <div class="icon">🎢</div>
+                <h3>Nonlinear Functions</h3>
+                <p>Quadratics, exponentials, polynomials, and their graphs.</p>
+                <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Nonlinear_Functions_App/concept.html">📖 Concept Guide</a></div>
+            </div>
+
+            <div class="app-card with-guide" data-app="Systems_and_Expressions_App_v2">
+                <a href="./Systems_and_Expressions_App_v2/index.html" class="card-main">
+                <div class="icon">🧩</div>
+                <h3>Systems & Expressions</h3>
+                <p>Equivalent expressions and advanced systems with Desmos strategies.</p>
+                <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Systems_and_Expressions_App_v2/concept.html">📖 Concept Guide</a></div>
+            </div>
+
+            <div class="app-card with-guide" data-app="Proportionality_App">
+                <a href="./Proportionality_App/index.html" class="card-main">
+                <div class="icon">%</div>
+                <h3>Proportionality</h3>
+                <p>Percentages, ratios, rates, and unit conversions.</p>
+                <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Proportionality_App/concept.html">📖 Concept Guide</a></div>
+            </div>
+
+            <div class="app-card with-guide" data-app="Statistical_Reasoning_App">
+                <a href="./Statistical_Reasoning_App/index.html" class="card-main">
+                <div class="icon">📊</div>
+                <h3>Statistical Reasoning</h3>
+                <p>Evaluating statistical claims, observations, and inference.</p>
+                <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Statistical_Reasoning_App/concept.html">📖 Concept Guide</a></div>
+            </div>
+
+            <div class="app-card with-guide" data-app="Core_Geometry_App">
+                <a href="./Core_Geometry_App/index.html" class="card-main">
+                <div class="icon">📐</div>
+                <h3>Core Geometry</h3>
+                <p>Area, Volume, Lines, Angles, and Triangles.</p>
+                <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Core_Geometry_App/concept.html">📖 Concept Guide</a></div>
+            </div>
+
+            <div class="app-card with-guide" data-app="Analytical_Geometry_App">
+                <a href="./Analytical_Geometry_App/index.html" class="card-main">
+                <div class="icon">⭕</div>
+                <h3>Analytical Geometry & Trig</h3>
+                <p>Circles, Right Triangles, and Trigonometry.</p>
+                <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Analytical_Geometry_App/concept.html">📖 Concept Guide</a></div>
+            </div>
+
+            <div class="app-card with-guide" data-app="Data_Analysis_Probability_App">
+                <a href="./Data_Analysis_Probability_App/index.html" class="card-main">
+                <div class="icon">🎲</div>
+                <h3>Data Analysis & Probability</h3>
+                <p>One/Two-variable data, Models, and Probability strategies.</p>
+                <div class="mastery-strip unstarted">Not started yet</div>
+                </a>
+                <div class="card-guide-link"><a href="./Data_Analysis_Probability_App/concept.html">📖 Concept Guide</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./shared/progress.js"></script>
+    <script>
+        // Tutor-adjustable settings, stored in localStorage (shared across the
+        // hub and all apps on the same origin).
+        const SAT_DATE_KEY = 'edutrack_sat_date';     // 'YYYY-MM-DD'
+        const TIMER_PERQ_KEY = 'edutrack_timer_per_q'; // integer seconds
+        const SAT_DATE_DEFAULT = '2026-06-06';         // fallback if none set
+
+        function getSatDate() {
+            try {
+                const v = localStorage.getItem(SAT_DATE_KEY);
+                if (v && /^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
+            } catch (e) {}
+            return SAT_DATE_DEFAULT;
+        }
+        function getTimerPerQ() {
+            try {
+                const n = parseInt(localStorage.getItem(TIMER_PERQ_KEY), 10);
+                if (n >= 10 && n <= 600) return n;
+            } catch (e) {}
+            return 90;
+        }
+
+        function renderExamCountdown() {
+            const el = document.getElementById('examCountdown');
+            if (!el) return;
+            const target = new Date(getSatDate() + 'T00:00:00');
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const days = Math.ceil((target - today) / 86400000);
+            if (days < 0) { el.style.display = 'none'; return; } // hide if SAT has passed
+            const label = days === 0 ? 'SAT is today'
+                : days === 1 ? '1 day to SAT'
+                : `${days} days to SAT`;
+            el.textContent = '📅 ' + label;
+            el.style.display = 'inline-block';
+        }
+        renderExamCountdown();
+
+        // Settings panel wiring
+        (function settings() {
+            const toggle = document.getElementById('settingsToggle');
+            const panel = document.getElementById('settingsPanel');
+            const dateInput = document.getElementById('setSatDate');
+            const timerInput = document.getElementById('setTimerPerQ');
+            const saveBtn = document.getElementById('settingsSave');
+            const msg = document.getElementById('settingsMsg');
+            if (!toggle || !panel) return;
+            toggle.addEventListener('click', () => {
+                panel.hidden = !panel.hidden;
+                if (!panel.hidden) {
+                    dateInput.value = getSatDate();
+                    timerInput.value = getTimerPerQ();
+                    msg.textContent = '';
+                }
+            });
+            saveBtn.addEventListener('click', () => {
+                let saved = [];
+                const d = dateInput.value;
+                if (d && /^\d{4}-\d{2}-\d{2}$/.test(d)) { localStorage.setItem(SAT_DATE_KEY, d); saved.push('SAT date'); }
+                const t = parseInt(timerInput.value, 10);
+                if (t >= 10 && t <= 600) { localStorage.setItem(TIMER_PERQ_KEY, String(t)); saved.push('timer'); }
+                renderExamCountdown();
+                msg.textContent = saved.length ? ('Saved: ' + saved.join(' + ')) : 'Nothing valid to save.';
+            });
+        })();
+
+        (function () {
+            const APPS = [
+                'Linear_Equations_App',
+                'Linear_Functions_App',
+                'Nonlinear_Functions_App',
+                'Systems_and_Expressions_App_v2',
+                'Proportionality_App',
+                'Statistical_Reasoning_App',
+                'Core_Geometry_App',
+                'Analytical_Geometry_App',
+                'Data_Analysis_Probability_App'
+            ];
+
+            function renderStrip(card, manifest, summary) {
+                const strip = card.querySelector('.mastery-strip');
+                if (!strip) return;
+                strip.classList.remove('unstarted');
+                const pct = summary.total > 0 ? Math.round((summary.mastered / summary.total) * 100) : 0;
+                strip.innerHTML = `
+                    <div class="mastery-counts">
+                        <span><span class="mastered">${summary.mastered}</span> / ${summary.total} mastered</span>
+                        ${summary.struggling > 0 ? `<span><span class="struggling">${summary.struggling}</span> struggling</span>` : ''}
+                    </div>
+                    <div class="mastery-bar"><div class="mastery-bar-fill" style="width:${pct}%"></div></div>
+                `;
+            }
+
+            function renderOverall(totals) {
+                const wrap = document.getElementById('overallProgress');
+                if (!wrap) return;
+                if (totals.total === 0) return;
+                wrap.hidden = false;
+                wrap.classList.remove('empty');
+                document.getElementById('overallMastered').textContent = totals.mastered;
+                document.getElementById('overallTotal').textContent = totals.total;
+                document.getElementById('overallStruggling').textContent = totals.struggling;
+                const pct = totals.total > 0 ? Math.round((totals.mastered / totals.total) * 100) : 0;
+                document.getElementById('overallPct').textContent = pct;
+                document.getElementById('overallFill').style.width = pct + '%';
+            }
+
+            async function loadDashboard() {
+                if (!window.MathProgress) return;
+                const totals = { mastered: 0, struggling: 0, total: 0 };
+                const fetches = APPS.map(appId =>
+                    fetch(`./${appId}/manifest.json`, { cache: 'no-store' })
+                        .then(r => r.ok ? r.json() : null)
+                        .catch(() => null)
+                );
+                const manifests = await Promise.all(fetches);
+                manifests.forEach((manifest, i) => {
+                    if (!manifest || !Array.isArray(manifest.questionIds)) return;
+                    const appId = APPS[i];
+                    const card = document.querySelector(`.app-card[data-app="${appId}"]`);
+                    if (!card) return;
+                    const summary = window.MathProgress.summary(appId, manifest.questionIds);
+                    renderStrip(card, manifest, summary);
+                    totals.mastered += summary.mastered;
+                    totals.struggling += summary.struggling;
+                    totals.total += summary.total;
+                });
+                renderOverall(totals);
+            }
+
+            // Run as soon as the DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadDashboard);
+            } else {
+                loadDashboard();
+            }
+        })();
+    </script>
+</body>
+
+</html>
