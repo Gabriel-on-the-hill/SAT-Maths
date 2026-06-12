@@ -204,7 +204,7 @@
             dbStatus.style.color = "var(--primary)";
         }
 
-        const scriptURL = "https://script.google.com/macros/s/AKfycbxCEkQ_QepW7MWzClK28h32T-StNMdeGsqMISPVx76dn-Md7349LJA4Ir22LunJ6sQbkg/exec";
+        const scriptURL = ""; // Sheet A retired — sessions now sync via MathSession only (one pipeline). Restore this URL to re-enable.
 
         const payload = {
             studentName: studentName,
@@ -217,7 +217,7 @@
             timestamp: new Date().toISOString() // Logs exact time of this specific answer
         };
 
-        if (isFinal) fetch(scriptURL, {  // only sync at completion — no per-answer spam
+        if (isFinal && scriptURL) fetch(scriptURL, {  // disabled while scriptURL is empty
             method: 'POST',
             body: JSON.stringify(payload)
         })
@@ -794,7 +794,7 @@
     function startFreshIndependent() {
         if (!window.MathProgress) return;
         const pool = _buildCrossModulePool();
-        const selected = window.MathProgress.buildBalancedSet(APP_ID, pool, { count: 8, daysToAvoid: 7 });
+        const selected = window.MathProgress.buildBalancedSet(APP_ID, pool, { count: (window.APP_CONFIG && window.APP_CONFIG.freshCount) || 8, daysToAvoid: 7, distribution: (window.APP_CONFIG && window.APP_CONFIG.distribution) });
         _runPersonalisedSession({
             selected,
             moduleKey: 'independent',
@@ -809,7 +809,7 @@
     function startFreshGuided() {
         if (!window.MathProgress) return;
         const pool = _buildCrossModulePool();
-        const selected = window.MathProgress.buildCuratedProgression(APP_ID, pool, { count: 10 });
+        const selected = window.MathProgress.buildCuratedProgression(APP_ID, pool, { count: 10, distribution: (window.APP_CONFIG && window.APP_CONFIG.distribution) });
         _runPersonalisedSession({
             selected,
             moduleKey: 'guided',
@@ -824,7 +824,7 @@
     function startFreshExam() {
         if (!window.MathProgress) return;
         const pool = _buildCrossModulePool();
-        const selected = window.MathProgress.buildExamSample(APP_ID, pool, { count: 15 });
+        const selected = window.MathProgress.buildExamSample(APP_ID, pool, { count: (window.APP_CONFIG && window.APP_CONFIG.examCount) || 15 });
         _runPersonalisedSession({
             selected,
             moduleKey: 'exam',
@@ -1015,6 +1015,11 @@
             const _variant = state.isRetrySession ? 'retry-missed' : (_variantMap[_playlistId] || 'standard');
             const _nameInput = document.getElementById('studentName');
             const _studentName = (_nameInput && _nameInput.value.trim()) || (window.MathGate && MathGate.currentName && MathGate.currentName()) || '';
+            const _detail = state.allQuestions.map((q, i) => {
+                const _ua = state.userAnswers[i];
+                const _ok = hasAnswerKey(q) ? ((q.type === 'grid-in') ? checkGridIn(_ua || "", q.answer) : (_ua === getCorrectIndex(q))) : false;
+                return { id: q.id, difficulty: q.difficulty || '', answered: (_ua !== undefined && _ua !== null), correct: _ok };
+            });
             window.MathSession.logCompletion({
                 sessionId: state.sessionId,
                 appId: APP_ID,
@@ -1030,6 +1035,7 @@
                 startedAt: state.sessionStartTime || null,
                 completedAt: Date.now(),
                 studentName: _studentName,
+                detail: _detail,
                 smartMode: !!state.smartMode,
                 isExamMode: !!state.isExamMode
             });

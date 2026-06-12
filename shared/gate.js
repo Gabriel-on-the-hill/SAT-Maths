@@ -82,6 +82,20 @@
         }
     }
 
+    // Small "Signed in as <name>" badge + log-out link, shown on every page.
+    function _renderSignedInBadge() {
+        if (document.getElementById('edutrack-signed-in')) return;
+        const name = currentName();
+        if (!name || !document.body) return;
+        const b = document.createElement('div');
+        b.id = 'edutrack-signed-in';
+        b.style.cssText = 'position:fixed;top:10px;right:12px;z-index:99998;font:600 12px/1 Outfit,sans-serif;color:#94a3b8;background:rgba(30,41,59,0.85);border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:7px 13px;';
+        b.innerHTML = 'Signed in as <span style="color:#f1f5f9;">' + name + '</span> \u00b7 <a href="#" id="edutrack-logout" style="color:#38bdf8;text-decoration:none;">Log out</a>';
+        document.body.appendChild(b);
+        const lo = document.getElementById('edutrack-logout');
+        if (lo) lo.addEventListener('click', function (e) { e.preventDefault(); lock(); });
+    }
+
     // Hide page content immediately by injecting CSS into <head>.
     // We do this before DOMContentLoaded so users never see a flash of content.
     function _hidePage() {
@@ -172,6 +186,7 @@
                 overlay.remove();
                 _showPage();
                 _autofillName();
+                _renderSignedInBadge();
             } else {
                 err.textContent = 'Wrong password';
                 input.value = '';
@@ -192,7 +207,7 @@
     // guarantees every synced record is tied to a student.
     if (isUnlocked() && currentName()) {
         // Already unlocked this tab — show as soon as DOM is ready.
-        const _showAndFill = () => { _showPage(); _autofillName(); };
+        const _showAndFill = () => { _showPage(); _autofillName(); _renderSignedInBadge(); };
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', _showAndFill);
         } else {

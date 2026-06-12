@@ -107,7 +107,8 @@
             completedAt: entry.completedAt || Date.now(),
             studentName: entry.studentName || '',
             smartMode: !!entry.smartMode,
-            isExamMode: !!entry.isExamMode
+            isExamMode: !!entry.isExamMode,
+            detail: Array.isArray(entry.detail) ? entry.detail : []
         };
         try {
             const history = _readHistory();
