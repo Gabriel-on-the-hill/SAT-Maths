@@ -233,6 +233,7 @@ table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
     <div class="utility-bar">
         <button class="utility-btn" id="exportBtn">Export as JSON</button>
         <button class="utility-btn danger" id="clearBtn">Clear history</button>
+        <button class="utility-btn danger" id="resetAllBtn">Reset all progress</button>
     </div>
 </div>
 
@@ -441,10 +442,31 @@ table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
             URL.revokeObjectURL(url);
         });
         document.getElementById('clearBtn').addEventListener('click', () => {
-            if (confirm('Clear all session history on this device? This cannot be undone.')) {
+            if (confirm('Clear the SESSION HISTORY list only? (Your mastery — struggling/mastered on each app — is kept.) This cannot be undone.')) {
                 window.MathSession.clearHistory();
                 render();
             }
+        });
+        document.getElementById('resetAllBtn').addEventListener('click', () => {
+            if (!confirm('Reset ALL progress on this device — mastery (struggling/mastered), session history, saved sessions, and high scores? This cannot be undone.')) return;
+            try {
+                const keys = [];
+                for (let i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i));
+                keys.forEach(k => {
+                    if (!k) return;
+                    // Keep login/identity (gate) and tutor settings; clear everything that is "progress".
+                    if (k === 'edutrack_math_session_name_v1' || k === 'edutrack_math_session_user_v1') return;
+                    if (k === 'edutrack_math_progress_v1' ||          // mastery ledger → struggling/mastered
+                        k === 'edutrack_math_sessions_v1' ||           // session history
+                        k === 'edutrack_math_sync_queue_v1' ||         // pending tutor sync
+                        /^edutrack_math_session_.+_v1$/.test(k) ||     // per-app resume snapshots
+                        /^edutrack_score_/.test(k)) {                  // personal-best high scores
+                        localStorage.removeItem(k);
+                    }
+                });
+            } catch (e) {}
+            render();
+            alert('All progress reset. The domain apps will now show "Not started".');
         });
         render();
     }
