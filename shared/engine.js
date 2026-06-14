@@ -516,7 +516,11 @@
         // Per-question seconds is tutor-adjustable (set on the hub); default 90.
         let _perQ = 90;
         try { const _v = parseInt(localStorage.getItem('edutrack_timer_per_q'), 10); if (_v >= 10 && _v <= 600) _perQ = _v; } catch (e) {}
-        state.timeRemaining = _n > 0 ? _n * _perQ : 1200;
+        if (window.APP_CONFIG && window.APP_CONFIG.examTotalSeconds) {
+            state.timeRemaining = window.APP_CONFIG.examTotalSeconds;
+        } else {
+            state.timeRemaining = _n > 0 ? _n * _perQ : 1200;
+        }
         dom.activeTimer.textContent = formatTime(state.timeRemaining);
         state.timerInterval = setInterval(() => {
             state.timeRemaining--;
@@ -655,7 +659,7 @@
             : state.isExamMode ? 'exam'
             : state.currentModule;
         const elapsedMs = state.questionStartTime > 0 ? (Date.now() - state.questionStartTime) : 0;
-        window.MathProgress.recordAnswer(APP_ID, q.id, isCorrect, source, elapsedMs);
+        window.MathProgress.recordAnswer(q._appId || APP_ID, q.id, isCorrect, source, elapsedMs);
     }
 
     // --- SESSION RESUME ---
@@ -834,6 +838,80 @@
                 introText: 'Fifteen questions sampled in proportion to the SAT archetype mix. Exam conditions: no feedback during the quiz, full breakdown at the end. Treat it like a checkpoint.'
             }
         });
+    }
+
+    // ---- Mock SAT exam mode (cross-app, SAT-weighted, queue-aware) ----
+    // Requires window.EXAM_POOLS = [{ appId, domain, playlist }, ...] (set by exam.html).
+    function buildMockExam() {
+        const pools = window.EXAM_POOLS || [];
+        const byDomain = {};
+        pools.forEach(p => {
+            const flat = [];
+            const seen = new Set();
+            const _raw = p.playlist;
+            const _topics = Array.isArray(_raw) ? _raw : ((_raw && typeof _raw === 'object') ? [{ questions: _raw }] : []);
+            _topics.forEach(topic => {
+                const qs = (topic && topic.questions) || {};
+                Object.values(qs).forEach(arr => {
+                    if (!Array.isArray(arr)) return;
+                    arr.forEach(q => {
+                        if (q && q.id && !seen.has(q.id)) {
+                            seen.add(q.id);
+                            const qq = Object.assign({}, q, { _appId: p.appId, _domain: p.domain });
+                            // exam.html is served from root, so re-root app-relative image paths
+                            if (typeof qq.question === 'string') qq.question = qq.question.replace(/src="assets\//g, 'src="' + p.appId + '/assets/');
+                            if (typeof qq.question_image === 'string' && qq.question_image.indexOf('assets/') === 0) qq.question_image = p.appId + '/' + qq.question_image;
+                            flat.push(qq);
+                        }
+                    });
+                });
+            });
+            // queue-aware: missed/unseen first, mastered to the back (per source app)
+            const ordered = (window.MathProgress && window.MathProgress.prioritize)
+                ? window.MathProgress.prioritize(p.appId, flat) : flat;
+            (byDomain[p.domain] = byDomain[p.domain] || []).push(ordered); // array of per-app lists
+        });
+        const quota = (window.APP_CONFIG && window.APP_CONFIG.examQuota) || {
+            'Algebra': 8, 'Advanced Math': 8,
+            'Problem-Solving and Data Analysis': 3, 'Geometry and Trigonometry': 3
+        };
+        const exam = [];
+        Object.keys(quota).forEach(dom => {
+            const lists = byDomain[dom] || [];
+            // round-robin across the domain's apps, preserving each app's weakest-first order
+            const merged = [];
+            let idx = 0, more = true;
+            while (more) { more = false; lists.forEach(l => { if (idx < l.length) { merged.push(l[idx]); more = true; } }); idx++; }
+            for (let i = 0; i < quota[dom] && i < merged.length; i++) exam.push(merged[i]);
+        });
+        // interleave domains so they're not clustered
+        for (let i = exam.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const t = exam[i]; exam[i] = exam[j]; exam[j] = t;
+        }
+        return exam;
+    }
+
+    function startMockExam() {
+        if (!window.MathProgress) { alert('Progress module missing.'); return; }
+        const selected = buildMockExam();
+        if (!selected.length) { alert('No questions available for the exam.'); return; }
+        state.isExamMode = true;
+        state.isHardMode = false;
+        state.smartMode = false;
+        state.isRetrySession = false;
+        state.currentModule = 'exam';
+        state.currentTopicIdx = 0;
+        state.allQuestions = [];
+        state.userAnswers = [];
+        state.playlist = [{
+            id: 'mock_sat',
+            title: 'Mock SAT — Math (Single Module)',
+            introText: 'Exam conditions: ' + selected.length + ' questions, timed, no feedback until the end. Drawn across all domains by SAT weighting — your weakest and least-recent questions come first.',
+            questions: { exam: selected }
+        }];
+        dom.startScreen.hidden = true;
+        loadTopic(0);
     }
 
     function checkAndShowResume() {
@@ -1018,7 +1096,7 @@
             const _detail = state.allQuestions.map((q, i) => {
                 const _ua = state.userAnswers[i];
                 const _ok = hasAnswerKey(q) ? ((q.type === 'grid-in') ? checkGridIn(_ua || "", q.answer) : (_ua === getCorrectIndex(q))) : false;
-                return { id: q.id, difficulty: q.difficulty || '', answered: (_ua !== undefined && _ua !== null), correct: _ok };
+                return { id: q.id, app: q._appId || APP_ID, difficulty: q.difficulty || '', answered: (_ua !== undefined && _ua !== null), correct: _ok };
             });
             window.MathSession.logCompletion({
                 sessionId: state.sessionId,
@@ -1131,5 +1209,14 @@
     if (window.MathTierPreview) {
         window.MathTierPreview.attach(APP_ID, './manifest.json', '#tierPreview');
     }
+    if (window.APP_CONFIG && window.APP_CONFIG.examMode) {
+        const _eb = document.getElementById('startMockExamBtn');
+        if (_eb) _eb.addEventListener('click', function () {
+            const _n = document.getElementById('studentName');
+            if (_n && !_n.value.trim()) { _n.style.border = '2px solid var(--danger)'; _n.placeholder = 'Enter your name'; _n.focus(); return; }
+            startMockExam();
+        });
+    }
+
     init();
 })();

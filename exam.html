@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="shared/gate.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock SAT — Math</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="Linear_Functions_App/style.css">
+</head>
+
+<body>
+    <main class="app">
+        <div class="card">
+            <header>
+                <div class="brand">
+                    <div class="app-icon">ƒ</div>
+                    <div class="brand-text">
+                        <div class="app-name">EDUTRACK HUB</div>
+                        <div class="lesson-name">Mock SAT — Math</div>
+                    </div>
+                </div>
+                <div id="timerDisplay" class="timer-badge" hidden>15:00</div>
+                <button id="globalHomeBtn" class="nav-icon-btn home-btn" title="Return to Home">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- 1. Start Screen -->
+            <div id="startScreen">
+                <div id="resumeBanner" hidden style="display:flex;align-items:center;gap:12px;background:rgba(56,189,248,0.1);border:1px solid var(--primary, #38bdf8);border-radius:8px;padding:12px 16px;margin-bottom:20px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:200px;font-weight:600;">📍 In progress — <span id="resumeLabel"></span></div>
+                    <button id="resumeBtn" class="btn-primary" style="padding:8px 16px;">Resume</button>
+                    <button id="resumeDiscardBtn" class="btn-secondary" style="padding:8px 16px;">Discard</button>
+                </div>
+                <h1 class="fade-in">Mock SAT — Math</h1>
+
+                <div class="student-info fade-in-delay">
+                    <label>Name: <input type="text" id="studentName" placeholder="E.g., Tracy"></label>
+                    <label>Date: <input type="date" id="studentDate"></label>
+                </div>
+
+                <div class="fade-in-delay" style="max-width:560px;margin:24px auto 0;text-align:center;">
+                    <p style="color:var(--text-muted,#94a3b8);line-height:1.6;">
+                        A full single-module simulation: <strong style="color:var(--text-main,#f1f5f9);">22 questions in 35 minutes</strong>, weighted like the real SAT Math section (Algebra, Advanced Math, Problem-Solving &amp; Data, Geometry &amp; Trig). Questions are pulled across every topic &mdash; your weakest and least-recent first &mdash; so each attempt differs. No feedback until the end.
+                    </p>
+                    <button id="startMockExamBtn" class="btn-primary" style="margin-top:18px;padding:14px 32px;font-size:1.05rem;">&#9654; Start Mock Exam</button>
+                </div>
+                <input type="checkbox" id="examModeToggle" checked hidden>
+                <input type="checkbox" id="hardModeToggle" hidden>
+                <input type="checkbox" id="smartModeToggle" hidden>
+            </div>
+
+            <!-- 2. Concept Introduction Screen -->
+            <section id="introScreen" hidden>
+                <div class="intro-header">
+                    <div class="intro-icon">💡</div>
+                    <h2>Before You Begin: Linear Essentials</h2>
+                </div>
+
+                <div class="intro-content" id="playlistIntro">
+                    <!-- Dynamic Concept Cards Injected Here -->
+                </div>
+
+                <div class="intro-footer">
+                    <button class="primary-btn" id="startPracticeBtn">Ready? Let's Go →</button>
+                    <button class="nav-btn" id="introBackBtn">← Back</button>
+                </div>
+            </section>
+
+            <!-- 3. Quiz Area -->
+            <section id="quiz" hidden>
+                <div class="quiz-header">
+                    <div id="progress" class="muted">Question 1 of 10</div>
+                    <div class="header-right">
+                        <div id="difficultyBadge" class="difficulty-badge">Medium</div>
+                    </div>
+                </div>
+
+                <div id="slideContent" class="slide-content">
+                    <div id="questionText" class="question"></div>
+                    <div id="optionsGrid" class="options-grid"></div>
+                </div>
+
+                <!-- Feedback Area (Only in Practice/Homework) -->
+                <div id="feedbackArea" class="feedback-panel" hidden>
+                    <div id="feedbackStatus" class="status-indicator"></div>
+                    <div id="explanationText" class="explanation"></div>
+                </div>
+
+                <div class="controls">
+                    <button id="prevSlideBtn" class="btn-secondary" disabled>← Previous</button>
+                    <button id="nextSlideBtn" class="btn-primary">Next Question →</button>
+                </div>
+            </section>
+
+            <!-- 3. End Screen -->
+            <div id="endScreen" hidden>
+                <div class="end-content">
+                    <div class="completion-icon">🎓</div>
+                    <h2 id="endScreenTitle">Module Complete!</h2>
+                    <p id="endScreenSubtitle" class="muted">Great job! You have completed this conceptual module.</p>
+                    <div id="endScreenScore" class="score-display">Score: 0 / 10</div>
+                    <div id="highScoreDisplay" class="difficulty-badge diff-hard"
+                        style="margin-top: 10px; font-size: 0.9rem;"></div>
+                </div>
+
+                <div id="dbSyncStatus"
+                    style="text-align: center; margin-bottom: 20px; font-weight: 600; font-size: 0.95rem; display: none;">
+                </div>
+
+                <div id="breakdown" style="margin: 20px auto 0; max-width: 640px; text-align: left; padding: 0 20px;"></div>
+                <div class="end-actions">
+                    <button id="copyBtn" class="btn-primary" style="background: var(--success); color: #fff;">📋 Copy My
+                        Score & Work</button>
+                    <button id="retryMissedBtn" class="btn-primary" hidden>🎯 Drill the <span id="retryMissedCount">0</span> you missed</button>
+                    <button id="reviewBtn" class="btn-secondary">Review Answers</button>
+                    <button id="returnMenuBtn" class="btn-secondary">Return to Menu</button>
+                </div>
+                <div id="submitMsg" class="submit-msg"></div>
+            </div>
+
+            <!-- 4. Review Screen -->
+            <section id="reviewScreen" hidden>
+                <div class="quiz-header">
+                    <button id="reviewBackBtn" class="nav-icon-btn">← End Screen</button>
+                    <div class="header-right">
+                        <div id="reviewProgress" class="muted">Review: Question 1 of 10</div>
+                    </div>
+                </div>
+                <div id="reviewContent" class="slide-content">
+                    <div id="reviewQuestionText" class="question"></div>
+                    <div id="reviewOptions" class="options-grid"></div>
+                </div>
+                <div class="feedback-panel">
+                    <div id="reviewFeedbackStatus" class="status-indicator"></div>
+                    <div id="reviewExplanationText" class="explanation"></div>
+                </div>
+                <div class="controls">
+                    <button id="reviewPrevBtn" class="btn-secondary">← Previous</button>
+                    <button id="reviewNextBtn" class="btn-primary">Next Review →</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="shared/progress.js"></script>
+    <script src="shared/session.js"></script>
+    <script src="shared/breakdown.js"></script>
+    <script>window.EXAM_POOLS = [];</script>
+    <script src="Linear_Equations_App/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Linear_Equations_App',domain:'Algebra',playlist:window.PLAYLIST});</script>
+    <script src="Linear_Functions_App/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Linear_Functions_App',domain:'Algebra',playlist:window.PLAYLIST});</script>
+    <script src="Nonlinear_Functions_App/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Nonlinear_Functions_App',domain:'Advanced Math',playlist:window.PLAYLIST});</script>
+    <script src="Systems_and_Expressions_App_v2/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Systems_and_Expressions_App_v2',domain:'Advanced Math',playlist:window.PLAYLIST});</script>
+    <script src="Proportionality_App/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Proportionality_App',domain:'Problem-Solving and Data Analysis',playlist:window.PLAYLIST});</script>
+    <script src="Statistical_Reasoning_App/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Statistical_Reasoning_App',domain:'Problem-Solving and Data Analysis',playlist:window.PLAYLIST});</script>
+    <script src="Data_Analysis_Probability_App/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Data_Analysis_Probability_App',domain:'Problem-Solving and Data Analysis',playlist:window.PLAYLIST});</script>
+    <script src="Core_Geometry_App/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Core_Geometry_App',domain:'Geometry and Trigonometry',playlist:window.PLAYLIST});</script>
+    <script src="Analytical_Geometry_App/data/questions.js"></script><script>EXAM_POOLS.push({appId:'Analytical_Geometry_App',domain:'Geometry and Trigonometry',playlist:window.PLAYLIST});</script>
+    <script>window.APP_CONFIG = { appId: 'Mock_Exam', examMode: true, examTotalSeconds: 2100 };</script>
+    <script src="shared/engine.js"></script>
+</body>
+
+</html>
