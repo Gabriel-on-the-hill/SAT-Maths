@@ -1017,6 +1017,54 @@
         }
     }
 
+    function _examIsCorrect(q, userA) {
+        if (!hasAnswerKey(q)) return false;
+        try { return (q.type === 'grid-in') ? checkGridIn(userA || "", q.answer) : (userA === getCorrectIndex(q)); }
+        catch (e) { return false; }
+    }
+
+    // Bluebook-style end-of-exam report: estimated score band + per-domain bars.
+    function _renderExamSummary(container) {
+        const qs = state.allQuestions, ua = state.userAnswers;
+        const order = ['Algebra', 'Advanced Math', 'Problem-Solving and Data Analysis', 'Geometry and Trigonometry'];
+        const label = {
+            'Algebra': 'Algebra', 'Advanced Math': 'Advanced Math',
+            'Problem-Solving and Data Analysis': 'Problem-Solving &amp; Data Analysis',
+            'Geometry and Trigonometry': 'Geometry &amp; Trigonometry'
+        };
+        const dom = {}; let correct = 0, gradable = 0;
+        qs.forEach((q, i) => {
+            const okc = _examIsCorrect(q, ua[i]);
+            if (hasAnswerKey(q)) { gradable++; if (okc) correct++; }
+            const d = q._domain || 'Other';
+            (dom[d] = dom[d] || { c: 0, t: 0 }).t++;
+            if (okc) dom[d].c++;
+        });
+        const pct = gradable ? correct / gradable : 0;
+        const scaled = Math.round((200 + 600 * pct) / 10) * 10;
+        const lo = Math.max(200, scaled - 30), hi = Math.min(800, scaled + 30);
+        const mins = state.sessionStartTime ? Math.max(1, Math.round((Date.now() - state.sessionStartTime) / 60000)) : null;
+        let h = '<div style="max-width:560px;margin:0 auto;text-align:left;">';
+        h += '<div style="text-align:center;padding:18px;border:1px solid var(--border,rgba(255,255,255,0.1));border-radius:14px;background:rgba(56,189,248,0.06);margin-bottom:18px;">';
+        h += '<div style="font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted,#94a3b8);">Estimated SAT Math</div>';
+        h += '<div style="font-size:2.4rem;font-weight:800;color:var(--text-main,#f1f5f9);line-height:1.1;margin:4px 0;">' + lo + '&ndash;' + hi + '</div>';
+        h += '<div style="font-size:0.85rem;color:var(--text-muted,#94a3b8);">' + correct + ' of ' + gradable + ' correct' + (mins ? ' &middot; ' + mins + ' min' : '') + '</div>';
+        h += '<div style="font-size:0.72rem;color:var(--text-muted,#94a3b8);margin-top:6px;font-style:italic;">Rough estimate from a 22-question practice module &mdash; not an official score.</div>';
+        h += '</div>';
+        h += '<div style="font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted,#94a3b8);margin-bottom:10px;">Performance by domain</div>';
+        order.forEach(d => {
+            const v = dom[d]; if (!v) return;
+            const p = v.t ? Math.round(100 * v.c / v.t) : 0;
+            const col = p >= 70 ? '#4ade80' : (p >= 40 ? '#fbbf24' : '#f87171');
+            h += '<div style="margin-bottom:12px;">';
+            h += '<div style="display:flex;justify-content:space-between;font-size:0.9rem;margin-bottom:4px;"><span>' + label[d] + '</span><span style="color:var(--text-muted,#94a3b8);">' + v.c + '/' + v.t + ' &middot; ' + p + '%</span></div>';
+            h += '<div style="height:8px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;"><div style="height:100%;width:' + p + '%;background:' + col + ';"></div></div>';
+            h += '</div>';
+        });
+        h += '</div>';
+        container.innerHTML = h;
+    }
+
     function finishPlaylist() {
         clearInterval(state.timerInterval);
         dom.activeTimer.hidden = true;
@@ -1044,8 +1092,11 @@
                 ungraded++;
             }
         });
-        // Sub-category breakdown
-        if (window.MathBreakdown) {
+        // Sub-category breakdown — the mock exam uses a Bluebook-style domain report
+        const _bdEl = document.getElementById("breakdown");
+        if (_bdEl && state.playlist[0] && state.playlist[0].id === 'mock_sat') {
+            _renderExamSummary(_bdEl);
+        } else if (window.MathBreakdown) {
             const _correctness = state.allQuestions.map((q, idx) => {
                 if (!hasAnswerKey(q)) return false;
                 const userA = state.userAnswers[idx];
