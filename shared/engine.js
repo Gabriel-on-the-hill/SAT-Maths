@@ -197,14 +197,13 @@
             : (window.MathGate && MathGate.currentName && MathGate.currentName()) ? MathGate.currentName()
             : "Unknown Student";
 
+        const scriptURL = ""; // Sheet A retired — sessions now sync via MathSession only (one pipeline). Restore this URL to re-enable.
         const dbStatus = document.getElementById('dbSyncStatus');
-        if (isFinal && dbStatus) {
+        if (isFinal && dbStatus && scriptURL) {
             dbStatus.style.display = 'block';
             dbStatus.textContent = "Saving final score to database...";
             dbStatus.style.color = "var(--primary)";
         }
-
-        const scriptURL = ""; // Sheet A retired — sessions now sync via MathSession only (one pipeline). Restore this URL to re-enable.
 
         const payload = {
             studentName: studentName,
