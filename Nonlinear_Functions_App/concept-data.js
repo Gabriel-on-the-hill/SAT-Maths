@@ -2,7 +2,7 @@
 window.CONCEPT_DATA = {
     appId: 'Nonlinear_Functions_App',
     appName: 'Nonlinear Functions',
-    appIcon: '🎢',
+    appIcon: '',
     intro: 'Nonlinear is the SAT\'s favourite hunting ground for the 700→800 jump. Seven patterns cover everything: quadratics, exponentials, polynomials. Name the form first, then move.',
     archetypes: [
         {

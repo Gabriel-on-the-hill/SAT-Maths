@@ -168,7 +168,7 @@
 
         html += '<div class="mb-section"><h4 class="mb-title">Traps you fell into</h4>';
         if (trapRows.length === 0) {
-            html += '<div class="mb-empty">No traps triggered this set. 👏</div>';
+            html += '<div class="mb-empty">No traps triggered this set. </div>';
         } else {
             trapRows.forEach(t => {
                 html += `<div class="mb-trap">

@@ -2,7 +2,7 @@
 window.CONCEPT_DATA = {
     appId: 'Statistical_Reasoning_App',
     appName: 'Statistical Reasoning',
-    appIcon: '📊',
+    appIcon: '',
     intro: 'Statistical Reasoning tests inference, not arithmetic. Five patterns. The trap is always overreaching from the sample.',
     archetypes: [
         {

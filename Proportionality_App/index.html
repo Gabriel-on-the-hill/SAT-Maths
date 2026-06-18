@@ -22,7 +22,7 @@
                 <div class="brand">
                     <div class="app-icon">%</div>
                     <div class="brand-text">
-                        <div class="app-name">EDUTRACK HUB</div>
+                        <div class="app-name">Edutrack Math</div>
                         <div class="lesson-name">Proportionality & Percentages</div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
             <!-- 1. Start Screen -->
             <div id="startScreen">
                 <div id="resumeBanner" hidden style="display:flex;align-items:center;gap:12px;background:rgba(56,189,248,0.1);border:1px solid var(--primary, #38bdf8);border-radius:8px;padding:12px 16px;margin-bottom:20px;flex-wrap:wrap;">
-                    <div style="flex:1;min-width:200px;font-weight:600;">📍 In progress — <span id="resumeLabel"></span></div>
+                    <div style="flex:1;min-width:200px;font-weight:600;">In progress — <span id="resumeLabel"></span></div>
                     <button id="resumeBtn" class="btn-primary" style="padding:8px 16px;">Resume</button>
                     <button id="resumeDiscardBtn" class="btn-secondary" style="padding:8px 16px;">Discard</button>
                 </div>
@@ -102,21 +102,21 @@
                     <div id="tierPreview" style="text-align:center;font-size:0.85rem;margin-bottom:10px;"></div>
                     <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
                         <button id="freshGuidedBtn" style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:rgba(255,255,255,0.04);border:1px solid var(--border, rgba(255,255,255,0.12));border-radius:10px;color:var(--text-main, #f1f5f9);font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;">
-                            🚀 Fresh Guided Set
+                            Fresh Guided Set
                             <span style="font-weight:400;color:var(--text-muted,#94a3b8);font-size:0.82rem;">10 questions, easy → hard progression</span>
                         </button>
                         <button id="freshIndependentBtn" style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:rgba(255,255,255,0.04);border:1px solid var(--border, rgba(255,255,255,0.12));border-radius:10px;color:var(--text-main, #f1f5f9);font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;">
-                            🔄 Fresh Independent Set
+                            Fresh Independent Set
                             <span style="font-weight:400;color:var(--text-muted,#94a3b8);font-size:0.82rem;">8 balanced questions you haven't seen recently</span>
                         </button>
                         <div id="weakAreaCta" hidden>
                             <button id="weakAreaBtn" style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:linear-gradient(135deg, rgba(56,189,248,0.18), rgba(129,140,248,0.18));border:1px solid var(--primary, #38bdf8);border-radius:10px;color:var(--text-main, #f1f5f9);font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;">
-                                🎯 Weak-Area Set
+                                Weak-Area Set
                                 <span style="font-weight:400;color:var(--text-muted,#94a3b8);font-size:0.82rem;">10 questions drawn from your trouble spots</span>
                             </button>
                         </div>
                         <button id="freshExamBtn" style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.4);border-radius:10px;color:var(--text-main, #f1f5f9);font-family:inherit;font-size:0.92rem;font-weight:600;cursor:pointer;">
-                            🎓 Fresh Final Assessment
+                            Fresh Final Assessment
                             <span style="font-weight:400;color:var(--text-muted,#94a3b8);font-size:0.82rem;">15 questions, archetype-proportional, exam conditions</span>
                         </button>
                     </div>
@@ -124,7 +124,7 @@
 
                 <div class="fade-in-delay" style="margin-top: 28px; text-align: center;">
                     <a href="./concept.html" style="display: inline-block; padding: 10px 22px; border: 1px solid var(--border, rgba(255,255,255,0.1)); border-radius: 8px; color: var(--text-muted, #94a3b8); text-decoration: none; font-size: 0.92rem; font-weight: 600;">
-                        📖 Concept Guide — Master the 6 archetypes before drilling
+                        Concept guide — Master the 6 archetypes before drilling
                     </a>
                 </div>
             </div>
@@ -133,7 +133,7 @@
         <!-- 2. Concept Introduction Screen -->
         <section id="introScreen" hidden>
             <div class="intro-header">
-                <div class="intro-icon">💡</div>
+                <div class="intro-icon"></div>
                 <h2>Before You Begin: Proportional Essentials</h2>
             </div>
 
@@ -176,7 +176,7 @@
         <!-- 3. End Screen -->
         <div id="endScreen" hidden>
             <div class="end-content">
-                <div class="completion-icon">🎓</div>
+                <div class="completion-icon"></div>
                 <h2 id="endScreenTitle">Module Complete!</h2>
                 <p id="endScreenSubtitle" class="muted">Great job! You have completed this conceptual module.</p>
                 <div id="endScreenScore" class="score-display">Score: 0 / 10</div>
@@ -184,9 +184,9 @@
             </div>
             <div id="breakdown" style="margin: 20px auto 0; max-width: 640px; text-align: left; padding: 0 20px;"></div>
                 <div class="end-actions">
-                <button id="copyBtn" class="btn-primary" style="background: var(--success); color: #fff;">📋 Copy My
+                <button id="copyBtn" class="btn-primary" style="background: var(--success); color: #fff;">Copy My
                     Score & Work</button>
-                <button id="retryMissedBtn" class="btn-primary" hidden>🎯 Drill the <span id="retryMissedCount">0</span> you missed</button>
+                <button id="retryMissedBtn" class="btn-primary" hidden>Drill the <span id="retryMissedCount">0</span> you missed</button>
                 <button id="reviewBtn" class="btn-secondary">Review Answers</button>
                 <button id="returnMenuBtn" class="btn-secondary">Return to Menu</button>
             </div>

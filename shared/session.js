@@ -108,6 +108,7 @@
             studentName: entry.studentName || '',
             smartMode: !!entry.smartMode,
             isExamMode: !!entry.isExamMode,
+            domainBreakdown: entry.domainBreakdown || '',
             detail: Array.isArray(entry.detail) ? entry.detail : []
         };
         try {

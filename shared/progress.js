@@ -531,6 +531,22 @@
         try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
     }
 
+    // Clear the records for a specific list of questions: pairs = [{appId, qid}, ...].
+    // Used by Custom Practice's "reset this difficulty set" so those questions
+    // become fresh again. Returns how many records were removed.
+    function resetRecords(pairs) {
+        if (!Array.isArray(pairs) || !pairs.length) return 0;
+        const ledger = _load();
+        let n = 0;
+        pairs.forEach(p => {
+            if (!p || !p.appId || !p.qid) return;
+            const k = _key(p.appId, p.qid);
+            if (ledger.records[k]) { delete ledger.records[k]; n++; }
+        });
+        _save(ledger);
+        return n;
+    }
+
     window.MathProgress = {
         recordAnswer,
         getRecord,
@@ -548,6 +564,7 @@
         exportData,
         importData,
         reset,
+        resetRecords,
         // exposed for tests / debug only
         _internals: { STORAGE_KEY, SCHEMA_VERSION, MASTERY_THRESHOLD, MASTERY_DECAY_MS }
     };

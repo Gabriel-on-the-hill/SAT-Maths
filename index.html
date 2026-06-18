@@ -246,19 +246,56 @@
             color: var(--primary);
             border-bottom-color: var(--primary);
         }
+        /* Route picker — prominent, colorful mode cards */
+        .route-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin: 8px 0 4px;
+        }
+        .route-card {
+            position: relative;
+            border-radius: 18px;
+            padding: 26px 24px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            text-align: left;
+        }
+        .route-card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px -12px rgba(0, 0, 0, 0.6); }
+        .route-card .r-icon { font-size: 34px; }
+        .route-card .r-title { font-size: 1.35rem; font-weight: 800; }
+        .route-card .r-sub { font-size: 0.9rem; opacity: 0.93; line-height: 1.4; }
+        .route-card .r-badge {
+            position: absolute; top: 14px; right: 14px;
+            font-size: 0.62rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.22); padding: 4px 9px; border-radius: 999px;
+        }
+        .route-custom { background: linear-gradient(135deg, #06b6d4, #3b82f6); }
+        .route-exam   { background: linear-gradient(135deg, #f43f5e, #f59e0b); }
+        .route-topic  { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
+        .section-label {
+            text-align: left; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--text-muted); margin: 28px 0 12px; font-weight: 700;
+        }
     </style>
 </head>
 
 <body>
     <div class="hub-container fade-in">
         <div class="hub-icon">∑</div>
-        <h1>EDUTRACK HUB</h1>
-        <p class="subtitle fade-in-delay">Select a learning module to begin your journey.</p>
+        <h1>Edutrack Math</h1>
+        <p class="subtitle fade-in-delay">Choose how you would like to practise.</p>
         <div class="fade-in-delay" style="text-align:center;margin-top:-20px;margin-bottom:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-            <a href="./exam.html" style="display:inline-block;padding:6px 16px;color:#0f172a;background:linear-gradient(90deg,var(--primary),var(--accent));text-decoration:none;font-size:0.88rem;font-weight:700;border-radius:999px;">📝 Mock SAT Exam</a>
-            <a href="./progress.html" style="display:inline-block;padding:6px 14px;color:var(--text-muted);text-decoration:none;font-size:0.88rem;border:1px solid var(--border);border-radius:999px;">📊 My Progress</a>
+            <a href="./progress.html" style="display:inline-block;padding:6px 14px;color:var(--text-muted);text-decoration:none;font-size:0.88rem;border:1px solid var(--border);border-radius:999px;">My Progress</a>
             <span id="examCountdown" style="display:none;padding:6px 14px;color:var(--text-muted);font-size:0.88rem;border:1px solid var(--border);border-radius:999px;"></span>
-            <button id="settingsToggle" style="padding:6px 14px;color:var(--text-muted);background:none;font-size:0.88rem;border:1px solid var(--border);border-radius:999px;cursor:pointer;font-family:inherit;">⚙ Settings</button>
+            <button id="settingsToggle" style="padding:6px 14px;color:var(--text-muted);background:none;font-size:0.88rem;border:1px solid var(--border);border-radius:999px;cursor:pointer;font-family:inherit;">Settings</button>
         </div>
 
         <div id="settingsPanel" class="fade-in-delay" hidden style="max-width:420px;margin:0 auto 24px;padding:16px 20px;background:rgba(56,189,248,0.06);border:1px solid var(--border);border-radius:12px;text-align:left;font-size:0.9rem;">
@@ -289,99 +326,108 @@
                 <div id="overallFill" class="overall-progress-fill"></div>
             </div>
             <div style="margin-top:14px;text-align:right;">
-                <a href="./progress.html" style="display:inline-block;color:var(--primary);text-decoration:none;font-size:0.88rem;font-weight:600;">📊 See full session history →</a>
+                <a href="./progress.html" style="display:inline-block;color:var(--primary);text-decoration:none;font-size:0.88rem;font-weight:600;">See full session history →</a>
             </div>
         </div>
 
-        <div class="app-grid fade-in-delay">
+        <div class="route-grid fade-in-delay">
+            <a class="route-card route-custom" href="./custom.html">
+                <span class="r-badge">New</span>
+                <span class="r-title">Custom Practice</span>
+                <span class="r-sub">Choose difficulty &amp; time. Adaptive — skips what you've mastered and never repeats.</span>
+            </a>
+            <a class="route-card route-exam" href="./exam.html">
+                <span class="r-badge">New</span>
+                <span class="r-title">Mock SAT Exam</span>
+                <span class="r-sub">22 questions, 35 minutes, full SAT weighting — scored like Bluebook.</span>
+            </a>
+            <a class="route-card route-topic" href="#topicGrid">
+                <span class="r-title">Topic Practice</span>
+                <span class="r-sub">Work one topic: Guided → Independent → Homework → Final Assessment.</span>
+            </a>
+        </div>
+        <div class="section-label">Topic Practice — by skill</div>
+
+        <div class="app-grid fade-in-delay" id="topicGrid">
             <div class="app-card with-guide" data-app="Linear_Equations_App">
                 <a href="./Linear_Equations_App/index.html" class="card-main">
-                <div class="icon">⚙️</div>
                 <h3>Linear Equations<br>(One Variable)</h3>
                 <p>Master algebraic mechanics and foundational problem solving.</p>
                 <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Linear_Equations_App/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Linear_Equations_App/concept.html">Concept guide</a></div>
             </div>
 
             <div class="app-card with-guide" data-app="Linear_Functions_App">
                 <a href="./Linear_Functions_App/index.html" class="card-main">
-                    <div class="icon">📈</div>
                     <h3>Linear Functions</h3>
                     <p>Slope and Y-Intercept interpretation, equations from graphs, and models.</p>
                     <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Linear_Functions_App/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Linear_Functions_App/concept.html">Concept guide</a></div>
             </div>
 
             <div class="app-card with-guide" data-app="Nonlinear_Functions_App">
                 <a href="./Nonlinear_Functions_App/index.html" class="card-main">
-                <div class="icon">🎢</div>
                 <h3>Nonlinear Functions</h3>
                 <p>Quadratics, exponentials, polynomials, and their graphs.</p>
                 <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Nonlinear_Functions_App/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Nonlinear_Functions_App/concept.html">Concept guide</a></div>
             </div>
 
             <div class="app-card with-guide" data-app="Systems_and_Expressions_App_v2">
                 <a href="./Systems_and_Expressions_App_v2/index.html" class="card-main">
-                <div class="icon">🧩</div>
                 <h3>Systems & Expressions</h3>
                 <p>Equivalent expressions and advanced systems with Desmos strategies.</p>
                 <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Systems_and_Expressions_App_v2/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Systems_and_Expressions_App_v2/concept.html">Concept guide</a></div>
             </div>
 
             <div class="app-card with-guide" data-app="Proportionality_App">
                 <a href="./Proportionality_App/index.html" class="card-main">
-                <div class="icon">%</div>
                 <h3>Proportionality</h3>
                 <p>Percentages, ratios, rates, and unit conversions.</p>
                 <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Proportionality_App/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Proportionality_App/concept.html">Concept guide</a></div>
             </div>
 
             <div class="app-card with-guide" data-app="Statistical_Reasoning_App">
                 <a href="./Statistical_Reasoning_App/index.html" class="card-main">
-                <div class="icon">📊</div>
                 <h3>Statistical Reasoning</h3>
                 <p>Evaluating statistical claims, observations, and inference.</p>
                 <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Statistical_Reasoning_App/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Statistical_Reasoning_App/concept.html">Concept guide</a></div>
             </div>
 
             <div class="app-card with-guide" data-app="Core_Geometry_App">
                 <a href="./Core_Geometry_App/index.html" class="card-main">
-                <div class="icon">📐</div>
                 <h3>Core Geometry</h3>
                 <p>Area, Volume, Lines, Angles, and Triangles.</p>
                 <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Core_Geometry_App/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Core_Geometry_App/concept.html">Concept guide</a></div>
             </div>
 
             <div class="app-card with-guide" data-app="Analytical_Geometry_App">
                 <a href="./Analytical_Geometry_App/index.html" class="card-main">
-                <div class="icon">⭕</div>
                 <h3>Analytical Geometry & Trig</h3>
                 <p>Circles, Right Triangles, and Trigonometry.</p>
                 <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Analytical_Geometry_App/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Analytical_Geometry_App/concept.html">Concept guide</a></div>
             </div>
 
             <div class="app-card with-guide" data-app="Data_Analysis_Probability_App">
                 <a href="./Data_Analysis_Probability_App/index.html" class="card-main">
-                <div class="icon">🎲</div>
                 <h3>Data Analysis & Probability</h3>
                 <p>One/Two-variable data, Models, and Probability strategies.</p>
                 <div class="mastery-strip unstarted">Not started yet</div>
                 </a>
-                <div class="card-guide-link"><a href="./Data_Analysis_Probability_App/concept.html">📖 Concept Guide</a></div>
+                <div class="card-guide-link"><a href="./Data_Analysis_Probability_App/concept.html">Concept guide</a></div>
             </div>
         </div>
     </div>
@@ -420,7 +466,7 @@
             const label = days === 0 ? 'SAT is today'
                 : days === 1 ? '1 day to SAT'
                 : `${days} days to SAT`;
-            el.textContent = '📅 ' + label;
+            el.textContent = '' + label;
             el.style.display = 'inline-block';
         }
         renderExamCountdown();
@@ -472,59 +518,4 @@
                 strip.classList.remove('unstarted');
                 const pct = summary.total > 0 ? Math.round((summary.mastered / summary.total) * 100) : 0;
                 strip.innerHTML = `
-                    <div class="mastery-counts">
-                        <span><span class="mastered">${summary.mastered}</span> / ${summary.total} mastered</span>
-                        ${summary.struggling > 0 ? `<span><span class="struggling">${summary.struggling}</span> struggling</span>` : ''}
-                    </div>
-                    <div class="mastery-bar"><div class="mastery-bar-fill" style="width:${pct}%"></div></div>
-                `;
-            }
-
-            function renderOverall(totals) {
-                const wrap = document.getElementById('overallProgress');
-                if (!wrap) return;
-                if (totals.total === 0) return;
-                wrap.hidden = false;
-                wrap.classList.remove('empty');
-                document.getElementById('overallMastered').textContent = totals.mastered;
-                document.getElementById('overallTotal').textContent = totals.total;
-                document.getElementById('overallStruggling').textContent = totals.struggling;
-                const pct = totals.total > 0 ? Math.round((totals.mastered / totals.total) * 100) : 0;
-                document.getElementById('overallPct').textContent = pct;
-                document.getElementById('overallFill').style.width = pct + '%';
-            }
-
-            async function loadDashboard() {
-                if (!window.MathProgress) return;
-                const totals = { mastered: 0, struggling: 0, total: 0 };
-                const fetches = APPS.map(appId =>
-                    fetch(`./${appId}/manifest.json`, { cache: 'no-store' })
-                        .then(r => r.ok ? r.json() : null)
-                        .catch(() => null)
-                );
-                const manifests = await Promise.all(fetches);
-                manifests.forEach((manifest, i) => {
-                    if (!manifest || !Array.isArray(manifest.questionIds)) return;
-                    const appId = APPS[i];
-                    const card = document.querySelector(`.app-card[data-app="${appId}"]`);
-                    if (!card) return;
-                    const summary = window.MathProgress.summary(appId, manifest.questionIds);
-                    renderStrip(card, manifest, summary);
-                    totals.mastered += summary.mastered;
-                    totals.struggling += summary.struggling;
-                    totals.total += summary.total;
-                });
-                renderOverall(totals);
-            }
-
-            // Run as soon as the DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', loadDashboard);
-            } else {
-                loadDashboard();
-            }
-        })();
-    </script>
-</body>
-
-</html>
+               

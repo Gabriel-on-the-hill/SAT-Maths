@@ -318,7 +318,7 @@
     </div>
 
     <header class="intro" id="header">
-        <div class="icon-bubble" id="appIcon">📈</div>
+        <div class="icon-bubble" id="appIcon"></div>
         <h1 id="appName">Linear Functions — Concept Mastery</h1>
         <p class="lead" id="appIntro">Loading…</p>
     </header>
@@ -375,7 +375,7 @@
     }
 
     function renderHeader() {
-        document.getElementById('appIcon').textContent = DATA.appIcon || '📘';
+        document.getElementById('appIcon').textContent = DATA.appIcon || '';
         document.getElementById('appName').textContent = `${DATA.appName} — Concept Mastery`;
         document.getElementById('appIntro').textContent = DATA.intro || '';
         document.title = `${DATA.appName} — Concept Mastery`;
@@ -435,7 +435,7 @@
                 <div class="understood-row">
                     <span class="hint">${understood ? 'Marked understood — keep it that way by drilling regularly.' : 'When you can name this pattern from the first line of a question, mark it understood.'}</span>
                     <button class="mark-btn${understood ? ' is-understood' : ''}" data-toggle="${escapeHtml(arch.id)}">
-                        ${understood ? '✓ Understood' : 'Mark Understood'}
+                        ${understood ? 'Understood' : 'Mark Understood'}
                     </button>
                 </div>
             </div>

@@ -177,7 +177,7 @@
             const prevPercentage = parsedScore.score / parsedScore.maxScore;
 
             if (isFinal && currentPercentage > prevPercentage) {
-                if (highScoreDisplay) highScoreDisplay.textContent = `🏆 New Personal Best! (Previous: ${parsedScore.score}/${parsedScore.maxScore})`;
+                if (highScoreDisplay) highScoreDisplay.textContent = `New Personal Best! (Previous: ${parsedScore.score}/${parsedScore.maxScore})`;
                 localStorage.setItem(storageKey, JSON.stringify({ score: score, maxScore: totalPossible }));
             } else if (isFinal) {
                 if (highScoreDisplay) highScoreDisplay.textContent = `Your Personal Best: ${parsedScore.score}/${parsedScore.maxScore}`;
@@ -187,7 +187,7 @@
                 localStorage.setItem(storageKey, JSON.stringify({ score: score, maxScore: totalPossible }));
             }
         } else {
-            if (isFinal && highScoreDisplay) highScoreDisplay.textContent = `🏆 First attempt recorded!`;
+            if (isFinal && highScoreDisplay) highScoreDisplay.textContent = `First attempt recorded!`;
             localStorage.setItem(storageKey, JSON.stringify({ score: score, maxScore: totalPossible }));
         }
 
@@ -222,13 +222,13 @@
         })
             .then(response => {
                 if (isFinal && dbStatus) {
-                    dbStatus.textContent = "✅ Score successfully saved to database!";
+                    dbStatus.textContent = "Score successfully saved to database!";
                     dbStatus.style.color = "var(--success)";
                 }
             })
             .catch(error => {
                 if (isFinal && dbStatus) {
-                    dbStatus.textContent = "⚠️ Could not save to database (Check connection).";
+                    dbStatus.textContent = "Could not save to database (Check connection).";
                     dbStatus.style.color = "var(--danger)";
                 }
             });
@@ -261,7 +261,7 @@
                 if (!nameInput.value.trim()) {
                     e.preventDefault();
                     nameInput.style.border = "2px solid var(--danger)";
-                    nameInput.placeholder = "⚠️ REQUIRED: Enter your name";
+                    nameInput.placeholder = "REQUIRED: Enter your name";
                     nameInput.focus();
 
                     // Remove the red border once they start typing
@@ -368,7 +368,7 @@
             }
         });
 
-        let outputText = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📝 SAT PLAYLIST REPORT\nStudent: ${name}\nDate: ${date}\nFinal Score: ${score} / ${state.allQuestions.length}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+        let outputText = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSAT PLAYLIST REPORT\nStudent: ${name}\nDate: ${date}\nFinal Score: ${score} / ${state.allQuestions.length}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
         state.allQuestions.forEach((q, idx) => {
             const userA = state.userAnswers[idx];
@@ -384,11 +384,11 @@
             outputText += `Q${idx + 1}: ${cleanQuestion}\n`;
 
             if (userA === undefined || userA === null) {
-                outputText += `  Status: ⚠️ UNANSWERED\n\n`;
+                outputText += `  Status: UNANSWERED\n\n`;
             } else {
                 const userChoice = q.type === 'grid-in' ? userA : ['A', 'B', 'C', 'D'][userA];
                 outputText += `  Selected: ${userChoice}\n`;
-                outputText += `  Status: ${isCorrect ? '✅ Correct' : '❌ Incorrect'}\n\n`;
+                outputText += `  Status: ${isCorrect ? 'Correct' : 'Incorrect'}\n\n`;
             }
         });
 
@@ -399,7 +399,7 @@
             navigator.clipboard.writeText(outputText).then(() => {
                 const msgEl = document.getElementById('submitMsg');
                 if (msgEl) {
-                    msgEl.innerText = "✅ Copied to clipboard!";
+                    msgEl.innerText = "Copied to clipboard!";
                     msgEl.classList.add("msg-success");
                     setTimeout(() => { msgEl.innerText = ''; }, 3000);
                 }
@@ -485,7 +485,7 @@
         dom.introTitle.textContent = `Concept: ${topic.title}`;
         dom.introCards.innerHTML = `
             <div class="concept-card">
-                <div class="card-title">Winning Strategy</div>
+                <div class="card-title">Strategy</div>
                 <p>${topic.introText}</p>
             </div>
         `;
@@ -498,7 +498,7 @@
         dom.quiz.hidden = false;
 
         // If it's the very first topic, start global timer if in Exam mode
-        if (state.currentTopicIdx === 0 && state.isExamMode) {
+        if (state.currentTopicIdx === 0 && (state.isExamMode || state.customTimed)) {
             startTimer();
             dom.activeTimer.hidden = false;
         }
@@ -515,7 +515,9 @@
         // Per-question seconds is tutor-adjustable (set on the hub); default 90.
         let _perQ = 90;
         try { const _v = parseInt(localStorage.getItem('edutrack_timer_per_q'), 10); if (_v >= 10 && _v <= 600) _perQ = _v; } catch (e) {}
-        if (window.APP_CONFIG && window.APP_CONFIG.examTotalSeconds) {
+        if (state.customTotalSeconds) {
+            state.timeRemaining = state.customTotalSeconds;
+        } else if (window.APP_CONFIG && window.APP_CONFIG.examTotalSeconds) {
             state.timeRemaining = window.APP_CONFIG.examTotalSeconds;
         } else {
             state.timeRemaining = _n > 0 ? _n * _perQ : 1200;
@@ -913,6 +915,106 @@
         loadTopic(0);
     }
 
+    // ───────── Custom Practice (cross-topic, difficulty-filtered, mastery queue) ─────────
+    // Gather every question matching the chosen difficulties, tagged with its source
+    // app + domain, with image paths re-rooted for the root-level custom page.
+    function _customCandidates(difficulties) {
+        const pools = window.EXAM_POOLS || [];
+        const diffs = (difficulties || []).map(function (d) { return String(d).toLowerCase(); });
+        const out = []; const seen = new Set();
+        pools.forEach(function (p) {
+            const raw = p.playlist;
+            const topics = Array.isArray(raw) ? raw : ((raw && typeof raw === 'object') ? [{ questions: raw }] : []);
+            topics.forEach(function (t) {
+                const qs = (t && t.questions) || {};
+                Object.values(qs).forEach(function (arr) {
+                    if (!Array.isArray(arr)) return;
+                    arr.forEach(function (q) {
+                        if (!q || !q.id) return;
+                        const key = p.appId + ':' + q.id;
+                        if (seen.has(key)) return; seen.add(key);
+                        const d = String(q.difficulty || '').toLowerCase();
+                        if (diffs.length && diffs.indexOf(d) < 0) return;
+                        const qq = Object.assign({}, q, { _appId: p.appId, _domain: p.domain });
+                        if (typeof qq.question === 'string') qq.question = qq.question.replace(/src="assets\//g, 'src="' + p.appId + '/assets/');
+                        if (typeof qq.question_image === 'string' && qq.question_image.indexOf('assets/') === 0) qq.question_image = p.appId + '/' + qq.question_image;
+                        out.push(qq);
+                    });
+                });
+            });
+        });
+        return out;
+    }
+
+    // Build a sitting: exclude mastered (auto-resurfaces after the 21-day decay),
+    // then order unseen -> needs-work (net<=0) -> answered-once (net>=1), least-recent first.
+    function buildCustomSet(opts) {
+        opts = opts || {};
+        const MP = window.MathProgress;
+        const all = _customCandidates(opts.difficulties);
+        let mastered = 0; const active = [];
+        all.forEach(function (q) {
+            if (MP && MP.isMastered(q._appId, q.id)) { mastered++; return; }
+            active.push(q);
+        });
+        function tier(q) {
+            const r = MP ? MP.getRecord(q._appId, q.id) : { attempts: 0, correct: 0, wrong: 0 };
+            if (!r.attempts) return 0;                       // fresh / unseen
+            return ((r.correct || 0) - (r.wrong || 0)) <= 0 ? 1 : 2; // needs-work, then answered-once
+        }
+        active.sort(function (a, b) {
+            const ta = tier(a), tb = tier(b);
+            if (ta !== tb) return ta - tb;
+            const ra = MP ? MP.getRecord(a._appId, a.id) : { lastSeen: 0 };
+            const rb = MP ? MP.getRecord(b._appId, b.id) : { lastSeen: 0 };
+            return (ra.lastSeen || 0) - (rb.lastSeen || 0);
+        });
+        const count = opts.count || 10;
+        return { selected: active.slice(0, count), remaining: active.length, mastered: mastered, total: all.length };
+    }
+
+    function resetCustomSet(opts) {
+        if (!window.MathProgress || !window.MathProgress.resetRecords) return 0;
+        const pairs = _customCandidates((opts || {}).difficulties).map(function (q) { return { appId: q._appId, qid: q.id }; });
+        return window.MathProgress.resetRecords(pairs);
+    }
+
+    function _runCustom(selected, opts) {
+        state.isExamMode = false;          // practice → feedback as you go
+        state.isHardMode = false;
+        state.smartMode = false;
+        state.isRetrySession = false;
+        state.currentModule = 'custom';
+        state.customOpts = { difficulties: opts.difficulties, count: opts.count };
+        const mins = parseInt(opts.minutes, 10);
+        state.customTimed = (mins > 0);
+        state.customTotalSeconds = state.customTimed ? mins * 60 : 0;
+        state.currentTopicIdx = 0; state.allQuestions = []; state.userAnswers = [];
+        state.playlist = [{
+            id: 'custom_practice',
+            title: 'Custom Practice',
+            introText: 'Adaptive set: ' + selected.length + ' question(s) drawn from your chosen difficulties — newest and weakest first, mastered ones skipped. Feedback shown as you go' + (state.customTimed ? '; timed at ' + mins + ' min.' : '.'),
+            questions: { custom: selected }
+        }];
+        dom.startScreen.hidden = true;
+        loadTopic(0);
+    }
+
+    function startCustomPractice(opts) {
+        if (!window.MathProgress) { alert('Progress module missing.'); return; }
+        if (!opts.difficulties || !opts.difficulties.length) { alert('Pick at least one difficulty.'); return; }
+        const built = buildCustomSet(opts);
+        if (built.total === 0) { alert('No questions match the selected difficulty.'); return; }
+        if (built.selected.length === 0) {
+            if (confirm('You have mastered every question at the selected difficulty! Reset this set so you can practise it again?')) {
+                resetCustomSet(opts);
+                _runCustom(buildCustomSet(opts).selected, opts);
+            }
+            return;
+        }
+        _runCustom(built.selected, opts);
+    }
+
     function checkAndShowResume() {
         if (!window.MathSession || !dom.resumeBanner) return;
         const saved = window.MathSession.load(APP_ID);
@@ -960,7 +1062,7 @@
             dom.feedbackStatus.textContent = "ℹ Response Saved";
             dom.feedbackStatus.style.color = "var(--primary, #38bdf8)";
         } else {
-            dom.feedbackStatus.textContent = isCorrect ? "✓ Correct" : "✗ Incorrect";
+            dom.feedbackStatus.textContent = isCorrect ? "Correct" : "Incorrect";
             dom.feedbackStatus.style.color = isCorrect ? "var(--success)" : "var(--danger)";
         }
 
@@ -991,8 +1093,8 @@
         if (!archetype && !trap && !strategy) return '';
         let out = '<div style="margin-top:16px;padding:12px 14px;background:rgba(56,189,248,0.08);border-left:3px solid var(--primary,#38bdf8);border-radius:6px;line-height:1.6;font-size:0.95em;">';
         if (archetype) out += `<div style="font-size:0.85em;color:var(--text-muted,#94a3b8);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">Archetype · ${escapeHtml(archetype)}</div>`;
-        if (trap) out += `<div style="margin-bottom:6px;">⚠️ <strong>Watch for:</strong> ${escapeHtml(trap)}</div>`;
-        if (strategy) out += `<div>🎯 <strong>Strategy:</strong> ${escapeHtml(strategy)}</div>`;
+        if (trap) out += `<div style="margin-bottom:6px;"><strong>Watch for:</strong> ${escapeHtml(trap)}</div>`;
+        if (strategy) out += `<div><strong>Strategy:</strong> ${escapeHtml(strategy)}</div>`;
         out += '</div>';
         return out;
     }
@@ -1118,6 +1220,9 @@
 
         let scoreText = `Total Score: ${score} / ${gradable}`;
         if (ungraded > 0) scoreText += ` (${ungraded} ungraded)`;
+        if (state.currentModule === 'custom' && state.customOpts && typeof buildCustomSet === 'function') {
+            try { if (buildCustomSet(state.customOpts).selected.length === 0) scoreText += ' · Set mastered'; } catch (e) {}
+        }
         dom.scoreDisplay.textContent = scoreText;
         dom.scoreDisplay.hidden = false;
         dom.reviewBtn.hidden = false;
@@ -1146,8 +1251,21 @@
             const _detail = state.allQuestions.map((q, i) => {
                 const _ua = state.userAnswers[i];
                 const _ok = hasAnswerKey(q) ? ((q.type === 'grid-in') ? checkGridIn(_ua || "", q.answer) : (_ua === getCorrectIndex(q))) : false;
-                return { id: q.id, app: q._appId || APP_ID, difficulty: q.difficulty || '', answered: (_ua !== undefined && _ua !== null), correct: _ok };
+                return { id: q.id, app: q._appId || APP_ID, domain: q._domain || '', difficulty: q.difficulty || '', answered: (_ua !== undefined && _ua !== null), correct: _ok };
             });
+            // Compact per-domain score summary, e.g. "Algebra 7/9; Advanced Math 5/8".
+            // Only the cross-domain modes (mock exam, custom practice) tag questions
+            // with a domain; single-topic apps leave it blank.
+            const _domainAgg = {};
+            _detail.forEach(d => {
+                if (!d.domain) return;
+                const a = _domainAgg[d.domain] || (_domainAgg[d.domain] = { correct: 0, total: 0 });
+                a.total++;
+                if (d.correct) a.correct++;
+            });
+            const _domainBreakdown = Object.keys(_domainAgg)
+                .map(dom => `${dom} ${_domainAgg[dom].correct}/${_domainAgg[dom].total}`)
+                .join('; ');
             window.MathSession.logCompletion({
                 sessionId: state.sessionId,
                 appId: APP_ID,
@@ -1164,6 +1282,7 @@
                 completedAt: Date.now(),
                 studentName: _studentName,
                 detail: _detail,
+                domainBreakdown: _domainBreakdown,
                 smartMode: !!state.smartMode,
                 isExamMode: !!state.isExamMode
             });
@@ -1243,7 +1362,7 @@
             dom.reviewFeedbackStatus.textContent = "ℹ Ungraded (answer key missing)";
             dom.reviewFeedbackStatus.style.color = "var(--primary, #38bdf8)";
         } else {
-            dom.reviewFeedbackStatus.textContent = isCorrect ? "✓ Correct" : "✗ Incorrect";
+            dom.reviewFeedbackStatus.textContent = isCorrect ? "Correct" : "Incorrect";
             dom.reviewFeedbackStatus.style.color = isCorrect ? "var(--success)" : "var(--danger)";
         }
         dom.reviewExplanationText.innerHTML = q.explanation || '';
@@ -1258,6 +1377,22 @@
     // Tier preview badge above the personalised set buttons.
     if (window.MathTierPreview) {
         window.MathTierPreview.attach(APP_ID, './manifest.json', '#tierPreview');
+    }
+    if (window.APP_CONFIG && window.APP_CONFIG.customMode) {
+        const _cb = document.getElementById('startCustomBtn');
+        if (_cb) _cb.addEventListener('click', function () {
+            const _n = document.getElementById('studentName');
+            if (_n && !_n.value.trim()) { _n.style.border = '2px solid var(--danger)'; _n.placeholder = 'Enter your name'; _n.focus(); return; }
+            const diffs = [];
+            if (document.getElementById('diffEasy') && document.getElementById('diffEasy').checked) diffs.push('Easy');
+            if (document.getElementById('diffMedium') && document.getElementById('diffMedium').checked) diffs.push('Medium');
+            if (document.getElementById('diffHard') && document.getElementById('diffHard').checked) diffs.push('Hard');
+            const countEl = document.getElementById('customCount');
+            const minsEl = document.getElementById('customMinutes');
+            const count = countEl ? (parseInt(countEl.value, 10) || 10) : 10;
+            const minutes = minsEl ? (parseInt(minsEl.value, 10) || 0) : 0;
+            startCustomPractice({ difficulties: diffs, count: count, minutes: minutes });
+        });
     }
     if (window.APP_CONFIG && window.APP_CONFIG.examMode) {
         const _eb = document.getElementById('startMockExamBtn');

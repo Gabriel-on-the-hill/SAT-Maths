@@ -2,7 +2,7 @@
 window.CONCEPT_DATA = {
     appId: 'Core_Geometry_App',
     appName: 'Core Geometry',
-    appIcon: '📐',
+    appIcon: '',
     intro: 'Core Geometry is formula recognition. Seven patterns. Identify the figure, recall the formula, plug in. The math is rarely hard — the trap is using the wrong formula.',
     archetypes: [
         {

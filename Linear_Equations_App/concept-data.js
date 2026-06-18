@@ -2,7 +2,7 @@
 window.CONCEPT_DATA = {
     appId: 'Linear_Equations_App',
     appName: 'Linear Equations (One Variable)',
-    appIcon: '⚙️',
+    appIcon: '',
     intro: 'Linear equations are 100% mechanical once you spot the structure. Five patterns cover the bank. Recognise the pattern, run the algorithm, move on.',
     archetypes: [
         {

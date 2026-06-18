@@ -2,7 +2,7 @@
 window.CONCEPT_DATA = {
     appId: 'Data_Analysis_Probability_App',
     appName: 'Data Analysis & Probability',
-    appIcon: '🎲',
+    appIcon: '',
     intro: 'Data and probability questions are reading-comprehension as much as math. Seven patterns. Identify the chart type and the probability rule — the arithmetic is trivial after that.',
     archetypes: [
         {

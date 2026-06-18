@@ -10,7 +10,7 @@ Expressions · Proportionality · Statistical Reasoning · Core Geometry ·
 Analytical Geometry · Data Analysis & Probability
 
 ## Structure
-- `index.html` — hub / launcher (mastery dashboard, ⚙ tutor settings: SAT date + exam timer)
+- `index.html` — hub / launcher (mastery dashboard, tutor settings: SAT date + exam timer)
 - `progress.html` — session history
 - `shared/` — shared engine + modules (`engine.js`, `progress.js`, `session.js`, `gate.js`, `breakdown.js`, `tier-preview.js`)
 - `*_App/` — each topic app: `index.html` (sets `window.APP_CONFIG`), `data/questions.js`, `manifest.json`, `assets/`

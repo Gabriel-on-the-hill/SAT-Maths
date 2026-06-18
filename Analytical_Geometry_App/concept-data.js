@@ -2,7 +2,7 @@
 window.CONCEPT_DATA = {
     appId: 'Analytical_Geometry_App',
     appName: 'Analytical Geometry & Trig',
-    appIcon: '⭕',
+    appIcon: '',
     intro: 'Circles, right triangles, and trig. Six patterns. Recognise the form (circle equation, special right triangle, SOHCAHTOA setup) and the question almost solves itself.',
     archetypes: [
         {

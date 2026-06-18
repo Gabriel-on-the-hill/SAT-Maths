@@ -5,7 +5,7 @@
 window.CONCEPT_DATA = {
     appId: 'Linear_Functions_App',
     appName: 'Linear Functions',
-    appIcon: '📈',
+    appIcon: '',
     intro: 'Every Linear Functions question on the SAT is one of eight patterns. 800-scorers don\'t solve faster — they recognise the pattern in 5 seconds. Walk through the cards below. For each, ask: could I name this from the first line of a question? When yes, mark it understood.',
     archetypes: [
         {
