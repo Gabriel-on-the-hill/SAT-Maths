@@ -1,4 +1,4 @@
-const QUESTIONS_DATA = {
+var QUESTIONS_DATA = {
     "guided": [
         {
             "id": "2c76bcce",

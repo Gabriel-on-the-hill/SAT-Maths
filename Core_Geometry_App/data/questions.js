@@ -1,4 +1,4 @@
-const PLAYLIST = {
+var PLAYLIST = {
     "guided": [
         {
             "id": "deff8a2f",
