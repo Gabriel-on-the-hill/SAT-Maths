@@ -147,20 +147,6 @@ window.PLAYLIST = [
                 }
             ],
             "independent": [
-            {
-                "id": "b39d74a0",
-                "question": "<img src=\"assets/easy_b39d74a0.png\" class=\"full-q-image\" alt=\"Question Image\">",
-                "options": [],
-                "answer": "B",
-                "correctIndex": 1,
-                "type": "multiple-choice",
-                "difficulty": "Easy",
-                "explanation": "<strong>Rationale:</strong><br>Choice B is correct. Each row of the table is a point on the graph: $(0, 0)$, $(1, 1)$, $(2, 8)$, and $(3, 27)$. Only the graph in choice B passes through all of these points (the values follow $y = x^3$). Choices A, C, and D each fail to pass through at least one listed point.",
-                "archetype": "Match a table of values to a graph",
-                "trapName": "Checking only one point instead of all of them",
-                "strategy": "Plot each $(x, y)$ pair from the table and keep only the graph that hits every point.",
-                "timeTarget": 60
-            },
                 {
                     "id": "58dcc59f",
                     "question": "<img src=\"assets/hard_58dcc59f.png\" class=\"full-q-image\" alt=\"Question Image\">",
@@ -1382,20 +1368,6 @@ window.PLAYLIST = [
                 }
             ],
             "independent": [
-            {
-                "id": "75a32330",
-                "question": "<img src=\"assets/medium_75a32330.png\" class=\"full-q-image\" alt=\"Question Image\">",
-                "options": [],
-                "answer": "A",
-                "correctIndex": 0,
-                "type": "multiple-choice",
-                "difficulty": "Medium",
-                "explanation": "<strong>Rationale:</strong><br>Choice A is correct. The system pairs a quadratic (a parabola) with a linear equation (a line). The parabola must have the vertex given by the quadratic, and the line must have the slope and y-intercept given by the linear equation. Only choice A shows a parabola with the correct vertex together with a line of the correct slope and y-intercept.",
-                "archetype": "Match a system of equations to its graph",
-                "trapName": "Matching the parabola but ignoring the line (or vice versa)",
-                "strategy": "Identify the parabola's vertex and the line's slope/intercept separately, then find the graph that fits both.",
-                "timeTarget": 60
-            },
                 {
                     "id": "3de7a7d7",
                     "question": "<img src=\"assets/easy_3de7a7d7.png\" class=\"full-q-image\" alt=\"Question Image\">",
