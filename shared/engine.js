@@ -1116,13 +1116,13 @@
                 const arches = Object.keys(app.archetypes).sort();
                 html += '<div class="skill-topic">';
                 html += '<div class="skill-topic-head">'
-                    + '<label style="display:flex;align-items:center;gap:10px;flex:1;cursor:pointer;margin:0;">'
-                    + '<input type="checkbox" class="skill-topic-all" data-app="' + _esc(appId) + '">'
+                    + '<input type="checkbox" class="skill-topic-all" data-app="' + _esc(appId) + '" title="Include the whole topic">'
+                    + '<button type="button" class="skill-topic-toggle" aria-expanded="false" title="Show the skills in this topic">'
+                    + '<span class="skill-caret-icon">▸</span>'
                     + '<span class="topic-name">' + _esc(app.label) + '</span>'
                     + '<span class="skill-count">' + app.count + ' Qs</span>'
-                    + '</label>'
+                    + '</button>'
                     + '<input type="number" class="topic-weight" value="1" min="0" step="1" title="Topic weight" disabled>'
-                    + '<button type="button" class="skill-caret" aria-expanded="false">Show skills</button>'
                     + '</div>';
                 html += '<div class="skill-arch-list" hidden>';
                 arches.forEach(function (a) {
@@ -1139,14 +1139,15 @@
         host.innerHTML = html;
 
         host.addEventListener('click', function (e) {
-            const caret = e.target.closest('.skill-caret');
-            if (!caret) return;
+            const toggle = e.target.closest('.skill-topic-toggle');
+            if (!toggle) return;
             e.preventDefault();
-            const list = caret.closest('.skill-topic').querySelector('.skill-arch-list');
+            const list = toggle.closest('.skill-topic').querySelector('.skill-arch-list');
             const opening = list.hidden;
             list.hidden = !opening;
-            caret.setAttribute('aria-expanded', String(opening));
-            caret.textContent = opening ? 'Hide skills' : 'Show skills';
+            toggle.setAttribute('aria-expanded', String(opening));
+            const icon = toggle.querySelector('.skill-caret-icon');
+            if (icon) icon.textContent = opening ? '▾' : '▸';
         });
         function _syncTopic(topic) {
             const all = topic.querySelectorAll('.skill-arch');

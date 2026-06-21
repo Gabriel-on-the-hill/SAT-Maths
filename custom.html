@@ -25,17 +25,22 @@
             background: rgba(255,255,255,0.02);
         }
         #skillPicker .skill-topic-head {
-            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-            cursor: pointer; font-weight: 600; font-size: 0.95rem; margin: 0;
+            display: flex; align-items: center; gap: 10px; padding: 6px 12px; margin: 0;
         }
-        #skillPicker .skill-topic-head:hover { background: rgba(255,255,255,0.03); }
-        #skillPicker .skill-topic-head .topic-name { flex: 1; }
+        #skillPicker .skill-topic-toggle {
+            flex: 1; display: flex; align-items: center; gap: 10px;
+            border: none; background: transparent; color: var(--text-main, #f1f5f9);
+            font-family: inherit; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; padding: 6px 0; text-align: left;
+        }
+        #skillPicker .skill-topic-toggle:hover { color: var(--primary, #38bdf8); }
+        #skillPicker .skill-topic-toggle .topic-name { flex: 1; }
+        #skillPicker .skill-caret-icon {
+            color: var(--text-muted, #94a3b8); font-size: 0.7rem; width: 12px;
+            display: inline-block; text-align: center;
+        }
         #skillPicker .skill-count {
             font-weight: 400; font-size: 0.78rem; color: var(--text-muted, #94a3b8);
-        }
-        #skillPicker .skill-caret {
-            border: none; background: transparent; color: var(--text-muted, #94a3b8);
-            font-size: 0.8rem; cursor: pointer; padding: 4px 8px; font-family: inherit;
         }
         #skillPicker .skill-arch-list {
             padding: 4px 12px 12px 38px; display: flex; flex-direction: column; gap: 7px;
@@ -110,7 +115,7 @@
                     <div style="margin-bottom:18px;">
                         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
                             <span style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted,#94a3b8);">Skills to practise</span>
-                            <span style="font-size:0.78rem;color:var(--text-muted,#94a3b8);">Leave all unchecked for every skill</span>
+                            <span style="font-size:0.78rem;color:var(--text-muted,#94a3b8);">Check a topic for all of it, or expand to pick skills</span>
                         </div>
                         <div id="skillPicker"></div>
                     </div>
