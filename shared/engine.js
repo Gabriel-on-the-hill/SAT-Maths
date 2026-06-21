@@ -1015,8 +1015,19 @@
         return picked;
     }
 
+    // Fisher-Yates shuffle (reorders the array in place and returns it).
+    function _shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        }
+        return arr;
+    }
+
     // Build a sitting: exclude mastered (auto-resurfaces after the 21-day decay),
-    // then order unseen -> needs-work (net<=0) -> answered-once (net>=1), least-recent first.
+    // order unseen -> needs-work (net<=0) -> answered-once (net>=1), least-recent first,
+    // apply any ratio quotas to choose WHICH questions, then shuffle the final set so
+    // topics are interleaved (SAT-style mixed presentation rather than topic blocks).
     function buildCustomSet(opts) {
         opts = opts || {};
         const MP = window.MathProgress;
@@ -1039,7 +1050,7 @@
             return (ra.lastSeen || 0) - (rb.lastSeen || 0);
         });
         const count = opts.count || 10;
-        const selected = _allocate(active, count, opts.diffWeights, opts.skillWeights);
+        const selected = _shuffle(_allocate(active, count, opts.diffWeights, opts.skillWeights));
         return { selected: selected, remaining: active.length, mastered: mastered, total: all.length };
     }
 
@@ -1226,10 +1237,14 @@
         state.customTimed = (mins > 0);
         state.customTotalSeconds = state.customTimed ? mins * 60 : 0;
         state.currentTopicIdx = 0; state.allQuestions = []; state.userAnswers = [];
+        const _requested = parseInt(opts.count, 10) || selected.length;
+        const _capNote = (selected.length < _requested)
+            ? ' Note: only ' + selected.length + ' question(s) match your current selection (you asked for ' + _requested + '), so all of them are included.'
+            : '';
         state.playlist = [{
             id: 'custom_practice',
             title: 'Custom Practice',
-            introText: 'Adaptive set: ' + selected.length + ' question(s) drawn from your chosen difficulties — newest and weakest first, mastered ones skipped. Feedback shown as you go' + (state.customTimed ? '; timed at ' + mins + ' min.' : '.'),
+            introText: 'Adaptive set: ' + selected.length + ' question(s) from your chosen skills and difficulties — mastered ones skipped, then mixed across topics for exam realism. Feedback shown as you go' + (state.customTimed ? '; timed at ' + mins + ' min.' : '.') + _capNote,
             questions: { custom: selected }
         }];
         dom.startScreen.hidden = true;
@@ -1240,9 +1255,9 @@
         if (!window.MathProgress) { alert('Progress module missing.'); return; }
         if (!opts.difficulties || !opts.difficulties.length) { alert('Pick at least one difficulty.'); return; }
         const built = buildCustomSet(opts);
-        if (built.total === 0) { alert('No questions match the selected difficulty.'); return; }
+        if (built.total === 0) { alert('No questions match the selected skills and difficulty. Try selecting more skills or difficulties.'); return; }
         if (built.selected.length === 0) {
-            if (confirm('You have mastered every question at the selected difficulty! Reset this set so you can practise it again?')) {
+            if (confirm('You have mastered every question in this selection! Reset this set so you can practise it again?')) {
                 resetCustomSet(opts);
                 _runCustom(buildCustomSet(opts).selected, opts);
             }
