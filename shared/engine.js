@@ -918,9 +918,15 @@
     // ───────── Custom Practice (cross-topic, difficulty-filtered, mastery queue) ─────────
     // Gather every question matching the chosen difficulties, tagged with its source
     // app + domain, with image paths re-rooted for the root-level custom page.
-    function _customCandidates(difficulties) {
+    // Canonical skill label for a question. Falls back to 'Untagged' so that a
+    // question without an archetype is never silently unreachable — the picker
+    // uses this exact same function, guaranteeing every question maps to a box.
+    function _skillOf(q) { return (q && q.archetype) ? String(q.archetype) : 'Untagged'; }
+
+    function _customCandidates(difficulties, skills) {
         const pools = window.EXAM_POOLS || [];
         const diffs = (difficulties || []).map(function (d) { return String(d).toLowerCase(); });
+        const skillSet = (skills && skills.length) ? new Set(skills.map(function (s) { return String(s); })) : null;
         const out = []; const seen = new Set();
         pools.forEach(function (p) {
             const raw = p.playlist;
@@ -935,6 +941,7 @@
                         if (seen.has(key)) return; seen.add(key);
                         const d = String(q.difficulty || '').toLowerCase();
                         if (diffs.length && diffs.indexOf(d) < 0) return;
+                        if (skillSet && !skillSet.has(_skillOf(q))) return;
                         const qq = Object.assign({}, q, { _appId: p.appId, _domain: p.domain });
                         if (typeof qq.question === 'string') qq.question = qq.question.replace(/src="assets\//g, 'src="' + p.appId + '/assets/');
                         if (typeof qq.question_image === 'string' && qq.question_image.indexOf('assets/') === 0) qq.question_image = p.appId + '/' + qq.question_image;
@@ -946,12 +953,74 @@
         return out;
     }
 
+    function _nonUniform(vals) {
+        if (!vals || vals.length < 2) return false;
+        for (let i = 1; i < vals.length; i++) if (vals[i] !== vals[0]) return true;
+        return false;
+    }
+
+    // Largest-remainder apportionment of `count` across weighted keys.
+    function _quota(weights, count) {
+        const keys = Object.keys(weights);
+        const tot = keys.reduce(function (a, k) { return a + (weights[k] || 0); }, 0);
+        if (tot <= 0) { const z = {}; keys.forEach(function (k) { z[k] = 0; }); return z; }
+        const parts = keys.map(function (k) {
+            const exact = count * (weights[k] || 0) / tot;
+            return { k: k, n: Math.floor(exact), r: exact - Math.floor(exact) };
+        });
+        let assigned = parts.reduce(function (a, p) { return a + p.n; }, 0);
+        parts.sort(function (a, b) { return b.r - a.r; });
+        let i = 0;
+        while (assigned < count && parts.length) { parts[i % parts.length].n++; assigned++; i++; }
+        const out = {}; parts.forEach(function (p) { out[p.k] = p.n; }); return out;
+    }
+
+    // Choose `count` from queue-ordered `active`, approximating the difficulty and
+    // skill marginals. A dimension only constrains when its weights are non-uniform,
+    // so equal weights (the default) reproduce the plain weakest-first slice. Quotas
+    // that the pool can't satisfy are backfilled in queue order, so the set always
+    // reaches `count` when enough questions exist.
+    function _allocate(active, count, diffW, skillW) {
+        const diffOn = diffW && _nonUniform(Object.keys(diffW).map(function (k) { return diffW[k]; }));
+        const skillOn = skillW && _nonUniform(Object.keys(skillW).map(function (k) { return skillW[k]; }));
+        if (!diffOn && !skillOn) return active.slice(0, count);
+        const rd = diffOn ? _quota(diffW, count) : null;
+        const rs = skillOn ? _quota(skillW, count) : null;
+        const picked = []; const used = new Set();
+        function dk(q) { return String(q.difficulty || ''); }
+        function sk(q) { return _skillOf(q); }
+        function take(q) { picked.push(q); used.add(q); if (rd && rd[dk(q)] > 0) rd[dk(q)]--; if (rs && rs[sk(q)] > 0) rs[sk(q)]--; }
+        // Pass 1: satisfy both marginals at once.
+        active.forEach(function (q) {
+            if (picked.length >= count || used.has(q)) return;
+            if (rd && !(rd[dk(q)] > 0)) return;
+            if (rs && !(rs[sk(q)] > 0)) return;
+            take(q);
+        });
+        // Pass 2: satisfy the difficulty marginal alone.
+        if (rd) active.forEach(function (q) {
+            if (picked.length >= count || used.has(q)) return;
+            if (rd[dk(q)] > 0) take(q);
+        });
+        // Pass 3: satisfy the skill marginal alone.
+        if (rs) active.forEach(function (q) {
+            if (picked.length >= count || used.has(q)) return;
+            if (rs[sk(q)] > 0) take(q);
+        });
+        // Pass 4: backfill in queue order to reach the requested count.
+        active.forEach(function (q) {
+            if (picked.length >= count || used.has(q)) return;
+            take(q);
+        });
+        return picked;
+    }
+
     // Build a sitting: exclude mastered (auto-resurfaces after the 21-day decay),
     // then order unseen -> needs-work (net<=0) -> answered-once (net>=1), least-recent first.
     function buildCustomSet(opts) {
         opts = opts || {};
         const MP = window.MathProgress;
-        const all = _customCandidates(opts.difficulties);
+        const all = _customCandidates(opts.difficulties, opts.skills);
         let mastered = 0; const active = [];
         all.forEach(function (q) {
             if (MP && MP.isMastered(q._appId, q.id)) { mastered++; return; }
@@ -970,13 +1039,179 @@
             return (ra.lastSeen || 0) - (rb.lastSeen || 0);
         });
         const count = opts.count || 10;
-        return { selected: active.slice(0, count), remaining: active.length, mastered: mastered, total: all.length };
+        const selected = _allocate(active, count, opts.diffWeights, opts.skillWeights);
+        return { selected: selected, remaining: active.length, mastered: mastered, total: all.length };
     }
 
     function resetCustomSet(opts) {
         if (!window.MathProgress || !window.MathProgress.resetRecords) return 0;
-        const pairs = _customCandidates((opts || {}).difficulties).map(function (q) { return { appId: q._appId, qid: q.id }; });
+        const pairs = _customCandidates((opts || {}).difficulties, (opts || {}).skills).map(function (q) { return { appId: q._appId, qid: q.id }; });
         return window.MathProgress.resetRecords(pairs);
+    }
+
+    // ── Skill picker (Custom Practice) ──────────────────────────────
+    // Friendly topic names, matching the hub cards.
+    var _appLabels = {
+        Linear_Equations_App: 'Linear Equations (One Variable)',
+        Linear_Functions_App: 'Linear Functions',
+        Nonlinear_Functions_App: 'Nonlinear Functions',
+        Systems_and_Expressions_App_v2: 'Systems & Expressions',
+        Proportionality_App: 'Proportionality',
+        Statistical_Reasoning_App: 'Statistical Reasoning',
+        Data_Analysis_Probability_App: 'Data Analysis & Probability',
+        Core_Geometry_App: 'Core Geometry',
+        Analytical_Geometry_App: 'Analytical Geometry & Trig'
+    };
+
+    function _esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+
+    // Builds Domain -> Topic(app) -> Skill(archetype) counts straight from the
+    // live pools, using the SAME traversal + dedup + _skillOf() as the filter.
+    // This guarantees the picker and the filter see exactly the same questions.
+    function _skillTaxonomy() {
+        const pools = window.EXAM_POOLS || [];
+        const byDomain = {};
+        pools.forEach(function (p) {
+            const raw = p.playlist;
+            const topics = Array.isArray(raw) ? raw : ((raw && typeof raw === 'object') ? [{ questions: raw }] : []);
+            const dom = p.domain || 'Other';
+            const dEntry = byDomain[dom] || (byDomain[dom] = { domain: dom, apps: {} });
+            const aEntry = dEntry.apps[p.appId] || (dEntry.apps[p.appId] = { appId: p.appId, label: _appLabels[p.appId] || p.appId, archetypes: {}, count: 0, _seen: new Set() });
+            topics.forEach(function (t) {
+                const qs = (t && t.questions) || {};
+                Object.values(qs).forEach(function (arr) {
+                    if (!Array.isArray(arr)) return;
+                    arr.forEach(function (q) {
+                        if (!q || !q.id) return;
+                        if (aEntry._seen.has(q.id)) return; aEntry._seen.add(q.id);
+                        const a = _skillOf(q);
+                        aEntry.archetypes[a] = (aEntry.archetypes[a] || 0) + 1;
+                        aEntry.count++;
+                    });
+                });
+            });
+        });
+        return byDomain;
+    }
+
+    function buildSkillPicker() {
+        const host = document.getElementById('skillPicker');
+        if (!host) return;
+        const tax = _skillTaxonomy();
+        const domainOrder = ['Algebra', 'Advanced Math', 'Problem-Solving and Data Analysis', 'Geometry and Trigonometry'];
+        const domains = Object.keys(tax).sort(function (a, b) {
+            const ia = domainOrder.indexOf(a), ib = domainOrder.indexOf(b);
+            return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+        });
+        let html = '';
+        domains.forEach(function (dom) {
+            const apps = tax[dom].apps;
+            html += '<div class="skill-domain"><div class="skill-domain-title">' + _esc(dom) + '</div>';
+            Object.keys(apps).forEach(function (appId) {
+                const app = apps[appId];
+                const arches = Object.keys(app.archetypes).sort();
+                html += '<div class="skill-topic">';
+                html += '<div class="skill-topic-head">'
+                    + '<label style="display:flex;align-items:center;gap:10px;flex:1;cursor:pointer;margin:0;">'
+                    + '<input type="checkbox" class="skill-topic-all" data-app="' + _esc(appId) + '">'
+                    + '<span class="topic-name">' + _esc(app.label) + '</span>'
+                    + '<span class="skill-count">' + app.count + ' Qs</span>'
+                    + '</label>'
+                    + '<input type="number" class="topic-weight" value="1" min="0" step="1" title="Topic weight" disabled>'
+                    + '<button type="button" class="skill-caret" aria-expanded="false">Show skills</button>'
+                    + '</div>';
+                html += '<div class="skill-arch-list" hidden>';
+                arches.forEach(function (a) {
+                    html += '<div class="skill-arch-row" style="display:flex;align-items:flex-start;gap:8px;">'
+                        + '<label style="flex:1;"><input type="checkbox" class="skill-arch" data-app="' + _esc(appId) + '" value="' + _esc(a) + '">'
+                        + '<span>' + _esc(a) + ' <span class="skill-count">(' + app.archetypes[a] + ')</span></span></label>'
+                        + '<input type="number" class="skill-weight" value="1" min="0" step="1" title="Skill weight" disabled>'
+                        + '</div>';
+                });
+                html += '</div></div>';
+            });
+            html += '</div>';
+        });
+        host.innerHTML = html;
+
+        host.addEventListener('click', function (e) {
+            const caret = e.target.closest('.skill-caret');
+            if (!caret) return;
+            e.preventDefault();
+            const list = caret.closest('.skill-topic').querySelector('.skill-arch-list');
+            const opening = list.hidden;
+            list.hidden = !opening;
+            caret.setAttribute('aria-expanded', String(opening));
+            caret.textContent = opening ? 'Hide skills' : 'Show skills';
+        });
+        function _syncTopic(topic) {
+            const all = topic.querySelectorAll('.skill-arch');
+            const checked = topic.querySelectorAll('.skill-arch:checked');
+            const head = topic.querySelector('.skill-topic-all');
+            head.checked = all.length > 0 && checked.length === all.length;
+            head.indeterminate = checked.length > 0 && checked.length < all.length;
+            const anyChecked = checked.length > 0;
+            const tw = topic.querySelector('.topic-weight');
+            if (tw) tw.disabled = !anyChecked;
+            // each skill's own weight follows its own checkbox
+            topic.querySelectorAll('.skill-arch-row').forEach(function (row) {
+                const cb = row.querySelector('.skill-arch');
+                const w = row.querySelector('.skill-weight');
+                if (w) w.disabled = !(cb && cb.checked);
+            });
+        }
+        host.addEventListener('change', function (e) {
+            const topic = e.target.closest('.skill-topic');
+            if (!topic) return;
+            if (e.target.classList.contains('skill-topic-all')) {
+                topic.querySelectorAll('.skill-arch').forEach(function (c) { c.checked = e.target.checked; });
+                e.target.indeterminate = false;
+            }
+            if (e.target.classList.contains('skill-topic-all') || e.target.classList.contains('skill-arch')) {
+                _syncTopic(topic);
+            }
+        });
+    }
+
+    function _selectedSkills() {
+        return Array.prototype.slice
+            .call(document.querySelectorAll('#skillPicker .skill-arch:checked'))
+            .map(function (c) { return c.value; });
+    }
+
+    // Relative weight per selected difficulty (default 1 each). Equal weights
+    // mean "no difficulty ratio" — the allocator then ignores this dimension.
+    function _difficultyWeights() {
+        const out = {};
+        [['diffEasy', 'Easy'], ['diffMedium', 'Medium'], ['diffHard', 'Hard']].forEach(function (pair) {
+            const cb = document.getElementById(pair[0]);
+            if (cb && cb.checked) {
+                const w = document.querySelector('.diff-weight[data-diff="' + pair[1] + '"]');
+                let v = w ? parseFloat(w.value) : 1;
+                if (isNaN(v) || v < 0) v = 1;
+                out[pair[1]] = v;
+            }
+        });
+        return out;
+    }
+
+    // Relative weight per selected skill = its own weight x its topic's weight.
+    function _skillWeights() {
+        const out = {};
+        Array.prototype.slice.call(document.querySelectorAll('#skillPicker .skill-arch:checked')).forEach(function (c) {
+            const row = c.closest('.skill-arch-row');
+            const topic = c.closest('.skill-topic');
+            let sw = row ? parseFloat((row.querySelector('.skill-weight') || {}).value) : 1;
+            let tw = topic ? parseFloat((topic.querySelector('.topic-weight') || {}).value) : 1;
+            if (isNaN(sw) || sw < 0) sw = 1;
+            if (isNaN(tw) || tw < 0) tw = 1;
+            out[c.value] = sw * tw;
+        });
+        return out;
     }
 
     function _runCustom(selected, opts) {
@@ -985,7 +1220,7 @@
         state.smartMode = false;
         state.isRetrySession = false;
         state.currentModule = 'custom';
-        state.customOpts = { difficulties: opts.difficulties, count: opts.count };
+        state.customOpts = { difficulties: opts.difficulties, count: opts.count, skills: opts.skills };
         const mins = parseInt(opts.minutes, 10);
         state.customTimed = (mins > 0);
         state.customTotalSeconds = state.customTimed ? mins * 60 : 0;
@@ -1379,6 +1614,14 @@
         window.MathTierPreview.attach(APP_ID, './manifest.json', '#tierPreview');
     }
     if (window.APP_CONFIG && window.APP_CONFIG.customMode) {
+        buildSkillPicker();
+        ['diffEasy', 'diffMedium', 'diffHard'].forEach(function (id) {
+            const cb = document.getElementById(id);
+            if (!cb) return;
+            const w = document.querySelector('.diff-weight[data-diff="' + id.replace('diff', '') + '"]');
+            const sync = function () { if (w) w.disabled = !cb.checked; };
+            cb.addEventListener('change', sync); sync();
+        });
         const _cb = document.getElementById('startCustomBtn');
         if (_cb) _cb.addEventListener('click', function () {
             const _n = document.getElementById('studentName');
@@ -1387,11 +1630,12 @@
             if (document.getElementById('diffEasy') && document.getElementById('diffEasy').checked) diffs.push('Easy');
             if (document.getElementById('diffMedium') && document.getElementById('diffMedium').checked) diffs.push('Medium');
             if (document.getElementById('diffHard') && document.getElementById('diffHard').checked) diffs.push('Hard');
+            if (!diffs.length) { alert('Pick at least one difficulty.'); return; }
             const countEl = document.getElementById('customCount');
             const minsEl = document.getElementById('customMinutes');
             const count = countEl ? (parseInt(countEl.value, 10) || 10) : 10;
             const minutes = minsEl ? (parseInt(minsEl.value, 10) || 0) : 0;
-            startCustomPractice({ difficulties: diffs, count: count, minutes: minutes });
+            startCustomPractice({ difficulties: diffs, count: count, minutes: minutes, skills: _selectedSkills(), diffWeights: _difficultyWeights(), skillWeights: _skillWeights() });
         });
     }
     if (window.APP_CONFIG && window.APP_CONFIG.examMode) {

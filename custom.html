@@ -13,6 +13,50 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <link rel="stylesheet" href="Linear_Functions_App/style.css">
+    <style>
+        #skillPicker .skill-domain { margin-bottom: 14px; }
+        #skillPicker .skill-domain-title {
+            font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
+            color: var(--primary, #38bdf8); margin: 0 0 8px; font-weight: 700;
+        }
+        #skillPicker .skill-topic {
+            border: 1px solid var(--border, rgba(255,255,255,0.12));
+            border-radius: 10px; margin-bottom: 8px; overflow: hidden;
+            background: rgba(255,255,255,0.02);
+        }
+        #skillPicker .skill-topic-head {
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+            cursor: pointer; font-weight: 600; font-size: 0.95rem; margin: 0;
+        }
+        #skillPicker .skill-topic-head:hover { background: rgba(255,255,255,0.03); }
+        #skillPicker .skill-topic-head .topic-name { flex: 1; }
+        #skillPicker .skill-count {
+            font-weight: 400; font-size: 0.78rem; color: var(--text-muted, #94a3b8);
+        }
+        #skillPicker .skill-caret {
+            border: none; background: transparent; color: var(--text-muted, #94a3b8);
+            font-size: 0.8rem; cursor: pointer; padding: 4px 8px; font-family: inherit;
+        }
+        #skillPicker .skill-arch-list {
+            padding: 4px 12px 12px 38px; display: flex; flex-direction: column; gap: 7px;
+        }
+        #skillPicker .skill-arch-list label {
+            display: flex; align-items: flex-start; gap: 8px;
+            font-size: 0.88rem; font-weight: 400; cursor: pointer; line-height: 1.35;
+            color: var(--text-main, #f1f5f9);
+        }
+        #skillPicker .skill-arch-list input[type=checkbox] { margin-top: 3px; }
+        .diff-item { display: inline-flex; align-items: center; gap: 8px; }
+        .diff-weight, #skillPicker .topic-weight, #skillPicker .skill-weight {
+            width: 46px; padding: 4px 6px; text-align: center; font-family: inherit; font-size: 0.85rem;
+            background: var(--bg-surface, #1e293b); color: var(--text-main, #f1f5f9);
+            border: 1px solid var(--border, rgba(255,255,255,0.15)); border-radius: 6px;
+        }
+        .diff-weight:disabled, #skillPicker .topic-weight:disabled, #skillPicker .skill-weight:disabled {
+            opacity: 0.3; cursor: not-allowed;
+        }
+        #skillPicker .skill-topic-head .topic-weight { margin-left: 4px; }
+    </style>
 </head>
 
 <body>
@@ -53,10 +97,22 @@
                 <div class="fade-in-delay" style="max-width:600px;margin:24px auto 0;text-align:left;background:rgba(255,255,255,0.03);border:1px solid var(--border,rgba(255,255,255,0.1));border-radius:14px;padding:24px;">
                     <h3 style="margin:0 0 16px;text-align:center;">Build your set</h3>
                     <div style="margin-bottom:18px;">
-                        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted,#94a3b8);margin-bottom:10px;">Difficulty</div>
-                        <label style="margin-right:20px;font-size:1rem;cursor:pointer;"><input type="checkbox" id="diffEasy"> Easy</label>
-                        <label style="margin-right:20px;font-size:1rem;cursor:pointer;"><input type="checkbox" id="diffMedium" checked> Medium</label>
-                        <label style="font-size:1rem;cursor:pointer;"><input type="checkbox" id="diffHard" checked> Hard</label>
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
+                            <span style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted,#94a3b8);">Difficulty</span>
+                            <span style="font-size:0.78rem;color:var(--text-muted,#94a3b8);">Weights bias the mix (equal = natural)</span>
+                        </div>
+                        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+                            <span class="diff-item"><label style="font-size:1rem;cursor:pointer;"><input type="checkbox" id="diffEasy"> Easy</label><input type="number" class="diff-weight" data-diff="Easy" value="1" min="0" step="1" title="Relative weight" disabled></span>
+                            <span class="diff-item"><label style="font-size:1rem;cursor:pointer;"><input type="checkbox" id="diffMedium" checked> Medium</label><input type="number" class="diff-weight" data-diff="Medium" value="1" min="0" step="1" title="Relative weight"></span>
+                            <span class="diff-item"><label style="font-size:1rem;cursor:pointer;"><input type="checkbox" id="diffHard" checked> Hard</label><input type="number" class="diff-weight" data-diff="Hard" value="1" min="0" step="1" title="Relative weight"></span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom:18px;">
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
+                            <span style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted,#94a3b8);">Skills to practise</span>
+                            <span style="font-size:0.78rem;color:var(--text-muted,#94a3b8);">Leave all unchecked for every skill</span>
+                        </div>
+                        <div id="skillPicker"></div>
                     </div>
                     <div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:22px;">
                         <label style="flex:1;min-width:150px;font-size:0.85rem;color:var(--text-muted,#94a3b8);">Questions this sitting
