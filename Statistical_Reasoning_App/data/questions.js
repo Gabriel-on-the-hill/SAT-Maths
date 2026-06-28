@@ -3,7 +3,7 @@ var QUESTIONS_DATA = {
         {
             "id": "2c76bcce",
             "difficulty": "Easy",
-            "question": "<img src=\"assets/easy_2c76bcce.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/easy_2c76bcce.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -21,7 +21,7 @@ var QUESTIONS_DATA = {
         {
             "id": "e7d9649f",
             "difficulty": "Easy",
-            "question": "<img src=\"assets/easy_e7d9649f.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/easy_e7d9649f.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -39,7 +39,7 @@ var QUESTIONS_DATA = {
         {
             "id": "0108ac2d",
             "difficulty": "Easy",
-            "question": "<img src=\"assets/easy_0108ac2d.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/easy_0108ac2d.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -57,7 +57,7 @@ var QUESTIONS_DATA = {
         {
             "id": "f04d40b2",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_f04d40b2.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_f04d40b2.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -75,7 +75,7 @@ var QUESTIONS_DATA = {
         {
             "id": "642519d7",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_642519d7.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_642519d7.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -93,7 +93,7 @@ var QUESTIONS_DATA = {
         {
             "id": "e03f3477",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_e03f3477.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_e03f3477.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -111,7 +111,7 @@ var QUESTIONS_DATA = {
         {
             "id": "fc46af57",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_fc46af57.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_fc46af57.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -129,7 +129,7 @@ var QUESTIONS_DATA = {
         {
             "id": "7ce2830a",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_7ce2830a.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_7ce2830a.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -147,7 +147,7 @@ var QUESTIONS_DATA = {
         {
             "id": "6fca0144",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_6fca0144.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_6fca0144.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -165,7 +165,7 @@ var QUESTIONS_DATA = {
         {
             "id": "308084c5",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_308084c5.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_308084c5.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -185,7 +185,7 @@ var QUESTIONS_DATA = {
         {
             "id": "6a305cd0",
             "difficulty": "Easy",
-            "question": "<img src=\"assets/easy_6a305cd0.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/easy_6a305cd0.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -203,7 +203,7 @@ var QUESTIONS_DATA = {
         {
             "id": "37930b2a",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_37930b2a.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_37930b2a.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -221,7 +221,7 @@ var QUESTIONS_DATA = {
         {
             "id": "53d97af5",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_53d97af5.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_53d97af5.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -239,7 +239,7 @@ var QUESTIONS_DATA = {
         {
             "id": "f8f79e11",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_f8f79e11.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_f8f79e11.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -257,7 +257,7 @@ var QUESTIONS_DATA = {
         {
             "id": "9ee22c16",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_9ee22c16.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_9ee22c16.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -276,7 +276,7 @@ var QUESTIONS_DATA = {
         {
             "id": "9ba3e283",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_9ba3e283.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_9ba3e283.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -294,7 +294,7 @@ var QUESTIONS_DATA = {
         {
             "id": "85939da5",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_85939da5.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_85939da5.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -312,7 +312,7 @@ var QUESTIONS_DATA = {
         {
             "id": "7d68096f",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_7d68096f.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_7d68096f.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -332,7 +332,7 @@ var QUESTIONS_DATA = {
         {
             "id": "90eed2e5",
             "difficulty": "Easy",
-            "question": "<img src=\"assets/easy_90eed2e5.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/easy_90eed2e5.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -351,7 +351,7 @@ var QUESTIONS_DATA = {
         {
             "id": "f4b3672a",
             "difficulty": "Easy",
-            "question": "<img src=\"assets/easy_f4b3672a.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/easy_f4b3672a.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -369,7 +369,7 @@ var QUESTIONS_DATA = {
         {
             "id": "89f8d08a",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_89f8d08a.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_89f8d08a.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -387,7 +387,7 @@ var QUESTIONS_DATA = {
         {
             "id": "b4f5a7ca",
             "difficulty": "Medium",
-            "question": "<img src=\"assets/medium_b4f5a7ca.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/medium_b4f5a7ca.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -405,7 +405,7 @@ var QUESTIONS_DATA = {
         {
             "id": "4a422e3e",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_4a422e3e.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_4a422e3e.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -423,7 +423,7 @@ var QUESTIONS_DATA = {
         {
             "id": "1ea09200",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_1ea09200.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_1ea09200.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -441,7 +441,7 @@ var QUESTIONS_DATA = {
         {
             "id": "aa43b41f",
             "difficulty": "Hard",
-            "question": "<img src=\"assets/hard_aa43b41f.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/hard_aa43b41f.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -461,7 +461,7 @@ var QUESTIONS_DATA = {
         {
             "id": "9bf4c545",
             "difficulty": "Easy",
-            "question": "<img src=\"assets/easy_9bf4c545.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/easy_9bf4c545.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
@@ -479,7 +479,7 @@ var QUESTIONS_DATA = {
         {
             "id": "82dfb646",
             "difficulty": "Easy",
-            "question": "<img src=\"assets/easy_82dfb646.png\" class=\"question-img\" alt=\"Question\">",
+            "question": "<img src=\"assets/easy_82dfb646.png\" class=\"full-q-image\" alt=\"Question\">",
             "options": [
                 "A",
                 "B",
