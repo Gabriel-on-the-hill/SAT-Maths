@@ -236,13 +236,13 @@
   }
   function styleOnce() {
     if (document.getElementById('challenge-css')) return;
-    var css = '#challengeRoot{max-width:760px;margin:0 auto;padding:24px;font-family:Outfit,system-ui,sans-serif;color:#0f172a}' +
+    var css = '#challengeRoot{max-width:820px;margin:0 auto;padding:24px;font-family:Outfit,system-ui,sans-serif;color:#0f172a}' +
       '.ttl{font-size:1.5rem;font-weight:800;margin:0 0 8px}.tally{color:#475569;font-size:.95rem;margin:0 0 16px}' +
       '.setup{display:flex;flex-direction:column;gap:12px;max-width:320px}.setup input[type=number]{padding:10px;font-size:1rem;border:1px solid #cbd5e1;border-radius:8px}' +
       '.chk{display:flex;align-items:center;gap:8px}.btn{padding:12px 16px;border:0;border-radius:10px;background:#2563eb;color:#fff;font-weight:700;font-size:1rem;cursor:pointer}' +
       '.btn.ghost{background:#e2e8f0;color:#0f172a}.btn:hover{filter:brightness(1.05)}.msg{background:#f1f5f9;padding:12px;border-radius:8px}.msg.ok{background:#dcfce7}' +
       '.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#475569;font-size:.9rem;margin-bottom:12px}.timer{font-weight:800;color:#b91c1c}' +
-      '.qbox{margin:8px 0 16px}.qimg{max-width:100%;height:auto;border:1px solid #e2e8f0;border-radius:8px}.opts{display:flex;flex-direction:column;gap:10px;max-width:520px}' +
+      '.qbox{margin:8px 0 16px}.qimg{width:100%;height:auto;display:block;box-sizing:border-box;background:#fff;padding:14px;border:1px solid #e2e8f0;border-radius:12px;box-shadow:inset 0 2px 4px rgba(0,0,0,.05)}.opts{display:flex;flex-direction:column;gap:10px;max-width:none}' +
       '.opt{text-align:left;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;font-size:1rem;cursor:pointer}.opt:hover{border-color:#2563eb;background:#eff6ff}' +
       '.grid{padding:10px;font-size:1.05rem;border:1px solid #cbd5e1;border-radius:8px;margin-right:8px}' +
       '.verdict{font-weight:800;font-size:1.15rem;margin-bottom:10px}.verdict.ok{color:#15803d}.verdict.no{color:#b91c1c}' +
