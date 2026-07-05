@@ -114,7 +114,8 @@
     if (!n || n < 1) return;
     var queue = servable(POOL, includeMastered);
     if (!queue.length) { screenStart(); return; }
-    S = { n: n, done: 0, correct: 0, queue: queue, timed: !!timed, endsAt: 0, timerId: 0 };
+    S = { n: n, done: 0, correct: 0, queue: queue, timed: !!timed, endsAt: 0, timerId: 0,
+           includeMastered: !!includeMastered, sessionId: 'challenge_' + Date.now(), startedAt: Date.now(), detail: [] };
     if (timed) {
       var secs = estimateSeconds(queue, n);
       S.endsAt = Date.now() + secs * 1000;
@@ -189,6 +190,7 @@
     var elapsed = Date.now() - started;
     if (window.MathProgress) window.MathProgress.recordAnswer(q.app, q.id, isCorrect, SRC, elapsed);
     S.done++; if (isCorrect) S.correct++;
+    S.detail.push({ id: q.id, app: q.app, domain: q.domain || '', difficulty: q.difficulty || '', answered: true, correct: !!isCorrect });
     // requeue: back of its (new) segment, so it returns later, not now
     if (segOf(q) !== 'mastered' || S.includeMastered) S.queue.push(q);
     reveal(q, isCorrect);
@@ -209,6 +211,24 @@
     if (S && S.timerId) clearInterval(S.timerId);
     clear();
     var c = counts(POOL);
+    if (window.MathSession && MathSession.logCompletion) {
+      var nm = (window.MathGate && MathGate.currentName && MathGate.currentName()) || '';
+      var agg = {};
+      S.detail.forEach(function (d) { if (!d.domain) return; var a = agg[d.domain] || (agg[d.domain] = { c: 0, t: 0 }); a.t++; if (d.correct) a.c++; });
+      var bd = Object.keys(agg).map(function (k) { return k + ' ' + agg[k].c + '/' + agg[k].t; }).join('; ');
+      try {
+        MathSession.logCompletion({
+          sessionId: S.sessionId, appId: 'Challenge_App',
+          appName: 'Challenge Set', module: 'challenge',
+          variant: S.includeMastered ? 'reattempt' : 'drill', topicTitle: 'Challenge Set',
+          score: S.correct, gradable: S.done, ungraded: 0, missed: S.done - S.correct,
+          durationMs: Date.now() - S.startedAt, startedAt: S.startedAt, completedAt: Date.now(),
+          studentName: nm,
+          domainBreakdown: (bd ? bd + ' \u00b7 ' : '') + 'mastered ' + c.mastered + '/' + c.total,
+          detail: S.detail
+        });
+      } catch (e) {}
+    }
     root.appendChild(el('h1', { class: 'ttl' }, 'Session complete'));
     if (reason === 'time') root.appendChild(el('p', { class: 'msg' }, 'Time is up.'));
     root.appendChild(el('p', null, 'You answered <b>' + S.correct + '</b> of <b>' + S.done + '</b> correctly this session.'));
