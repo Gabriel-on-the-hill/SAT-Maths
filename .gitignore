@@ -28,7 +28,10 @@
 !/Core_Geometry_App/
 !/Analytical_Geometry_App/
 !/Data_Analysis_Probability_App/
+!/Challenge_App/
 
 # OS cruft, even inside published folders
 .DS_Store
 Thumbs.db
+'!/Challenge_App/' 
+'!/Challenge_App/' 
