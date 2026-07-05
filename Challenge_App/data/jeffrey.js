@@ -12,7 +12,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "daad7c32",
@@ -26,7 +28,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "ac472881",
@@ -40,7 +44,9 @@ var PLAYLIST = {
       "trapName": "Matching only the coefficient or only the constant, not both",
       "strategy": "Infinitely many solutions ⇒ set the sides identical; equate $x$-coefficients and constants separately.",
       "timeTarget": 120,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "2e92cc21",
@@ -59,12 +65,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "5b4757df",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_5b4757df.png",
       "answer": "14.66",
@@ -74,7 +82,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "98958ae8",
@@ -88,7 +97,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "0121a235",
@@ -102,7 +113,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "0b0fa68b",
@@ -116,7 +129,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "f75bd744",
@@ -130,7 +145,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8c5dbd3e",
@@ -149,12 +166,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "e10d8313",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_e10d8313.png",
       "answer": "123",
@@ -164,7 +183,8 @@ var PLAYLIST = {
       "archetype": "Triangle angle sum and exterior angles",
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "1e8ccffd",
@@ -178,7 +198,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "52cb8ea4",
@@ -192,7 +214,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "023c0a8d",
@@ -206,7 +230,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e6cb2402",
@@ -223,7 +249,9 @@ var PLAYLIST = {
       "trapName": "Swapped the two conditions",
       "strategy": "Distribute both sides completely.",
       "timeTarget": 60,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "65c49824",
@@ -242,12 +270,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "459dd6c5",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_459dd6c5.png",
       "answer": "135/8",
@@ -257,7 +287,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "9d935bd8",
@@ -271,7 +302,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "fb5e7f59",
@@ -285,7 +318,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "b988eeec",
@@ -299,7 +334,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e2e3942f",
@@ -313,7 +350,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8637294f",
@@ -332,12 +371,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "eb70d2d0",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_eb70d2d0.png",
       "answer": "24.5",
@@ -347,7 +388,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "94237701",
@@ -361,7 +403,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     }
   ],
   "independent": [
@@ -377,7 +421,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "daad7c32",
@@ -391,7 +437,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "ac472881",
@@ -405,7 +453,9 @@ var PLAYLIST = {
       "trapName": "Matching only the coefficient or only the constant, not both",
       "strategy": "Infinitely many solutions ⇒ set the sides identical; equate $x$-coefficients and constants separately.",
       "timeTarget": 120,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "2e92cc21",
@@ -424,12 +474,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "5b4757df",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_5b4757df.png",
       "answer": "14.66",
@@ -439,7 +491,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "98958ae8",
@@ -453,7 +506,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "0121a235",
@@ -467,7 +522,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "0b0fa68b",
@@ -481,7 +538,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "f75bd744",
@@ -495,7 +554,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8c5dbd3e",
@@ -514,12 +575,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "e10d8313",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_e10d8313.png",
       "answer": "123",
@@ -529,7 +592,8 @@ var PLAYLIST = {
       "archetype": "Triangle angle sum and exterior angles",
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "1e8ccffd",
@@ -543,7 +607,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "52cb8ea4",
@@ -557,7 +623,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "023c0a8d",
@@ -571,7 +639,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e6cb2402",
@@ -588,7 +658,9 @@ var PLAYLIST = {
       "trapName": "Swapped the two conditions",
       "strategy": "Distribute both sides completely.",
       "timeTarget": 60,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "65c49824",
@@ -607,12 +679,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "459dd6c5",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_459dd6c5.png",
       "answer": "135/8",
@@ -622,7 +696,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "9d935bd8",
@@ -636,7 +711,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "fb5e7f59",
@@ -650,7 +727,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "b988eeec",
@@ -664,7 +743,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e2e3942f",
@@ -678,7 +759,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8637294f",
@@ -697,12 +780,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "eb70d2d0",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_eb70d2d0.png",
       "answer": "24.5",
@@ -712,7 +797,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "94237701",
@@ -726,7 +812,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     }
   ],
   "homework": [
@@ -742,7 +830,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "daad7c32",
@@ -756,7 +846,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "ac472881",
@@ -770,7 +862,9 @@ var PLAYLIST = {
       "trapName": "Matching only the coefficient or only the constant, not both",
       "strategy": "Infinitely many solutions ⇒ set the sides identical; equate $x$-coefficients and constants separately.",
       "timeTarget": 120,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "2e92cc21",
@@ -789,12 +883,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "5b4757df",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_5b4757df.png",
       "answer": "14.66",
@@ -804,7 +900,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "98958ae8",
@@ -818,7 +915,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "0121a235",
@@ -832,7 +931,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "0b0fa68b",
@@ -846,7 +947,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "f75bd744",
@@ -860,7 +963,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8c5dbd3e",
@@ -879,12 +984,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "e10d8313",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_e10d8313.png",
       "answer": "123",
@@ -894,7 +1001,8 @@ var PLAYLIST = {
       "archetype": "Triangle angle sum and exterior angles",
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "1e8ccffd",
@@ -908,7 +1016,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "52cb8ea4",
@@ -922,7 +1032,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "023c0a8d",
@@ -936,7 +1048,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e6cb2402",
@@ -953,7 +1067,9 @@ var PLAYLIST = {
       "trapName": "Swapped the two conditions",
       "strategy": "Distribute both sides completely.",
       "timeTarget": 60,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "65c49824",
@@ -972,12 +1088,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "459dd6c5",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_459dd6c5.png",
       "answer": "135/8",
@@ -987,7 +1105,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "9d935bd8",
@@ -1001,7 +1120,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "fb5e7f59",
@@ -1015,7 +1136,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "b988eeec",
@@ -1029,7 +1152,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e2e3942f",
@@ -1043,7 +1168,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8637294f",
@@ -1062,12 +1189,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "eb70d2d0",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_eb70d2d0.png",
       "answer": "24.5",
@@ -1077,7 +1206,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "94237701",
@@ -1091,7 +1221,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     }
   ],
   "exam": [
@@ -1107,7 +1239,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "daad7c32",
@@ -1121,7 +1255,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "ac472881",
@@ -1135,7 +1271,9 @@ var PLAYLIST = {
       "trapName": "Matching only the coefficient or only the constant, not both",
       "strategy": "Infinitely many solutions ⇒ set the sides identical; equate $x$-coefficients and constants separately.",
       "timeTarget": 120,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "2e92cc21",
@@ -1154,12 +1292,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "5b4757df",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_5b4757df.png",
       "answer": "14.66",
@@ -1169,7 +1309,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "98958ae8",
@@ -1183,7 +1324,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "0121a235",
@@ -1197,7 +1340,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "0b0fa68b",
@@ -1211,7 +1356,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "f75bd744",
@@ -1225,7 +1372,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8c5dbd3e",
@@ -1244,12 +1393,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "e10d8313",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_e10d8313.png",
       "answer": "123",
@@ -1259,7 +1410,8 @@ var PLAYLIST = {
       "archetype": "Triangle angle sum and exterior angles",
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "1e8ccffd",
@@ -1273,7 +1425,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "52cb8ea4",
@@ -1287,7 +1441,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "023c0a8d",
@@ -1301,7 +1457,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e6cb2402",
@@ -1318,7 +1476,9 @@ var PLAYLIST = {
       "trapName": "Swapped the two conditions",
       "strategy": "Distribute both sides completely.",
       "timeTarget": 60,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "65c49824",
@@ -1337,12 +1497,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "459dd6c5",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_459dd6c5.png",
       "answer": "135/8",
@@ -1352,7 +1514,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "9d935bd8",
@@ -1366,7 +1529,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "fb5e7f59",
@@ -1380,7 +1545,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "b988eeec",
@@ -1394,7 +1561,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e2e3942f",
@@ -1408,7 +1577,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8637294f",
@@ -1427,12 +1598,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "eb70d2d0",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_eb70d2d0.png",
       "answer": "24.5",
@@ -1442,7 +1615,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "94237701",
@@ -1456,7 +1630,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     }
   ],
   "additional": [
@@ -1472,7 +1648,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "daad7c32",
@@ -1486,7 +1664,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "ac472881",
@@ -1500,7 +1680,9 @@ var PLAYLIST = {
       "trapName": "Matching only the coefficient or only the constant, not both",
       "strategy": "Infinitely many solutions ⇒ set the sides identical; equate $x$-coefficients and constants separately.",
       "timeTarget": 120,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "2e92cc21",
@@ -1519,12 +1701,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "5b4757df",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_5b4757df.png",
       "answer": "14.66",
@@ -1534,7 +1718,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "98958ae8",
@@ -1548,7 +1733,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "0121a235",
@@ -1562,7 +1749,9 @@ var PLAYLIST = {
       "archetype": "Polynomial zeros / factor theorem",
       "trapName": "Sign flipped on the zero",
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Nonlinear_Functions_App",
+      "domain": "Advanced Math"
     },
     {
       "id": "0b0fa68b",
@@ -1576,7 +1765,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "f75bd744",
@@ -1590,7 +1781,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8c5dbd3e",
@@ -1609,12 +1802,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "e10d8313",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_e10d8313.png",
       "answer": "123",
@@ -1624,7 +1819,8 @@ var PLAYLIST = {
       "archetype": "Triangle angle sum and exterior angles",
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "1e8ccffd",
@@ -1638,7 +1834,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "52cb8ea4",
@@ -1652,7 +1850,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "023c0a8d",
@@ -1666,7 +1866,9 @@ var PLAYLIST = {
       "archetype": "Slope-intercept form (y = mx + b)",
       "trapName": "Confused slope (m) with y-intercept (b)",
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e6cb2402",
@@ -1683,7 +1885,9 @@ var PLAYLIST = {
       "trapName": "Swapped the two conditions",
       "strategy": "Distribute both sides completely.",
       "timeTarget": 60,
-      "difficulty": "Hard"
+      "difficulty": "Hard",
+      "app": "Linear_Equations_App",
+      "domain": "Algebra"
     },
     {
       "id": "65c49824",
@@ -1702,12 +1906,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "459dd6c5",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_459dd6c5.png",
       "answer": "135/8",
@@ -1717,7 +1923,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "9d935bd8",
@@ -1731,7 +1938,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "fb5e7f59",
@@ -1745,7 +1954,9 @@ var PLAYLIST = {
       "archetype": "Equivalent expressions (factoring / expanding)",
       "trapName": "Lost a sign or missed a term",
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "b988eeec",
@@ -1759,7 +1970,9 @@ var PLAYLIST = {
       "archetype": "Interpret slope or intercept in a real-world context",
       "trapName": "Confused rate of change (slope) with initial value (y-intercept), or confused x-intercept with y-intercept",
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Linear_Functions_App",
+      "domain": "Algebra"
     },
     {
       "id": "e2e3942f",
@@ -1773,7 +1986,9 @@ var PLAYLIST = {
       "archetype": "Number of solutions (0, 1, or infinite)",
       "trapName": "Mixed up ",
       "strategy": "One solution → different slopes (lines cross).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Systems_and_Expressions_App_v2",
+      "domain": "Advanced Math"
     },
     {
       "id": "8637294f",
@@ -1792,12 +2007,14 @@ var PLAYLIST = {
       "archetype": "Percent in a real-world context",
       "trapName": "Applied percent to the wrong base",
       "strategy": "Identify the base value (the ",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Proportionality_App",
+      "domain": "Problem-Solving and Data Analysis"
     },
     {
       "id": "eb70d2d0",
       "difficulty": "Hard",
-      "domain": "Algebra",
+      "domain": "Geometry and Trigonometry",
       "skill": "Core Geometry",
       "question_image": "assets/hard_eb70d2d0.png",
       "answer": "24.5",
@@ -1807,7 +2024,8 @@ var PLAYLIST = {
       "archetype": "Area, perimeter, rectangles and triangles",
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Core_Geometry_App"
     },
     {
       "id": "94237701",
@@ -1821,7 +2039,9 @@ var PLAYLIST = {
       "archetype": "Mean, median, mode",
       "trapName": "Used mean when median was needed",
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
-      "timeTarget": 60
+      "timeTarget": 60,
+      "app": "Data_Analysis_Probability_App",
+      "domain": "Problem-Solving and Data Analysis"
     }
   ]
 };
