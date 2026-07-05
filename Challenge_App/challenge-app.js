@@ -212,7 +212,8 @@
     clear();
     var c = counts(POOL);
     if (window.MathSession && MathSession.logCompletion) {
-      var nm = (window.MathGate && MathGate.currentName && MathGate.currentName()) || '';
+      var _f = document.getElementById('studentName');
+      var nm = (_f && _f.value.trim()) || (window.MathGate && MathGate.currentName && MathGate.currentName()) || '';
       var agg = {};
       S.detail.forEach(function (d) { if (!d.domain) return; var a = agg[d.domain] || (agg[d.domain] = { c: 0, t: 0 }); a.t++; if (d.correct) a.c++; });
       var bd = Object.keys(agg).map(function (k) { return k + ' ' + agg[k].c + '/' + agg[k].t; }).join('; ');
