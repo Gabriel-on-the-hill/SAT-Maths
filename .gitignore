@@ -28,7 +28,20 @@
 !/Core_Geometry_App/
 !/Analytical_Geometry_App/
 !/Data_Analysis_Probability_App/
+!/Challenge_App/
+
+# 3) Tutor-side tooling. Tracked so it survives a fresh clone. It is served by
+#    Pages like everything else, so it must stay free of passwords and student
+#    data: the challenge builder derives a student's roster key from their
+#    display name and holds no credentials.
+!/build_challenge_set.py
+!/CHALLENGE_SETS_RUNBOOK.md
 
 # OS cruft, even inside published folders
 .DS_Store
 Thumbs.db
+
+# NOTE: this repo IS the public site (Pages serves the root), so anything
+# tracked here is world-readable. Never allow-list a file holding a password,
+# a key, or student data. Tutor-side tooling (build_challenge_set.py, the
+# runbooks) is deliberately NOT published — it stays local.

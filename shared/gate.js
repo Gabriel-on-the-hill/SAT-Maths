@@ -5,16 +5,14 @@
 // Unlock persists per browser tab (sessionStorage) — closing the tab re-locks.
 //
 // Passwords are matched by SHA-256 hash so the plaintext is never in source.
-// To change passwords:
+// This repo IS the public site, so never write a password here, not even in a
+// comment: keep the plaintext out of git entirely.
+//
+// To change a password:
 //   1. Open devtools console on any page.
 //   2. Run:  await MathGate._hash('your-new-password')
 //   3. Copy the returned hex string into PASSWORD_HASHES below.
 //   4. Sync + push.
-//
-// Accepted passwords:
-//   - michael   → student login
-//   - jeffrey   → student login
-//   - gabe      → tutor login
 
 (function () {
     const UNLOCK_KEY = 'edutrack_math_unlocked_v1';

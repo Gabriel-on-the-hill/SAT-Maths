@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../shared/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Challenge Set</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>body{margin:0;background:#f8fafc}</style>
+</head>
+<body>
+  <input type="hidden" id="studentName">
+  <div id="challengeRoot"></div>
+
+  <!-- KaTeX for explanation math (optional, best-effort) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Identity + persistence (reused from the shared app) -->
+  <script src="../shared/progress.js"></script>
+  <script src="../shared/session.js"></script>
+
+  <!-- Per-student roster, then the app (waits for login, loads the set) -->
+  <script src="data/manifest.js"></script>
+  <script src="challenge-app.js"></script>
+</body>
+</html>
