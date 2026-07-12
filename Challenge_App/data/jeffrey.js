@@ -14,7 +14,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "daad7c32",
@@ -30,7 +31,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "ac472881",
@@ -46,7 +48,8 @@ var PLAYLIST = {
       "timeTarget": 120,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "2e92cc21",
@@ -67,7 +70,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "5b4757df",
@@ -83,7 +87,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "98958ae8",
@@ -99,7 +104,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "0121a235",
@@ -115,7 +121,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "0b0fa68b",
@@ -131,7 +138,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "f75bd744",
@@ -147,7 +155,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8c5dbd3e",
@@ -168,7 +177,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "e10d8313",
@@ -184,7 +194,8 @@ var PLAYLIST = {
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "1e8ccffd",
@@ -200,7 +211,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "52cb8ea4",
@@ -216,7 +228,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "023c0a8d",
@@ -232,7 +245,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e6cb2402",
@@ -251,7 +265,8 @@ var PLAYLIST = {
       "timeTarget": 60,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "65c49824",
@@ -272,7 +287,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "459dd6c5",
@@ -288,7 +304,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "9d935bd8",
@@ -304,7 +321,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "fb5e7f59",
@@ -320,7 +338,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "b988eeec",
@@ -336,7 +355,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e2e3942f",
@@ -352,7 +372,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8637294f",
@@ -373,7 +394,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "eb70d2d0",
@@ -389,7 +411,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "94237701",
@@ -405,7 +428,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     }
   ],
   "independent": [
@@ -423,7 +447,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "daad7c32",
@@ -439,7 +464,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "ac472881",
@@ -455,7 +481,8 @@ var PLAYLIST = {
       "timeTarget": 120,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "2e92cc21",
@@ -476,7 +503,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "5b4757df",
@@ -492,7 +520,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "98958ae8",
@@ -508,7 +537,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "0121a235",
@@ -524,7 +554,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "0b0fa68b",
@@ -540,7 +571,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "f75bd744",
@@ -556,7 +588,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8c5dbd3e",
@@ -577,7 +610,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "e10d8313",
@@ -593,7 +627,8 @@ var PLAYLIST = {
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "1e8ccffd",
@@ -609,7 +644,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "52cb8ea4",
@@ -625,7 +661,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "023c0a8d",
@@ -641,7 +678,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e6cb2402",
@@ -660,7 +698,8 @@ var PLAYLIST = {
       "timeTarget": 60,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "65c49824",
@@ -681,7 +720,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "459dd6c5",
@@ -697,7 +737,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "9d935bd8",
@@ -713,7 +754,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "fb5e7f59",
@@ -729,7 +771,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "b988eeec",
@@ -745,7 +788,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e2e3942f",
@@ -761,7 +805,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8637294f",
@@ -782,7 +827,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "eb70d2d0",
@@ -798,7 +844,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "94237701",
@@ -814,7 +861,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     }
   ],
   "homework": [
@@ -832,7 +880,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "daad7c32",
@@ -848,7 +897,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "ac472881",
@@ -864,7 +914,8 @@ var PLAYLIST = {
       "timeTarget": 120,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "2e92cc21",
@@ -885,7 +936,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "5b4757df",
@@ -901,7 +953,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "98958ae8",
@@ -917,7 +970,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "0121a235",
@@ -933,7 +987,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "0b0fa68b",
@@ -949,7 +1004,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "f75bd744",
@@ -965,7 +1021,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8c5dbd3e",
@@ -986,7 +1043,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "e10d8313",
@@ -1002,7 +1060,8 @@ var PLAYLIST = {
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "1e8ccffd",
@@ -1018,7 +1077,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "52cb8ea4",
@@ -1034,7 +1094,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "023c0a8d",
@@ -1050,7 +1111,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e6cb2402",
@@ -1069,7 +1131,8 @@ var PLAYLIST = {
       "timeTarget": 60,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "65c49824",
@@ -1090,7 +1153,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "459dd6c5",
@@ -1106,7 +1170,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "9d935bd8",
@@ -1122,7 +1187,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "fb5e7f59",
@@ -1138,7 +1204,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "b988eeec",
@@ -1154,7 +1221,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e2e3942f",
@@ -1170,7 +1238,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8637294f",
@@ -1191,7 +1260,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "eb70d2d0",
@@ -1207,7 +1277,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "94237701",
@@ -1223,7 +1294,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     }
   ],
   "exam": [
@@ -1241,7 +1313,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "daad7c32",
@@ -1257,7 +1330,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "ac472881",
@@ -1273,7 +1347,8 @@ var PLAYLIST = {
       "timeTarget": 120,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "2e92cc21",
@@ -1294,7 +1369,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "5b4757df",
@@ -1310,7 +1386,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "98958ae8",
@@ -1326,7 +1403,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "0121a235",
@@ -1342,7 +1420,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "0b0fa68b",
@@ -1358,7 +1437,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "f75bd744",
@@ -1374,7 +1454,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8c5dbd3e",
@@ -1395,7 +1476,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "e10d8313",
@@ -1411,7 +1493,8 @@ var PLAYLIST = {
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "1e8ccffd",
@@ -1427,7 +1510,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "52cb8ea4",
@@ -1443,7 +1527,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "023c0a8d",
@@ -1459,7 +1544,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e6cb2402",
@@ -1478,7 +1564,8 @@ var PLAYLIST = {
       "timeTarget": 60,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "65c49824",
@@ -1499,7 +1586,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "459dd6c5",
@@ -1515,7 +1603,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "9d935bd8",
@@ -1531,7 +1620,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "fb5e7f59",
@@ -1547,7 +1637,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "b988eeec",
@@ -1563,7 +1654,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e2e3942f",
@@ -1579,7 +1671,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8637294f",
@@ -1600,7 +1693,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "eb70d2d0",
@@ -1616,7 +1710,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "94237701",
@@ -1632,7 +1727,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     }
   ],
   "additional": [
@@ -1650,7 +1746,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "daad7c32",
@@ -1666,7 +1763,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "ac472881",
@@ -1682,7 +1780,8 @@ var PLAYLIST = {
       "timeTarget": 120,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "2e92cc21",
@@ -1703,7 +1802,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "5b4757df",
@@ -1719,7 +1819,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "98958ae8",
@@ -1735,7 +1836,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "0121a235",
@@ -1751,7 +1853,8 @@ var PLAYLIST = {
       "strategy": "Factor theorem: if (x − r) is a factor, then r is a zero (f(r) = 0).",
       "timeTarget": 60,
       "app": "Nonlinear_Functions_App",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "0b0fa68b",
@@ -1767,7 +1870,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "f75bd744",
@@ -1783,7 +1887,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8c5dbd3e",
@@ -1804,7 +1909,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "e10d8313",
@@ -1820,7 +1926,8 @@ var PLAYLIST = {
       "trapName": "Forgot exterior + adjacent interior = 180°",
       "strategy": "Interior angles of any triangle sum to 180°.",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "1e8ccffd",
@@ -1836,7 +1943,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "52cb8ea4",
@@ -1852,7 +1960,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "023c0a8d",
@@ -1868,7 +1977,8 @@ var PLAYLIST = {
       "strategy": "Rearrange to y = mx + b first. m is the coefficient on x; b is the constant. Never read m or b until the equation is solved for y.",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e6cb2402",
@@ -1887,7 +1997,8 @@ var PLAYLIST = {
       "timeTarget": 60,
       "difficulty": "Hard",
       "app": "Linear_Equations_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "65c49824",
@@ -1908,7 +2019,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "459dd6c5",
@@ -1924,7 +2036,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "9d935bd8",
@@ -1940,7 +2053,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "fb5e7f59",
@@ -1956,7 +2070,8 @@ var PLAYLIST = {
       "strategy": "Expanding: distribute every term in the first bracket to every term in the second (FOIL).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "b988eeec",
@@ -1972,7 +2087,8 @@ var PLAYLIST = {
       "strategy": "y-intercept = value when x = 0 (the \"starting\" amount). Slope = change in y per unit increase in x. x-intercept = when y becomes 0 (the \"ends\" or \"stops\" event).",
       "timeTarget": 60,
       "app": "Linear_Functions_App",
-      "domain": "Algebra"
+      "domain": "Algebra",
+      "addedAt": 1783866015790
     },
     {
       "id": "e2e3942f",
@@ -1988,7 +2104,8 @@ var PLAYLIST = {
       "strategy": "One solution → different slopes (lines cross).",
       "timeTarget": 60,
       "app": "Systems_and_Expressions_App_v2",
-      "domain": "Advanced Math"
+      "domain": "Advanced Math",
+      "addedAt": 1783866015790
     },
     {
       "id": "8637294f",
@@ -2009,7 +2126,8 @@ var PLAYLIST = {
       "strategy": "Identify the base value (the ",
       "timeTarget": 60,
       "app": "Proportionality_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     },
     {
       "id": "eb70d2d0",
@@ -2025,7 +2143,8 @@ var PLAYLIST = {
       "trapName": "Used the slant instead of the perpendicular height",
       "strategy": "Rectangle: Area = length × width. Perimeter = 2(l + w).",
       "timeTarget": 60,
-      "app": "Core_Geometry_App"
+      "app": "Core_Geometry_App",
+      "addedAt": 1783866015790
     },
     {
       "id": "94237701",
@@ -2041,7 +2160,8 @@ var PLAYLIST = {
       "strategy": "Mean = sum / count. Pulled by outliers — sensitive.",
       "timeTarget": 60,
       "app": "Data_Analysis_Probability_App",
-      "domain": "Problem-Solving and Data Analysis"
+      "domain": "Problem-Solving and Data Analysis",
+      "addedAt": 1783866015790
     }
   ]
 };

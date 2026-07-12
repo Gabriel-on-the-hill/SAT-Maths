@@ -33,5 +33,8 @@
 # OS cruft, even inside published folders
 .DS_Store
 Thumbs.db
-'!/Challenge_App/' 
-'!/Challenge_App/' 
+
+# NOTE: this repo IS the public site (Pages serves the root), so anything
+# tracked here is world-readable. Never allow-list a file holding a password,
+# a key, or student data. Tutor-side tooling (build_challenge_set.py, the
+# runbooks) is deliberately NOT published — it stays local.
