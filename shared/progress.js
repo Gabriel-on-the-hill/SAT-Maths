@@ -21,7 +21,31 @@
     const STORAGE_KEY = 'edutrack_math_progress_v1';
     const SCHEMA_VERSION = 1;
     const MASTERY_THRESHOLD = 2;            // correct - wrong >= 2 to be mastered
-    const MASTERY_DECAY_MS = 21 * 86_400_000; // 21 days
+    const MASTERY_DECAY_MS = 21 * 86_400_000; // 21 days — superseded by the ladder below,
+                                              // kept only so _internals stays backward-compatible.
+
+    // ── The review ladder ─────────────────────────────────────────────
+    // Mastery does not expire on a flat clock. Each consecutive correct answer
+    // pushes the next sighting further out; a miss drops the question to the
+    // bottom rung.
+    //
+    //   1st correct → back in 1 day    4th  → back in 3 weeks
+    //   2nd         → 3 days           5th+ → back in 6 weeks, then maintenance
+    //   3rd         → 1 week
+    //
+    // This replaces the old flat 21-day decay, which treated a question answered
+    // right twice exactly like one answered right nine times: both rested 21 days,
+    // then both came back. The ladder spends the student's time where it is worth
+    // spending — often on the shaky ones, rarely on the solid ones (`MR-1`, `MR-3`
+    // in the root handbook).
+    //
+    // The tier machinery it feeds is UNCHANGED and must stay that way: when a rung
+    // elapses, isMastered() goes false, tierFor() returns 'learning', and
+    // prioritize() serves 'learning' AHEAD of 'unseen' — so the question actually
+    // comes back. The sister R&W app had that tier order inverted, and a question
+    // the student had learned was never drawn again. See AGENTS.md.
+    const REVIEW_LADDER_DAYS = [1, 3, 7, 21, 42];
+    const DAY_MS = 86_400_000;
 
     function _emptyLedger() {
         return { version: SCHEMA_VERSION, records: {} };
@@ -65,8 +89,32 @@
             attempts: 0,
             totalTimeMs: 0,
             lastSeen: 0,
-            lastSource: null
+            lastSource: null,
+            streak: 0          // consecutive corrects — which rung of the ladder
         };
+    }
+
+    // Consecutive corrects. Ledgers written before the ladder existed carry no
+    // `streak`, so infer one rather than resetting real students to zero: credit
+    // the net corrects they have already banked.
+    function _streak(rec) {
+        if (!rec) return 0;
+        if (typeof rec.streak === 'number') return rec.streak;
+        return Math.max(0, _net(rec));
+    }
+
+    // When this question should next be put in front of the student.
+    function _dueAt(rec) {
+        if (!rec || !rec.lastSeen) return 0;
+        const s = _streak(rec);
+        if (s <= 0) return rec.lastSeen;   // not on the ladder — it is already due
+        const rung = REVIEW_LADDER_DAYS[Math.min(s, REVIEW_LADDER_DAYS.length) - 1];
+        return rec.lastSeen + rung * DAY_MS;
+    }
+
+    function _isDue(rec) {
+        if (!rec || !rec.lastSeen) return false;
+        return Date.now() >= _dueAt(rec);
     }
 
     // Record a single answer. source affects scoring weight:
@@ -79,6 +127,11 @@
         const rec = ledger.records[k] || _emptyRecord();
         const weight = (source === 'exam') ? 2 : 1;
 
+        // Read the rung BEFORE touching anything. _streak() falls back to net-correct
+        // for pre-ladder ledgers, so computing it after correct++ would count a single
+        // right answer as two rungs and double-space the question.
+        const rung = _streak(rec);
+
         rec.attempts += 1;
         rec.totalTimeMs += (typeof elapsedMs === 'number' && elapsedMs >= 0) ? elapsedMs : 0;
         rec.lastSeen = Date.now();
@@ -86,9 +139,11 @@
 
         if (isCorrect) {
             rec.correct += weight;
+            rec.streak = rung + 1;      // climb a rung
         } else {
             rec.wrong += 1;
             rec.correct = Math.max(0, rec.correct - 1);
+            rec.streak = 0;             // back to the bottom
         }
 
         ledger.records[k] = rec;
@@ -105,12 +160,16 @@
         return (rec.correct || 0) - (rec.wrong || 0);
     }
 
-    // Mastered = net correct >= threshold AND last seen within decay window
+    // Mastered = net correct >= threshold AND its ladder rung has not yet elapsed.
+    //
+    // When the rung elapses the question is DUE: isMastered() goes false, tierFor()
+    // drops it to 'learning', and prioritize() serves 'learning' ahead of 'unseen',
+    // so it comes back. That is the whole review mechanism — do not "tidy" it.
     function isMastered(appId, qid) {
         const rec = getRecord(appId, qid);
         if (rec.attempts === 0) return false;
         if (_net(rec) < MASTERY_THRESHOLD) return false;
-        if (Date.now() - rec.lastSeen > MASTERY_DECAY_MS) return false;
+        if (_isDue(rec)) return false;
         return true;
     }
 
@@ -566,6 +625,7 @@
         reset,
         resetRecords,
         // exposed for tests / debug only
-        _internals: { STORAGE_KEY, SCHEMA_VERSION, MASTERY_THRESHOLD, MASTERY_DECAY_MS }
+        _internals: { STORAGE_KEY, SCHEMA_VERSION, MASTERY_THRESHOLD, MASTERY_DECAY_MS,
+                      REVIEW_LADDER_DAYS, _streak, _dueAt, _isDue }
     };
 })();
