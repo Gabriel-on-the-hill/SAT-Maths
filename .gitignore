@@ -17,6 +17,7 @@
 !/progress.html
 !/exam.html
 !/custom.html
+!/review.html
 !/README.md
 !/shared/
 !/Linear_Equations_App/
@@ -36,6 +37,13 @@
 #    display name and holds no credentials.
 !/build_challenge_set.py
 !/CHALLENGE_SETS_RUNBOOK.md
+
+# 4) The test toolchain. The APP has no dependencies and no build step — this is
+#    only so `npm install && npm test` works on a fresh clone, which is what the
+#    jsdom harness in shared/*.test.js needs. node_modules/ stays ignored by the
+#    rule above; the lockfile is deliberately not tracked (dev-only, and this is a
+#    public site — there is no point publishing an npm dependency tree).
+!/package.json
 
 # OS cruft, even inside published folders
 .DS_Store

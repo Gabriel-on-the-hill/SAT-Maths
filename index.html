@@ -277,6 +277,7 @@
             font-size: 0.62rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
             background: rgba(255, 255, 255, 0.22); padding: 4px 9px; border-radius: 999px;
         }
+        .route-review { background: linear-gradient(135deg, #10b981, #0ea5e9); }
         .route-custom { background: linear-gradient(135deg, #06b6d4, #3b82f6); }
         .route-exam   { background: linear-gradient(135deg, #f43f5e, #f59e0b); }
         .route-topic  { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
@@ -331,6 +332,13 @@
         </div>
 
         <div class="route-grid fade-in-delay">
+            <!-- Hidden until something is actually due — see renderDueReview().
+                 An empty "Due review" is an invitation to a set that does not exist. -->
+            <a class="route-card route-review" href="./review.html" id="dueReviewCard" style="display:none;">
+                <span class="r-badge" id="dueReviewBadge">Due</span>
+                <span class="r-title">Due Review</span>
+                <span class="r-sub" id="dueReviewSub">Questions coming back on schedule, mixed across topics.</span>
+            </a>
             <a class="route-card route-custom" href="./custom.html">
                 <span class="r-badge">New</span>
                 <span class="r-title">Custom Practice</span>
@@ -476,6 +484,33 @@
         }
         renderExamCountdown();
 
+        // "Due Review" — the cross-topic draw (MR-4, MR-7).
+        //
+        // The ladder in progress.js already knows when each question is due; until now
+        // that only ever resurfaced a question inside the topic app you happened to
+        // open, so review was siloed by strand. This card is the hub-level version:
+        // due, ANY topic, mixed.
+        //
+        // It stays hidden when nothing is due. A card promising review with an empty
+        // set behind it is a small lie, and the student finds out immediately.
+        function renderDueReview() {
+            const card = document.getElementById('dueReviewCard');
+            if (!card) return;
+            if (!window.MathProgress || !window.MathProgress.countDueAcrossApps) return;
+            const n = window.MathProgress.countDueAcrossApps();
+            if (n <= 0) { card.style.display = 'none'; return; }
+            const badge = document.getElementById('dueReviewBadge');
+            const sub = document.getElementById('dueReviewSub');
+            if (badge) badge.textContent = n + ' due';
+            if (sub) {
+                sub.textContent = n === 1
+                    ? '1 question is due to come back. Untimed, and you are not told which topic it is.'
+                    : n + ' questions are due to come back, mixed across topics. Untimed, and you are not told which topic each one is.';
+            }
+            card.style.display = '';
+        }
+        renderDueReview();
+
         // Settings panel wiring
         (function settings() {
             const toggle = document.getElementById('settingsToggle');
@@ -523,4 +558,59 @@
                 strip.classList.remove('unstarted');
                 const pct = summary.total > 0 ? Math.round((summary.mastered / summary.total) * 100) : 0;
                 strip.innerHTML = `
-               
+                    <div class="mastery-counts">
+                        <span><span class="mastered">${summary.mastered}</span> / ${summary.total} mastered</span>
+                        ${summary.struggling > 0 ? `<span><span class="struggling">${summary.struggling}</span> struggling</span>` : ''}
+                    </div>
+                    <div class="mastery-bar"><div class="mastery-bar-fill" style="width:${pct}%"></div></div>
+                `;
+            }
+
+            function renderOverall(totals) {
+                const wrap = document.getElementById('overallProgress');
+                if (!wrap) return;
+                if (totals.total === 0) return;
+                wrap.hidden = false;
+                wrap.classList.remove('empty');
+                document.getElementById('overallMastered').textContent = totals.mastered;
+                document.getElementById('overallTotal').textContent = totals.total;
+                document.getElementById('overallStruggling').textContent = totals.struggling;
+                const pct = totals.total > 0 ? Math.round((totals.mastered / totals.total) * 100) : 0;
+                document.getElementById('overallPct').textContent = pct;
+                document.getElementById('overallFill').style.width = pct + '%';
+            }
+
+            async function loadDashboard() {
+                if (!window.MathProgress) return;
+                const totals = { mastered: 0, struggling: 0, total: 0 };
+                const fetches = APPS.map(appId =>
+                    fetch(`./${appId}/manifest.json`, { cache: 'no-store' })
+                        .then(r => r.ok ? r.json() : null)
+                        .catch(() => null)
+                );
+                const manifests = await Promise.all(fetches);
+                manifests.forEach((manifest, i) => {
+                    if (!manifest || !Array.isArray(manifest.questionIds)) return;
+                    const appId = APPS[i];
+                    const card = document.querySelector(`.app-card[data-app="${appId}"]`);
+                    if (!card) return;
+                    const summary = window.MathProgress.summary(appId, manifest.questionIds);
+                    renderStrip(card, manifest, summary);
+                    totals.mastered += summary.mastered;
+                    totals.struggling += summary.struggling;
+                    totals.total += summary.total;
+                });
+                renderOverall(totals);
+            }
+
+            // Run as soon as the DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadDashboard);
+            } else {
+                loadDashboard();
+            }
+        })();
+    </script>
+</body>
+
+</html>

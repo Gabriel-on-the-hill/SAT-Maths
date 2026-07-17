@@ -26,6 +26,12 @@
         questionStartTime: 0,
         sessionStartTime: 0,
 
+        // Prediction gate, keyed by the same global index userAnswers uses:
+        //   { [globalIdx]: { revealed, prediction, preRevealMs } }
+        // This rides in the session snapshot so a refresh mid-question does NOT
+        // hand over the choices — a gate you can reopen by pressing F5 is not a gate.
+        gateState: {},
+
         // UNIQUE SESSION ID (Generated per page load) to group concurrent student data
         sessionId: 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
     };
@@ -433,7 +439,7 @@
         }
         state.currentTopicIdx = 0;
         state.allQuestions = [];
-        state.userAnswers = [];
+        resetAnswers();
 
         if (sourcePlaylist.length === 0) {
             alert("Payload empty. Ensure questions.js is loaded.");
@@ -506,21 +512,51 @@
         renderSlide();
     }
 
+    // Sum the clock from what the questions actually ask for.
+    //
+    // Every question is authored with a `timeTarget` and nothing read it — the clock
+    // was a flat ~90s per question, so a set of quick Easies and a set of grinding
+    // Hards got the same time. Summing the authored targets makes the clock mean
+    // something. Questions with no target fall back to the flat rate, so a
+    // half-tagged bank still produces a sane number.
+    //
+    // Returns { seconds, targeted, total } — targeted/total is how much of the set
+    // actually carried a target.
+    function sumTimeTargets(perQ) {
+        const mod = state.currentModule;
+        let seconds = 0, targeted = 0, total = 0;
+        (state.playlist || []).forEach(t => {
+            ((t.questions && t.questions[mod]) || []).forEach(q => {
+                total++;
+                const tt = Number(q && q.timeTarget);
+                if (tt > 0) { seconds += tt; targeted++; }
+                else { seconds += perQ; }
+            });
+        });
+        return { seconds, targeted, total };
+    }
+
     function startTimer() {
-// Scale the clock to the session length (~90s per question = realistic SAT
-        // pace), instead of a flat 20 minutes regardless of how many questions.
-        const _mod = state.currentModule;
-        let _n = 0;
-        (state.playlist || []).forEach(t => { _n += ((t.questions && t.questions[_mod]) || []).length; });
         // Per-question seconds is tutor-adjustable (set on the hub); default 90.
         let _perQ = 90;
-        try { const _v = parseInt(localStorage.getItem('edutrack_timer_per_q'), 10); if (_v >= 10 && _v <= 600) _perQ = _v; } catch (e) {}
+        let _tutorSetPerQ = false;
+        try {
+            const _v = parseInt(localStorage.getItem('edutrack_timer_per_q'), 10);
+            if (_v >= 10 && _v <= 600) { _perQ = _v; _tutorSetPerQ = true; }
+        } catch (e) {}
+
+        const _t = sumTimeTargets(_perQ);
+
         if (state.customTotalSeconds) {
             state.timeRemaining = state.customTotalSeconds;
         } else if (window.APP_CONFIG && window.APP_CONFIG.examTotalSeconds) {
             state.timeRemaining = window.APP_CONFIG.examTotalSeconds;
+        } else if (_tutorSetPerQ) {
+            // The tutor set an explicit pace on the hub. An explicit instruction beats
+            // the authored targets — that setting exists to override exactly this.
+            state.timeRemaining = _t.total > 0 ? _t.total * _perQ : 1200;
         } else {
-            state.timeRemaining = _n > 0 ? _n * _perQ : 1200;
+            state.timeRemaining = _t.total > 0 ? _t.seconds : 1200;
         }
         dom.activeTimer.textContent = formatTime(state.timeRemaining);
         state.timerInterval = setInterval(() => {
@@ -529,6 +565,146 @@
             if (state.timeRemaining <= 60) dom.activeTimer.classList.add('timer-danger');
             if (state.timeRemaining <= 0) finishPlaylist();
         }, 1000);
+    }
+
+    // ── The prediction gate (PS-4, MR-2, M4) ──────────────────────────
+    // Options used to render WITH the question, so the student read the four choices
+    // and picked one. That is RECOGNITION, and it is the weakest form of practice —
+    // it feels like mastery while producing little (`M4`, the fluency illusion).
+    // Every unassisted recall is what actually builds and lengthens memory (`PS-4`).
+    //
+    // So: the choices are hidden until the student commits. Hidden, not merely
+    // disabled — a greyed-out option is still read, and then the retrieval never
+    // happened. In guided mode he can also type the answer or his first move, which
+    // is the same commitment the sister R&W app's untimed `predictMode` asks for.
+    //
+    // Exam mode is NEVER gated: it is the real test, and the real test shows options.
+    //
+    // The gate's markup and styles live here, in the engine, on purpose. Nine apps
+    // share this file; the styles do not (they are three near-identical copies), and
+    // a gate that had to be pasted into nine stylesheets would rot in one of them.
+    const GATE_STYLE_ID = 'edutrack-predict-gate-style';
+
+    function _injectGateStyles() {
+        if (document.getElementById(GATE_STYLE_ID)) return;
+        const st = document.createElement('style');
+        st.id = GATE_STYLE_ID;
+        st.textContent = `
+.predict-gate{grid-column:1/-1;background:rgba(56,189,248,0.06);border:1px solid var(--border,rgba(255,255,255,0.1));border-left:3px solid var(--primary,#38bdf8);border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:0.25rem;}
+.predict-gate-head{font-weight:700;font-size:1.02rem;margin-bottom:6px;color:var(--text-main,#e2e8f0);}
+.predict-gate-sub{font-size:0.9rem;line-height:1.55;color:var(--text-muted,#94a3b8);margin:0 0 0.9rem;}
+.predict-input{width:100%;box-sizing:border-box;background:rgba(255,255,255,0.04);border:1px solid var(--border,rgba(255,255,255,0.12));border-radius:10px;padding:0.7rem 0.85rem;color:var(--text-main,#e2e8f0);font-size:0.98rem;margin-bottom:0.75rem;}
+.predict-input:focus{outline:none;border-color:var(--primary,#38bdf8);}
+.predict-reveal-btn{background:var(--primary,#38bdf8);color:#0b1220;border:none;border-radius:10px;padding:0.7rem 1.15rem;font-size:0.95rem;font-weight:700;cursor:pointer;transition:filter .15s ease;}
+.predict-reveal-btn:hover{filter:brightness(1.08);}
+.predict-committed{grid-column:1/-1;font-size:0.9rem;line-height:1.5;color:var(--text-muted,#94a3b8);background:rgba(255,255,255,0.03);border-radius:8px;padding:0.6rem 0.8rem;margin-bottom:0.25rem;}
+.predict-committed strong{color:var(--text-main,#e2e8f0);}
+.option-btn.opt-gated{display:none;}
+.pace-note{margin-top:14px;font-size:0.88rem;color:var(--text-muted,#94a3b8);}
+`;
+        document.head.appendChild(st);
+    }
+
+    // The global index of the question on screen — the same key userAnswers uses.
+    function gateKeyFor() {
+        return state.allQuestions.length + state.currentSlideIdx;
+    }
+
+    // Start a fresh answer space.
+    //
+    // gateState is keyed by the SAME global index as userAnswers, so the two must
+    // always be cleared together. They were not, once: starting Independent after
+    // revealing a question in Guided left `gateState[0] = {revealed:true}` behind, and
+    // the new session's first question came up with its options already showing. The
+    // gate silently did nothing for the most ordinary flow in the app.
+    //
+    // Every start path (playlist, weak-area, fresh sets, exam, custom, review, retry)
+    // resets answers through here. If you add another, call this — do not assign
+    // state.userAnswers directly.
+    function resetAnswers() {
+        state.userAnswers = [];
+        state.gateState = {};
+    }
+
+    // Should this question hide its options behind a commit step?
+    function isGateActive(q) {
+        if (!q || q.type === 'grid-in') return false;   // typing an answer IS a gate
+        if (!q.options || !q.options.length) return false;
+        if (state.isExamMode) return false;             // the real test — never gate
+        const cfg = window.APP_CONFIG ? window.APP_CONFIG.predictionGate : undefined;
+        if (cfg === false) return false;                // tutor opt-out, whole app
+        const mode = state.currentModule;
+        if (cfg && typeof cfg === 'object' && typeof cfg[mode] === 'boolean') return cfg[mode];
+        // guided, independent, homework, custom, retry: gate by default.
+        // Homework is the tutor's call and the default is ON (PEDAGOGY_ALIGNMENT item 1).
+        return true;
+    }
+
+    // The free-text "your answer or your first move" box is a guided-mode affordance.
+    // In independent mode the gate is one click — the low-friction version.
+    function gateAllowsPrediction() {
+        return state.currentModule === 'guided';
+    }
+
+    function renderGatePanel(q, revealed, gs) {
+        _injectGateStyles();
+        if (revealed) {
+            // Keep the commitment on screen so he can hold his prediction against the
+            // feedback. That comparison is where the correction actually lands (`FS-3`).
+            if (gs && gs.prediction) {
+                const done = document.createElement('div');
+                done.className = 'predict-committed';
+                done.innerHTML = `Your prediction: <strong>${escapeHtml(gs.prediction)}</strong>`;
+                dom.optionsGrid.appendChild(done);
+            }
+            return;
+        }
+        const panel = document.createElement('div');
+        panel.className = 'predict-gate';
+        const allowText = gateAllowsPrediction();
+        panel.innerHTML = `
+            <div class="predict-gate-head">Predict first</div>
+            <p class="predict-gate-sub">Work it out before you look. Pulling the answer out of your own head is what builds the memory — reading four choices and recognising one builds almost nothing.</p>
+            ${allowText ? `<input type="text" id="predict-input" class="predict-input" placeholder="Your answer, or your first move — optional" autocomplete="off">` : ''}
+            <button type="button" id="predict-reveal-btn" class="predict-reveal-btn">Reveal choices</button>
+        `;
+        dom.optionsGrid.appendChild(panel);
+
+        const input = panel.querySelector('#predict-input');
+        const revealBtn = panel.querySelector('#predict-reveal-btn');
+        revealBtn.addEventListener('click', () => openGate(panel, input ? input.value.trim() : ''));
+        if (input) {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); openGate(panel, input.value.trim()); }
+            });
+            input.focus();
+        }
+    }
+
+    // Open the gate IN PLACE rather than re-rendering: renderSlide() resets
+    // questionStartTime, and a re-render here would throw away the time he spent
+    // thinking before the reveal — which is the part we most want to keep.
+    function openGate(panel, predictionText) {
+        const gk = gateKeyFor();
+        const preRevealMs = state.questionStartTime > 0 ? (Date.now() - state.questionStartTime) : 0;
+        state.gateState[gk] = {
+            revealed: true,
+            prediction: predictionText || '',
+            preRevealMs: preRevealMs
+        };
+        saveSession();
+
+        Array.from(dom.optionsGrid.querySelectorAll('.option-btn')).forEach(b => {
+            b.disabled = false;
+            b.classList.remove('opt-gated');
+        });
+
+        if (predictionText) {
+            panel.className = 'predict-committed';
+            panel.innerHTML = `Your prediction: <strong>${escapeHtml(predictionText)}</strong>`;
+        } else if (panel.parentNode) {
+            panel.parentNode.removeChild(panel);
+        }
     }
 
     function renderSlide() {
@@ -583,23 +759,35 @@
                 submit.disabled = true;
 
                 const isCorrect = checkGridIn(val, q.answer);
+                const elapsedMs = state.questionStartTime > 0 ? (Date.now() - state.questionStartTime) : 0;
                 recordToLedger(q, isCorrect);
 
                 // Save progress immediately
                 saveProgress(false);
 
                 if (!state.isExamMode && state.currentModule !== 'homework') {
-                    showFeedback(isCorrect);
+                    showFeedback(isCorrect, elapsedMs);
                 }
             });
         } else {
+            const globalIdx = state.allQuestions.length + state.currentSlideIdx;
+            const gated = isGateActive(q);
+            const gs = state.gateState[gateKeyFor()] || null;
+            const answered = state.userAnswers[globalIdx] !== undefined;
+            // An answered question has nothing left to hide. Otherwise the gate stays
+            // shut until he commits — including across a refresh, because gateState
+            // rides in the session snapshot.
+            const revealed = !gated || answered || !!(gs && gs.revealed);
+
+            if (gated) renderGatePanel(q, revealed, gs);
+
             const letters = ['A', 'B', 'C', 'D'];
             letters.forEach((letter, idx) => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn';
+                btn.className = 'option-btn' + (revealed ? '' : ' opt-gated');
+                btn.disabled = !revealed;
                 btn.innerHTML = (`<span class="opt-letter">${letter}</span>` + ((q.options && q.options[idx] != null && q.options[idx] !== "") ? ` <span class="opt-text">${q.options[idx]}</span>` : ""));
 
-                const globalIdx = state.allQuestions.length + state.currentSlideIdx;
                 if (state.userAnswers[globalIdx] === idx) {
                     btn.classList.add('selected');
                     if (!state.isExamMode && state.currentModule !== 'homework') {
@@ -611,10 +799,12 @@
                 }
 
                 btn.addEventListener('click', () => {
+                    if (btn.disabled) return;
                     if (state.userAnswers[globalIdx] !== undefined && !state.isExamMode && state.currentModule !== 'homework') return;
 
                     state.userAnswers[globalIdx] = idx;
                     const isCorrect = idx === getCorrectIndex(q);
+                    const elapsedMs = state.questionStartTime > 0 ? (Date.now() - state.questionStartTime) : 0;
                     recordToLedger(q, isCorrect);
 
                     // Save progress immediately
@@ -623,9 +813,9 @@
                     if (!state.isExamMode && state.currentModule !== 'homework') {
                         btn.classList.add(isCorrect ? 'correct' : 'wrong');
                         disableOptions();
-                        showFeedback(isCorrect);
+                        showFeedback(isCorrect, elapsedMs);
                     } else {
-                        Array.from(dom.optionsGrid.children).forEach(b => b.classList.remove('selected'));
+                        Array.from(dom.optionsGrid.querySelectorAll('.option-btn')).forEach(b => b.classList.remove('selected'));
                         btn.classList.add('selected');
                     }
                 });
@@ -660,7 +850,24 @@
             : state.isExamMode ? 'exam'
             : state.currentModule;
         const elapsedMs = state.questionStartTime > 0 ? (Date.now() - state.questionStartTime) : 0;
-        window.MathProgress.recordAnswer(q._appId || APP_ID, q.id, isCorrect, source, elapsedMs);
+
+        // `predicted` means he actually committed a prediction in writing — NOT merely
+        // that he clicked past the gate. A click is not thinking, and a flag that
+        // counted it would report retrieval that never happened (root rule 5).
+        const gs = state.gateState[gateKeyFor()] || null;
+        const predicted = !!(gs && gs.prediction);
+
+        window.MathProgress.recordAnswer(q._appId || APP_ID, q.id, isCorrect, source, elapsedMs,
+                                         { predicted: predicted });
+
+        // Keep the trap, don't just show it once and forget it (`AN-1`). The archetype
+        // is this app's nearest analogue to the R&W "skill" — it is what the
+        // set-builders already reason about — and it is the fallback bucket for a
+        // question that carries no named trap.
+        if (typeof window.MathProgress.recordTrapOutcome === 'function') {
+            const skill = q.archetype || (state.playlist[state.currentTopicIdx] || {}).title || '';
+            window.MathProgress.recordTrapOutcome(skill, q.trapName || q.trapShape, isCorrect);
+        }
     }
 
     // --- SESSION RESUME ---
@@ -676,7 +883,9 @@
             isExamMode: state.isExamMode,
             isHardMode: state.isHardMode,
             smartMode: state.smartMode,
-            isRetrySession: state.isRetrySession
+            isRetrySession: state.isRetrySession,
+            // Without this, a refresh would reopen every gate. See state.gateState.
+            gateState: state.gateState
         };
     }
 
@@ -729,7 +938,7 @@
         state.currentModule = 'homework';
         state.currentTopicIdx = 0;
         state.allQuestions = [];
-        state.userAnswers = [];
+        resetAnswers();
 
         state.playlist = [{
             id: 'weak_area',
@@ -783,7 +992,7 @@
         state.currentModule = opts.moduleKey;
         state.currentTopicIdx = 0;
         state.allQuestions = [];
-        state.userAnswers = [];
+        resetAnswers();
 
         state.playlist = [{
             id: opts.playlistMeta.id,
@@ -904,7 +1113,7 @@
         state.currentModule = 'exam';
         state.currentTopicIdx = 0;
         state.allQuestions = [];
-        state.userAnswers = [];
+        resetAnswers();
         state.playlist = [{
             id: 'mock_sat',
             title: 'Mock SAT — Math (Single Module)',
@@ -1251,6 +1460,85 @@
         loadTopic(0);
     }
 
+    // ── Due review, across every strand (MR-4, MR-7) ──────────────────
+    // The ladder resurfaces a due question inside the topic app you are already in.
+    // Nothing pulled a due question from a DIFFERENT topic into today's session, so
+    // review was siloed by strand and the interleaving that teaches "which method
+    // does this need?" only ever happened within one topic.
+
+    // Round-robin the due questions across their apps, keeping most-overdue first
+    // WITHIN each app. Serving strictly by overdueness would hand him five Linear
+    // Equations in a row — blocked practice, which is the thing this item exists to
+    // stop (`MR-4`). Alternating strands is the whole point of the draw.
+    function _interleaveByApp(list) {
+        const groups = {};
+        list.forEach(q => {
+            const a = q._appId || '_';
+            (groups[a] = groups[a] || []).push(q);
+        });
+        const keys = Object.keys(groups);
+        const out = [];
+        let took = true;
+        while (took) {
+            took = false;
+            keys.forEach(k => {
+                if (groups[k].length) { out.push(groups[k].shift()); took = true; }
+            });
+        }
+        return out;
+    }
+
+    // The due set, resolved against the loaded question banks.
+    function buildDueReviewSet(count) {
+        if (!window.MathProgress || !window.MathProgress.dueAcrossApps) return [];
+        const due = window.MathProgress.dueAcrossApps(500);   // everything due; trim after mixing
+        if (!due.length) return [];
+
+        const byKey = {};
+        _customCandidates([], null).forEach(q => { byKey[(q._appId || '') + ':' + q.id] = q; });
+
+        // A due record whose question is not in the loaded banks (a retired question,
+        // or one belonging to an app this page does not load) is simply skipped —
+        // never invented.
+        const resolved = [];
+        due.forEach(d => {
+            const q = byKey[d.appId + ':' + d.qid];
+            if (q) resolved.push(q);
+        });
+        return _interleaveByApp(resolved).slice(0, count || 8);
+    }
+
+    function startDueReview(opts) {
+        opts = opts || {};
+        if (!window.MathProgress) { alert('Progress module missing.'); return; }
+        const count = parseInt(opts.count, 10) || 8;
+        const selected = buildDueReviewSet(count);
+        if (!selected.length) {
+            alert('Nothing is due for review yet. Keep working through the topics — questions come back once their review date arrives.');
+            return;
+        }
+        state.isExamMode = false;      // review is practice: feedback as you go
+        state.isHardMode = false;
+        state.smartMode = false;
+        state.isRetrySession = false;
+        state.currentModule = 'review';
+        state.customTimed = false;     // review is never timed: it is retrieval, not a test
+        state.customTotalSeconds = 0;
+        state.currentTopicIdx = 0; state.allQuestions = []; state.userAnswers = [];
+
+        const strands = new Set(selected.map(q => q._appId).filter(Boolean));
+        state.playlist = [{
+            id: 'due_review',
+            title: 'Due Review',
+            introText: selected.length + ' question(s) that are due to come back, drawn from ' +
+                strands.size + ' topic(s) and mixed on purpose. These are ones you have met before — ' +
+                'the point is to pull the method out of your own head without being told which topic it is.',
+            questions: { review: selected }
+        }];
+        dom.startScreen.hidden = true;
+        loadTopic(0);
+    }
+
     function startCustomPractice(opts) {
         if (!window.MathProgress) { alert('Progress module missing.'); return; }
         if (!opts.difficulties || !opts.difficulties.length) { alert('Pick at least one difficulty.'); return; }
@@ -1289,6 +1577,10 @@
 
         dom.resumeBtn.onclick = () => {
             Object.assign(state, s);
+            // A session saved before the gate existed carries no gateState, and
+            // Object.assign would leave it undefined. Unrevealed is the safe default:
+            // resuming into an open gate is the one failure mode that matters here.
+            if (!state.gateState || typeof state.gateState !== 'object') state.gateState = {};
             dom.resumeBanner.hidden = true;
             dom.startScreen.hidden = true;
             dom.quiz.hidden = false;
@@ -1301,10 +1593,41 @@
     }
 
     function disableOptions() {
-        Array.from(dom.optionsGrid.children).forEach(b => b.disabled = true);
+        // Target the buttons, not every child: the gate panel is a child too.
+        Array.from(dom.optionsGrid.querySelectorAll('.option-btn')).forEach(b => b.disabled = true);
     }
 
-    function showFeedback(isCorrect) {
+    // A quiet note on pace, shown AFTER accuracy and never as a penalty.
+    //
+    // `AS-5`: speed comes after competence. So this never appears in guided mode —
+    // first acquisition stays untimed — and it never appears on a wrong answer, where
+    // "and you were slow" is noise on top of the thing he actually needs to fix.
+    //
+    // elapsedMs is passed in from the answer itself. On a restored/refreshed slide we
+    // do not know how long he took, so we say nothing rather than guess (root rule 5).
+    function renderPaceNote(q, isCorrect, elapsedMs) {
+        if (state.currentModule === 'guided') return '';   // untimed stays untimed
+        if (!isCorrect) return '';
+        if (typeof elapsedMs !== 'number' || elapsedMs <= 0) return '';
+        const target = Number(q && q.timeTarget);
+        if (!(target > 0)) return '';
+
+        const secs = Math.round(elapsedMs / 1000);
+        // Only speak up when the gap is big enough to mean something. Within ~30% of
+        // target is simply "on pace", and saying so every question is chatter.
+        const ratio = secs / target;
+        let note = '';
+        if (ratio > 1.3) {
+            note = `Took ${secs}s against a ${target}s target — right, but slower than exam pace. Worth a second look at the setup step.`;
+        } else if (ratio < 0.5 && secs < target - 5) {
+            note = `${secs}s against a ${target}s target — quick and correct.`;
+        } else {
+            note = `${secs}s against a ${target}s target — on pace.`;
+        }
+        return `<div class="pace-note">⏱ ${escapeHtml(note)}</div>`;
+    }
+
+    function showFeedback(isCorrect, elapsedMs) {
         const q = state.currentQuestions[state.currentSlideIdx];
         const isGridIn = q.type === 'grid-in';
         const hasKey = hasAnswerKey(q);
@@ -1327,6 +1650,7 @@
         }
         html += q.explanation || '';
         html += renderTrapCallout(q);
+        html += renderPaceNote(q, isCorrect, elapsedMs);
         dom.explanationText.innerHTML = html;
         dom.feedbackArea.hidden = false;
         triggerMath(dom.feedbackArea);
@@ -1551,7 +1875,7 @@
         if (missed.length === 0) return;
         state.isRetrySession = true;
         state.allQuestions = [];
-        state.userAnswers = [];
+        resetAnswers();
         state.currentTopicIdx = 0;
         state.currentSlideIdx = 0;
         state.playlist = [{
@@ -1660,6 +1984,22 @@
             const _n = document.getElementById('studentName');
             if (_n && !_n.value.trim()) { _n.style.border = '2px solid var(--danger)'; _n.placeholder = 'Enter your name'; _n.focus(); return; }
             startMockExam();
+        });
+    }
+    if (window.APP_CONFIG && window.APP_CONFIG.reviewMode) {
+        const _dueCount = document.getElementById('dueCount');
+        if (_dueCount && window.MathProgress && window.MathProgress.countDueAcrossApps) {
+            const _n = window.MathProgress.countDueAcrossApps();
+            _dueCount.textContent = _n === 0
+                ? 'Nothing is due yet.'
+                : _n + ' question' + (_n === 1 ? '' : 's') + ' due across your topics.';
+        }
+        const _rb = document.getElementById('startDueReviewBtn');
+        if (_rb) _rb.addEventListener('click', function () {
+            const _nm = document.getElementById('studentName');
+            if (_nm && !_nm.value.trim()) { _nm.style.border = '2px solid var(--danger)'; _nm.placeholder = 'Enter your name'; _nm.focus(); return; }
+            const _c = document.getElementById('reviewCount');
+            startDueReview({ count: _c ? parseInt(_c.value, 10) : 8 });
         });
     }
 

@@ -155,5 +155,114 @@ section('Pre-ladder ledgers keep the credit they earned');
      MP.getRecord(APP, 'old').streak === 3);
 }
 
+/* ── 6 · trap analytics: the weakness map (AN-1) ──────────────────────────── */
+section('Trap analytics: what he KEEPS falling for, not just what he got wrong');
+{
+  reset();
+  // Two buckets, same volume, different wrong-rates.
+  for (var i = 0; i < 4; i++) MP.recordTrapOutcome('Algebra', 'Solved for the wrong thing', i < 1);
+  for (var j = 0; j < 4; j++) MP.recordTrapOutcome('Algebra', 'Sign slip', j < 3);
+
+  var top = MP.getTopTraps(3, 6);
+  ok('both buckets are reported', top.length === 2);
+  ok('and the one he falls for MOST is first',
+     top[0].bucket === 'Solved for the wrong thing');
+  ok('with its rate computed', Math.abs(top[0].rate - 0.75) < 1e-9);
+
+  // A bucket he always gets right is not a trap. It must not be reported as one:
+  // an invented weakness sends the tutor at a problem that does not exist.
+  for (var k = 0; k < 5; k++) MP.recordTrapOutcome('Algebra', 'Never missed', true);
+  ok('a trap he has never fallen for is NOT reported',
+     MP.getTopTraps(3, 6).every(function (t) { return t.bucket !== 'Never missed'; }));
+
+  // Thin evidence is not evidence (root rule 5).
+  reset();
+  MP.recordTrapOutcome('Algebra', 'Seen once', false);
+  ok('a bucket below minTotal is withheld until there is enough evidence',
+     MP.getTopTraps(3, 6).length === 0);
+  ok('but it is there once the evidence arrives',
+     (MP.recordTrapOutcome('Algebra', 'Seen once', false),
+      MP.recordTrapOutcome('Algebra', 'Seen once', false),
+      MP.getTopTraps(3, 6).length === 1));
+
+  // An untagged question still counts for something.
+  reset();
+  MP.recordTrapOutcome('Geometry', null, false);
+  ok('a question with no named trap falls back to a per-skill bucket',
+     !!MP.getTrapStats()['Geometry — general']);
+  // ...but an answer attributable to nothing must not invent a bucket.
+  MP.recordTrapOutcome('', null, false);
+  ok('and an answer with neither skill nor trap invents nothing',
+     Object.keys(MP.getTrapStats()).length === 1);
+}
+
+/* ── 7 · the trap map survives a backup ──────────────────────────────────── */
+section('Export/import carries the trap map and the ladder rung');
+{
+  reset();
+  MP.recordAnswer(APP, 'x', true, 'practice', 0);
+  MP.recordAnswer(APP, 'x', true, 'practice', 0);   // streak 2
+  MP.recordTrapOutcome('Algebra', 'Sign slip', false);
+  var backup = MP.exportData();
+
+  ok('the export carries the traps', /Sign slip/.test(backup));
+
+  reset();
+  ok('a fresh ledger has none', Object.keys(MP.getTrapStats()).length === 0);
+  MP.importData(backup);
+  ok('and the import restores them', MP.getTrapStats()['Sign slip'].wrong === 1);
+
+  // THE REGRESSION: importData rebuilt each record field by field and never copied
+  // `streak`, so restoring a backup silently reset every question's ladder rung to
+  // the bottom -- the whole review schedule, wiped, with nothing on screen to say so.
+  ok('and the import keeps the ladder rung it was exported with',
+     MP.getRecord(APP, 'x').streak === 2);
+}
+
+/* ── 8 · cross-topic review draw (MR-4, MR-7) ────────────────────────────── */
+section('Due review spans strands: the interleaving is the point');
+{
+  reset();
+  // Due, in two different apps, plus one not yet due and one never seen.
+  var due1 = { correct: 2, wrong: 0, attempts: 2, totalTimeMs: 0, lastSeen: ago(40), lastSource: 'practice', streak: 2 };
+  var due2 = { correct: 2, wrong: 0, attempts: 2, totalTimeMs: 0, lastSeen: ago(10), lastSource: 'practice', streak: 2 };
+  var notDue = { correct: 5, wrong: 0, attempts: 5, totalTimeMs: 0, lastSeen: ago(2), lastSource: 'practice', streak: 5 };
+
+  var led = { version: MP._internals.SCHEMA_VERSION, records: {} };
+  led.records['Core_Geometry_App:a'] = due1;
+  led.records['Linear_Equations_App:b'] = due2;
+  led.records['Linear_Equations_App:c'] = notDue;
+  store[KEY] = JSON.stringify(led);
+
+  var draw = MP.dueAcrossApps(6);
+  ok('it draws from more than one app', draw.length === 2);
+  ok('the most overdue comes first', draw[0].appId === 'Core_Geometry_App' && draw[0].qid === 'a');
+  ok('a question whose rung has not elapsed is left alone',
+     draw.every(function (d) { return d.qid !== 'c'; }));
+  ok('and the count agrees with the draw', MP.countDueAcrossApps() === 2);
+  ok('the draw respects its limit', MP.dueAcrossApps(1).length === 1);
+
+  // An unseen question is NOT review. Serving one as "review" would be a lie about
+  // what the student is doing, and it would crowd out the questions that are due.
+  led.records['Core_Geometry_App:never'] = { correct: 0, wrong: 0, attempts: 0, totalTimeMs: 0, lastSeen: 0, lastSource: null, streak: 0 };
+  store[KEY] = JSON.stringify(led);
+  ok('an unseen question is never served as review',
+     MP.dueAcrossApps(9).every(function (d) { return d.qid !== 'never'; }));
+}
+
+/* ── 9 · the prediction flag (PS-4) ──────────────────────────────────────── */
+section('The prediction flag counts retrieval, and only retrieval');
+{
+  reset();
+  MP.recordAnswer(APP, 'p', true, 'guided', 0, { predicted: true });
+  ok('a predicted answer is counted', MP.getRecord(APP, 'p').predicted === 1);
+  MP.recordAnswer(APP, 'p', true, 'guided', 0, { predicted: false });
+  ok('an unpredicted one is not', MP.getRecord(APP, 'p').predicted === 1);
+  ok('and attempts still counts both', MP.getRecord(APP, 'p').attempts === 2);
+  // predicted describes HOW the answer was reached. It must never touch scoring.
+  MP.recordAnswer(APP, 'q', false, 'guided', 0, { predicted: true });
+  ok('predicting a WRONG answer earns no credit', MP.getRecord(APP, 'q').correct === 0);
+}
+
 console.log('\n' + '-'.repeat(64));
 console.log('ALL ' + pass + ' ASSERTIONS PASSED');

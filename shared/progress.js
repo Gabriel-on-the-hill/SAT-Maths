@@ -90,7 +90,8 @@
             totalTimeMs: 0,
             lastSeen: 0,
             lastSource: null,
-            streak: 0          // consecutive corrects — which rung of the ladder
+            streak: 0,         // consecutive corrects — which rung of the ladder
+            predicted: 0       // answers reached through a written prediction (PS-4)
         };
     }
 
@@ -120,7 +121,13 @@
     // Record a single answer. source affects scoring weight:
     //   exam answers count 2x correct, others 1x.
     // A wrong answer increments wrong and removes 1 from correct (min 0).
-    function recordAnswer(appId, qid, isCorrect, source, elapsedMs) {
+    //
+    // meta (optional) — { predicted: bool }: whether the student committed a written
+    // prediction before the options were revealed. Counted, not just flagged, so the
+    // tutor can see the rate: `predicted` against `attempts` is how you spot someone
+    // clicking straight past the gate. It is deliberately NOT part of scoring —
+    // it describes how the answer was reached, not whether it was right.
+    function recordAnswer(appId, qid, isCorrect, source, elapsedMs, meta) {
         if (!appId || !qid) return;
         const ledger = _load();
         const k = _key(appId, qid);
@@ -136,6 +143,7 @@
         rec.totalTimeMs += (typeof elapsedMs === 'number' && elapsedMs >= 0) ? elapsedMs : 0;
         rec.lastSeen = Date.now();
         rec.lastSource = source || 'practice';
+        if (meta && meta.predicted) rec.predicted = (rec.predicted || 0) + 1;
 
         if (isCorrect) {
             rec.correct += weight;
@@ -533,6 +541,152 @@
         return result.slice(0, count);
     }
 
+    // ── Trap analytics ────────────────────────────────────────────────
+    // Every question carries `archetype`, `trapName` and `strategy`. The engine used
+    // to show them once after the answer and throw them away, so the app could say
+    // WHAT he got wrong and never WHAT HE KEEPS FALLING FOR. This keeps the running
+    // tally that turns a wrong answer into a targeted next lesson (`AN-1`, `FS-3`).
+    //
+    // Ported from the sister R&W app (`recordTrapOutcome` / `getTopTraps`), under
+    // this app's own namespace so the two never collide on a shared device.
+    //
+    // Storage shape (localStorage["edutrack_math_traps_v1"]):
+    //   { version: 1, buckets: { "<trapName>": { wrong, total, skill } } }
+    //
+    // Questions with a named trap are bucketed by that name; anything else falls back
+    // to a per-skill bucket, so an untagged question still counts for something.
+    // "Skill" here is the question's archetype — the closest analogue to the R&W
+    // skill, and what the set-builders already reason about.
+    const TRAP_STORAGE_KEY = 'edutrack_math_traps_v1';
+    const TRAP_SCHEMA_VERSION = 1;
+
+    function _emptyTraps() {
+        return { version: TRAP_SCHEMA_VERSION, buckets: {} };
+    }
+
+    function _loadTraps() {
+        try {
+            const raw = localStorage.getItem(TRAP_STORAGE_KEY);
+            if (!raw) return _emptyTraps();
+            const parsed = JSON.parse(raw);
+            if (!parsed || typeof parsed !== 'object') return _emptyTraps();
+            if (parsed.version !== TRAP_SCHEMA_VERSION) return _emptyTraps();
+            if (!parsed.buckets || typeof parsed.buckets !== 'object') return _emptyTraps();
+            return parsed;
+        } catch (e) {
+            return _emptyTraps();
+        }
+    }
+
+    function _saveTraps(traps) {
+        try { localStorage.setItem(TRAP_STORAGE_KEY, JSON.stringify(traps)); } catch (e) {}
+    }
+
+    function getTrapStats() {
+        return _loadTraps().buckets;
+    }
+
+    // Call on every graded answer, next to recordAnswer.
+    function recordTrapOutcome(skill, trapName, isCorrect) {
+        const named = trapName && String(trapName).trim();
+        const hasSkill = skill && String(skill).trim();
+        // Nothing to attribute this answer to — don't invent a bucket.
+        if (!named && !hasSkill) return;
+        const bucket = named ? String(trapName).trim() : String(skill).trim() + ' — general';
+        const traps = _loadTraps();
+        if (!traps.buckets[bucket]) traps.buckets[bucket] = { wrong: 0, total: 0, skill: '' };
+        traps.buckets[bucket].total += 1;
+        if (!isCorrect) traps.buckets[bucket].wrong += 1;
+        if (hasSkill) traps.buckets[bucket].skill = String(skill).trim();
+        _saveTraps(traps);
+        return traps.buckets[bucket];
+    }
+
+    // Most-fallen-for traps: buckets with at least `minTotal` attempts and at least
+    // one miss, ranked by wrong-rate then by volume (so a 3/4 beats a 3/9, and a
+    // 5-miss bucket beats a 2-miss bucket at the same rate).
+    // Returns [{ bucket, skill, wrong, total, rate }].
+    function getTopTraps(minTotal, limit) {
+        minTotal = (typeof minTotal === 'number') ? minTotal : 3;
+        limit = (typeof limit === 'number') ? limit : 6;
+        const buckets = getTrapStats();
+        return Object.keys(buckets)
+            .map(bucket => {
+                const s = buckets[bucket] || {};
+                const total = s.total || 0;
+                const wrong = s.wrong || 0;
+                return { bucket, skill: s.skill || '', wrong, total, rate: total ? wrong / total : 0 };
+            })
+            .filter(t => t.total >= minTotal && t.wrong > 0)
+            .sort((a, b) => (b.rate - a.rate) || (b.wrong - a.wrong))
+            .slice(0, limit);
+    }
+
+    // Merge another trap map in (used by importData so a backup carries traps too).
+    function mergeTrapStats(incoming) {
+        if (!incoming || typeof incoming !== 'object') return false;
+        const traps = _loadTraps();
+        Object.keys(incoming).forEach(bucket => {
+            const s = incoming[bucket];
+            if (!s || typeof s !== 'object') return;
+            if (!traps.buckets[bucket]) {
+                traps.buckets[bucket] = { wrong: s.wrong || 0, total: s.total || 0, skill: s.skill || '' };
+            } else {
+                traps.buckets[bucket].wrong += s.wrong || 0;
+                traps.buckets[bucket].total += s.total || 0;
+                traps.buckets[bucket].skill = s.skill || traps.buckets[bucket].skill;
+            }
+        });
+        _saveTraps(traps);
+        return true;
+    }
+
+    // ── Cross-topic review draw ───────────────────────────────────────
+    // The ladder resurfaces a due question within the topic app you are already in.
+    // This is the hub-level version: "due, ANY app", so review is not siloed by
+    // strand and the student meets the interleaving that teaches WHICH METHOD THIS
+    // NEEDS (`MR-4`, `MR-7`).
+    //
+    // Records are keyed "<appId>:<qid>", so this is a filter over every record using
+    // the ladder's own `_isDue`. Most-overdue first.
+    //
+    // An unseen question is NEVER review: `_isDue` requires a lastSeen, so a question
+    // he has never met cannot appear here. That is the rule, not an accident — keep it.
+    function dueAcrossApps(n) {
+        n = (typeof n === 'number' && n > 0) ? n : 6;
+        const ledger = _load();
+        const now = Date.now();
+        const due = [];
+        Object.keys(ledger.records).forEach(k => {
+            const rec = ledger.records[k];
+            if (!rec || !rec.lastSeen) return;      // unseen is not review
+            if (!_isDue(rec)) return;
+            const sep = k.indexOf(':');
+            if (sep <= 0) return;
+            due.push({
+                appId: k.slice(0, sep),
+                qid: k.slice(sep + 1),
+                dueAt: _dueAt(rec),
+                overdueMs: now - _dueAt(rec),
+                tier: isMastered(k.slice(0, sep), k.slice(sep + 1)) ? 'mastered' : tierFor(k.slice(0, sep), k.slice(sep + 1))
+            });
+        });
+        due.sort((a, b) => b.overdueMs - a.overdueMs);
+        return due.slice(0, n);
+    }
+
+    // How many questions are due for review across every app right now.
+    // Used to label the hub's "Due review" entry without building the set.
+    function countDueAcrossApps() {
+        const ledger = _load();
+        let n = 0;
+        Object.keys(ledger.records).forEach(k => {
+            const rec = ledger.records[k];
+            if (rec && rec.lastSeen && _isDue(rec)) n++;
+        });
+        return n;
+    }
+
     // How many questions in this app the student has attempted at least once.
     // Used to gate the "Weak-Area Set" CTA — needs some signal to be useful.
     function countAttempted(appId) {
@@ -558,27 +712,42 @@
     }
 
     // Export the full ledger as a JSON string (for tutor review / backup).
+    // Carries the trap map alongside the records — a backup that loses what he keeps
+    // falling for is not a backup. Older exports have no `traps` key; importData
+    // tolerates that.
     function exportData() {
-        return JSON.stringify(_load(), null, 2);
+        const out = _load();
+        out.traps = getTrapStats();
+        return JSON.stringify(out, null, 2);
     }
 
     // Merge another ledger into this one. Takes max of correct, sum of wrong/attempts/time,
-    // and latest lastSeen.
+    // and latest lastSeen. Trap buckets sum.
     function importData(jsonString) {
         let incoming;
         try { incoming = JSON.parse(jsonString); } catch { return false; }
         if (!incoming || !incoming.records) return false;
+        if (incoming.traps) mergeTrapStats(incoming.traps);
         const current = _load();
         Object.keys(incoming.records).forEach(k => {
             const a = current.records[k] || _emptyRecord();
             const b = incoming.records[k];
+            const bIsNewer = (b.lastSeen || 0) > (a.lastSeen || 0);
             current.records[k] = {
                 correct: Math.max(a.correct || 0, b.correct || 0),
                 wrong: (a.wrong || 0) + (b.wrong || 0),
                 attempts: (a.attempts || 0) + (b.attempts || 0),
                 totalTimeMs: (a.totalTimeMs || 0) + (b.totalTimeMs || 0),
                 lastSeen: Math.max(a.lastSeen || 0, b.lastSeen || 0),
-                lastSource: (b.lastSeen || 0) > (a.lastSeen || 0) ? b.lastSource : a.lastSource
+                lastSource: bIsNewer ? b.lastSource : a.lastSource,
+                predicted: (a.predicted || 0) + (b.predicted || 0),
+                // The rung belongs to whichever side answered it LAST — a streak is a
+                // statement about consecutive answers, so the newer record's is the
+                // true one. (Merging by max would let a stale backup re-space a
+                // question the student has since missed.) Omitting it entirely, as
+                // this merge did until now, silently reset every imported question's
+                // ladder rung.
+                streak: bIsNewer ? _streak(b) : _streak(a)
             };
         });
         _save(current);
@@ -586,8 +755,11 @@
     }
 
     // Wipe all progress (used by debug page and "Reset progress" UI).
+    // The trap map goes with it — a fresh start that keeps the old weakness map
+    // would report traps for answers that no longer exist.
     function reset() {
         try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        try { localStorage.removeItem(TRAP_STORAGE_KEY); } catch (e) {}
     }
 
     // Clear the records for a specific list of questions: pairs = [{appId, qid}, ...].
@@ -620,12 +792,21 @@
         buildCuratedProgression,
         buildExamSample,
         countAttempted,
+        // trap analytics (AN-1)
+        recordTrapOutcome,
+        getTopTraps,
+        getTrapStats,
+        mergeTrapStats,
+        // cross-topic review draw (MR-4, MR-7)
+        dueAcrossApps,
+        countDueAcrossApps,
         exportData,
         importData,
         reset,
         resetRecords,
         // exposed for tests / debug only
         _internals: { STORAGE_KEY, SCHEMA_VERSION, MASTERY_THRESHOLD, MASTERY_DECAY_MS,
-                      REVIEW_LADDER_DAYS, _streak, _dueAt, _isDue }
+                      REVIEW_LADDER_DAYS, TRAP_STORAGE_KEY, TRAP_SCHEMA_VERSION,
+                      _streak, _dueAt, _isDue }
     };
 })();

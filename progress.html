@@ -198,6 +198,14 @@ table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
     font-family: inherit;
     font-size: 0.85rem;
 }
+.trap-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.trap-row:last-child { border-bottom: none; }
+.trap-name { flex: 1; font-weight: 600; }
+.trap-skill { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; display: block; margin-top: 2px; }
+.trap-count { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; }
 .utility-btn:hover { color: var(--text-main); border-color: var(--text-muted); }
 .utility-btn.danger:hover { color: var(--danger); border-color: var(--danger); }
 
@@ -228,6 +236,14 @@ table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
         <select id="filterStudent"><option value="">All students</option></select>
     </div>
 
+    <div class="app-section" id="trapsSection" hidden>
+        <div class="app-header">
+            <h2 class="app-title">Most-fallen-for traps</h2>
+            <div class="app-meta">Ranked by how often they catch you</div>
+        </div>
+        <div id="trapsBody"></div>
+    </div>
+
     <div id="appSections"></div>
 
     <div class="utility-bar">
@@ -237,6 +253,7 @@ table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
     </div>
 </div>
 
+<script src="./shared/progress.js"></script>
 <script src="./shared/session.js"></script>
 <script>
 (function () {
@@ -307,8 +324,40 @@ table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
         return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     }
 
+    // "Most-fallen-for traps" — the weakness map the engine used to throw away.
+    //
+    // This page is STUDENT-FACING, so every line here is written TO him and never
+    // ABOUT him (root rule 6): it names the trap and what to do about it, and it does
+    // not grade him for falling into it. getTopTraps already withholds anything under
+    // three attempts, so nothing here is a verdict drawn from one bad question.
+    function renderTraps() {
+        const section = document.getElementById('trapsSection');
+        const body = document.getElementById('trapsBody');
+        if (!section || !body) return;
+        if (!window.MathProgress || !window.MathProgress.getTopTraps) { section.hidden = true; return; }
+
+        const traps = window.MathProgress.getTopTraps(3, 6);
+        if (!traps.length) { section.hidden = true; return; }
+
+        section.hidden = false;
+        body.innerHTML =
+            '<p class="muted" style="margin:0 0 10px;font-size:0.9rem;">' +
+            'These are the specific mistakes catching you most often. Each one is a habit, ' +
+            'and habits are fixable — take the top one into your next set and look for it ' +
+            'before you answer.</p>' +
+            traps.map(t =>
+                '<div class="trap-row">' +
+                '  <div class="trap-name">' + escapeHtml(t.bucket) +
+                (t.skill ? '<span class="trap-skill">' + escapeHtml(t.skill) + '</span>' : '') +
+                '  </div>' +
+                '  <div class="trap-count">' + t.wrong + ' of ' + t.total + ' missed</div>' +
+                '</div>'
+            ).join('');
+    }
+
     function render() {
         const all = (window.MathSession && window.MathSession.getHistory) ? window.MathSession.getHistory() : [];
+        renderTraps();
 
         // Populate app + student filter dropdowns
         const appFilter = document.getElementById('filterApp');
@@ -448,7 +497,7 @@ table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
             }
         });
         document.getElementById('resetAllBtn').addEventListener('click', () => {
-            if (!confirm('Reset ALL progress on this device — mastery (struggling/mastered), session history, saved sessions, and high scores? This cannot be undone.')) return;
+            if (!confirm('Reset ALL progress on this device — mastery (struggling/mastered), your trap map, session history, saved sessions, and high scores? This cannot be undone.')) return;
             try {
                 const keys = [];
                 for (let i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i));
@@ -457,6 +506,7 @@ table.sessions tr:hover { background: rgba(255, 255, 255, 0.02); }
                     // Keep login/identity (gate) and tutor settings; clear everything that is "progress".
                     if (k === 'edutrack_math_session_name_v1' || k === 'edutrack_math_session_user_v1') return;
                     if (k === 'edutrack_math_progress_v1' ||          // mastery ledger → struggling/mastered
+                        k === 'edutrack_math_traps_v1' ||             // the trap/weakness map
                         k === 'edutrack_math_sessions_v1' ||           // session history
                         k === 'edutrack_math_sync_queue_v1' ||         // pending tutor sync
                         /^edutrack_math_session_.+_v1$/.test(k) ||     // per-app resume snapshots
