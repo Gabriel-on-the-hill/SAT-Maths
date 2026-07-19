@@ -4,7 +4,7 @@
   "private": true,
   "description": "Edutrack Math — nine SAT Math topic apps on one shared engine. The app itself has no build step and no runtime dependencies; jsdom is here only so the tests can drive the pages headlessly.",
   "scripts": {
-    "test": "node shared/progress.test.js && node shared/engine.test.js && node shared/pages.test.js && node Challenge_App/test-challenge.js"
+    "test": "node shared/progress.test.js && node shared/engine.test.js && node shared/pages.test.js && node Challenge_App/test-challenge.js && node tools/apps-script/Sessions.test.js"
   },
   "devDependencies": {
     "jsdom": "^29.1.1"

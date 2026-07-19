@@ -61,6 +61,12 @@
 !/build_systems_app_payload.py
 #    Bank sanity checker (duplicate ids, missing answer keys, thin pools):
 !/audit-question-pools.js
+#    The Google Apps Script behind the tutor Sheet. It used to live ONLY in
+#    Google, unversioned, which is exactly how it drifted out of step with the
+#    sheet's own columns and silently stopped recording student names. This
+#    folder is now the source of truth; the copy in Google is a deployment of
+#    it. It carries no credentials (SHARED_KEY is already public in session.js).
+!/tools/
 
 # 3b) The archive. PUBLISH WHAT WORKS — so the retired CODE in _archive/ is
 #     deliberately NOT published: it is superseded or broken, and the live site
