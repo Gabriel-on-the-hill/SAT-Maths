@@ -72,10 +72,21 @@ once already". This is that mirror, still loaded.
 
 - All **27** of its commits already exist in the outer repository — it holds **zero**
   unique history (checked with `git cat-file -e` against the outer object store).
-- Its working tree is byte-identical to the tracked root files (`diff -rq`), because
-  that is all `sync-pages.sh` ever did.
+- All **1117** of its files were compared against the root. Every one is either
+  byte-identical to a tracked root file or a stale copy of one, because copying the
+  root into it is all `sync-pages.sh` ever did.
 - It has never been committed on any branch of the outer repo, so nothing references
   it.
+
+**One exception, already handled.** Exactly one file existed there and nowhere else:
+a tutor-facing session plan, last touched 14 May, which the old `sync-pages.sh`
+listed among its root files but which had gone missing from the root. It survived
+only in the mirror, and in one unreachable commit (`9bbdba4`) that a routine
+`git gc --prune` would eventually have collected. It has been copied back to the
+repo root, where `.gitignore` section 5 (`*Session_Plan*.html`) keeps it private.
+
+That file was the only real thing this folder was still doing, and it was doing it by
+accident. With it recovered, the folder is pure duplicate plus a corruption vector.
 
 It could not be moved here automatically — the directory is **locked by another
 process** (a file handle held by an editor, a shell sitting in it, or an indexer).
