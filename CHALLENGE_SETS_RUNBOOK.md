@@ -176,15 +176,22 @@ name, reads `{...}` and `[...]` roots, and walks nested `questions` wrappers.
 
 ## 7. Deploy
 
-The site is served from the allow-listed root folders on `master`
-(`Gabriel-on-the-hill/SAT-Maths`); `github_pages/` and `sync-pages.sh` are not the
-live path. `.gitignore` is an allow-list, so `Challenge_App` must stay listed
-(`!/Challenge_App/`) or git silently skips it. To publish:
+The site is served from the allow-listed root folders on **`main`**
+(`Gabriel-on-the-hill/SAT-Maths`) — the repo root *is* the deploy. `.gitignore` is
+an allow-list, so `Challenge_App` must stay listed (`!/Challenge_App/`) or git
+silently skips it.
+
+Work on a branch and open a PR rather than committing to `main` directly:
 
 ```
+git checkout -b challenge/<student>-<date>
 git add -f Challenge_App
-git commit -m "Update Challenge module"
-git push origin master
+git commit -m "Challenge set: <student>"
+git push -u origin challenge/<student>-<date>
 ```
 
-Then give Pages a minute and hard-refresh.
+Once merged, give Pages a minute and hard-refresh.
+
+`github_pages/` and `sync-pages.sh` were never the live path and are now retired to
+`_archive/`. If a `github_pages/` folder is still in your working copy, it is a
+stale second clone of this repo — delete it, and never commit from inside it.

@@ -11,16 +11,28 @@ Analytical Geometry · Data Analysis & Probability
 
 ## Structure
 - `index.html` — hub / launcher (mastery dashboard, tutor settings: SAT date + exam timer)
-- `progress.html` — session history
+- `progress.html` — session history + most-fallen-for traps
+- `custom.html` · `exam.html` · `review.html` — custom practice, mock exam, cross-topic due review
 - `shared/` — shared engine + modules (`engine.js`, `progress.js`, `session.js`, `gate.js`, `breakdown.js`, `tier-preview.js`)
 - `*_App/` — each topic app: `index.html` (sets `window.APP_CONFIG`), `data/questions.js`, `manifest.json`, `assets/`
+- `build_*.py` · `audit-question-pools.js` — tooling that generates and sanity-checks the question banks
+- `_archive/` — retired code, kept for the record; nothing here is live ([why](_archive/README.md))
 
 All nine apps load the single `shared/engine.js`; per-app differences live in `APP_CONFIG`.
 
+## Tests
+```
+npm install && npm test
+```
+Mastery ledger, the engine driven headlessly in a real app template, page integrity
++ publication rules, and the Challenge module's serving rules.
+
 ## Deploy
 Served via GitHub Pages from the repo **root** — the tracked files listed above
-are what students load, and everything tracked is world-readable. (`github_pages/`
-is a local mirror that has never been committed; it is not the deploy.)
+are what students load, and everything tracked is world-readable. **There is no
+mirror and no publish step:** editing a tracked root file edits the live site.
+(If a `github_pages/` folder is on disk, it is a stale second clone of this repo,
+not a deploy target — see [`_archive/README.md`](_archive/README.md).)
 
 Publication is allow-listed in `.gitignore`: source PDFs, performance reports,
 per-student ledgers, and class notes stay local, at any depth in the tree. The

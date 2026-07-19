@@ -1,8 +1,10 @@
 # ───────────────────────────────────────────────────────────────────
 # THIS REPO IS THE PUBLIC SITE. GitHub Pages serves the repo ROOT — the
 # files listed below are the ones students load, and everything tracked
-# here is world-readable at a stable URL. (`github_pages/` is a local
-# mirror that has never been committed; it is not the deploy.)
+# here is world-readable at a stable URL. There is no mirror and no publish
+# step: editing a file listed below edits the live site. (If a
+# `github_pages/` folder is still on disk, it is a stale second clone of
+# this repo, not a deploy target — see _archive/README.md.)
 #
 # Allow-list deploy. NOTHING in this folder is published unless it is
 # explicitly listed below. So any PDFs, reports, notes, or scratch files
@@ -42,12 +44,35 @@
 !/Data_Analysis_Probability_App/
 !/Challenge_App/
 
-# 3) Tutor-side tooling. Tracked so it survives a fresh clone. It is served by
-#    Pages like everything else, so it must stay free of passwords and student
-#    data: the challenge builder derives a student's roster key from their
-#    display name and holds no credentials.
+# 3) Tutor-side tooling. TRACKED, deliberately, so it survives a fresh clone —
+#    the question banks cannot be rebuilt without it. It is served by Pages like
+#    everything else, so it must stay free of passwords and student data: these
+#    hold no credentials, and a student's roster key is just their display name.
 !/build_challenge_set.py
 !/CHALLENGE_SETS_RUNBOOK.md
+#    The payload builders that generate each app's data/questions.js:
+!/build_analytical_geometry_payload.py
+!/build_core_geometry_payload.py
+!/build_data_app_payload.py
+!/build_linear_app_payload.py
+!/build_nonlinear_app_payload.py
+!/build_proportionality_payload.py
+!/build_stats_payload.py
+!/build_systems_app_payload.py
+#    Bank sanity checker (duplicate ids, missing answer keys, thin pools):
+!/audit-question-pools.js
+
+# 3b) The archive. PUBLISH WHAT WORKS — so the retired CODE in _archive/ is
+#     deliberately NOT published: it is superseded or broken, and the live site
+#     should not serve it. It stays on disk, out of the way.
+#
+#     Its README is the exception, and is tracked on purpose: it is the RECORD —
+#     what was retired, why, and which mistakes not to repeat (do not fork the
+#     Challenge module per student; do not trust github_pages/). A lesson nobody
+#     can read after a fresh clone is not a lesson.
+!/_archive/
+_archive/*
+!/_archive/README.md
 
 # 4) The test toolchain. The APP has no dependencies and no build step — this is
 #    only so `npm install && npm test` works on a fresh clone, which is what the
@@ -59,6 +84,17 @@
 # OS cruft, even inside published folders
 .DS_Store
 Thumbs.db
+__pycache__/
+
+# ⚠ github_pages/ — NOT a mirror. It is a SECOND CLONE of this repository, on
+# main, 27 commits behind and diverged, with push enabled to the real remote.
+# A commit+push from inside it would clobber months of work on main; the root
+# CLAUDE.md records that a stale mirror has corrupted this repo once already.
+# It holds no unique history (all 27 commits verified present in this repo) and
+# its files duplicate the tracked root, so it is safe to delete — see
+# _archive/README.md. Ignored explicitly, belt and braces, so it can never be
+# committed while it is still sitting there.
+/github_pages/
 
 # ───────────────────────────────────────────────────────────────────
 # 5) TUTOR-FACING MATERIAL — never tracked, at ANY depth.
@@ -100,19 +136,22 @@ Class Summaries/
 *.tutor.json
 
 # ───────────────────────────────────────────────────────────────────
-# WHAT IS ACTUALLY PUBLISHED, and one thing to decide
+# WHAT IS ACTUALLY PUBLISHED
 #
 # Tracked here = world-readable. Never allow-list a file holding a password or
 # a key.
 #
-# Note the tutor tooling in rule 3 (build_challenge_set.py,
-# CHALLENGE_SETS_RUNBOOK.md) IS published — it is allow-listed above. An earlier
-# version of this note claimed it "stays local", and README.md still says the
-# same; both were wrong and reassuring in the wrong direction. The tooling holds
-# no credentials, but it does carry a student roster key and display name, so it
-# names students on the public site.
+# The tutor tooling in rule 3 IS published, deliberately and by decision
+# (19 Jul 2026): it is tracked so it survives a fresh clone, because the nine
+# question banks cannot be rebuilt without it. An earlier version of this note
+# claimed it "stays local" — that was simply false, and false in the reassuring
+# direction, which is the worst kind.
 #
-# That is a live decision, not a bug to fix silently: either keep it tracked so
-# it survives a fresh clone (today's behaviour) or drop the two "!" lines in
-# rule 3 and keep it local. Tutor's call.
+# What that costs: the builders carry roster keys and display names, so the
+# tooling names students on the public site. That is accepted. What it must
+# never carry is a password, a key, or anything ABOUT a student's ability —
+# section 5 covers the latter wherever it is written.
+#
+# Passwords: gate.js holds SHA-256 hashes, never plaintext. Accepted as fine —
+# it is a soft gate, not security, and it is documented as such in AGENTS.md.
 # ───────────────────────────────────────────────────────────────────
