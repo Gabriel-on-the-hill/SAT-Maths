@@ -116,9 +116,72 @@ pages.forEach(rel => {
     }
 });
 
+/* ── 2 · nothing tutor-facing can reach the public site ───────────────────────
+   Pages serves the repo ROOT, so every tracked file is world-readable at a stable
+   URL. The .gitignore is an allow-list, and an allow-list only guards the root —
+   a LEDGER.md dropped inside shared/ or any *_App/ (folders that ARE published)
+   used to ship straight to the internet.
+
+   This matters more every time a student joins. House rule 6: never write an
+   assessment of a student into a file the student can read. A ledger says what a
+   named minor cannot do yet; a challenge shortlist is a list of what they keep
+   getting wrong. Section 5 of .gitignore denies those patterns at any depth, and
+   this is what proves the denial still holds. */
+
+const { execSync } = require('child_process');
+
+function isIgnored(p) {
+    try {
+        execSync('git check-ignore -q ' + JSON.stringify(p), { cwd: ROOT, stdio: 'ignore' });
+        return true;                       // exit 0 = ignored
+    } catch (e) {
+        if (e.status === 1) return false;  // exit 1 = NOT ignored
+        return null;                       // git unavailable / not a repo
+    }
+}
+
+console.log('\nNothing tutor-facing is publishable, at any depth');
+
+// Paths that must never be publishable, in folders that ARE published.
+const MUST_BE_IGNORED = [
+    'LEDGER.md',
+    'shared/LEDGER.md',
+    'Linear_Equations_App/LEDGER.md',
+    'Challenge_App/data/LEDGER.md',
+    'Core_Geometry_App/assets/student_ledger.md',
+    'challenge_shortlist_wayne.md',
+    'Challenge_App/challenge_shortlist_wayne.md',
+    'shared/Class Summaries/week1.md',
+    'shared/notes.tutor.md',
+    'Challenge_App/roster.tutor.json',
+    'shared/Someone_Session_Plan.html'
+];
+
+const probe = isIgnored('LEDGER.md');
+if (probe === null) {
+    console.log('  – skipped: git not available here (the rules are still in .gitignore)');
+} else {
+    MUST_BE_IGNORED.forEach(p => {
+        if (!ok('publishable: ' + p, isIgnored(p) === true)) {
+            console.log('      ^ this would be served at a public URL. See .gitignore section 5.');
+        }
+    });
+
+    // And nothing already tracked may look like tutor material. Catches the case
+    // where a file was committed BEFORE the pattern existed — .gitignore does not
+    // untrack anything, so the deny rule alone would not save us.
+    const TUTOR_SHAPED = /(^|\/)(LEDGER\.md|.*ledger\.md|challenge_shortlist_.*\.md|.*\.tutor\.(md|json))$|Class Summaries\//i;
+    const tracked = execSync('git ls-files', { cwd: ROOT, encoding: 'utf8' }).split('\n').filter(Boolean);
+    const leaked = tracked.filter(f => TUTOR_SHAPED.test(f));
+    if (!ok('no tracked file is tutor-shaped', leaked.length === 0)) {
+        leaked.forEach(f => console.log('      ^ tracked and public: ' + f));
+    }
+    console.log('  (' + tracked.length + ' tracked files scanned)');
+}
+
 console.log('\n' + '-'.repeat(64));
 if (failed) {
-    console.log(failed + ' PROBLEM(S) FOUND across ' + pages.length + ' pages');
+    console.log(failed + ' PROBLEM(S) FOUND');
     process.exit(1);
 }
-console.log('ALL ' + pass + ' PAGES OK');
+console.log('ALL ' + pass + ' CHECKS OK (' + pages.length + ' pages + publication rules)');

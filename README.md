@@ -18,5 +18,18 @@ Analytical Geometry · Data Analysis & Probability
 All nine apps load the single `shared/engine.js`; per-app differences live in `APP_CONFIG`.
 
 ## Deploy
-Served via GitHub Pages from the repo root. Only the web app is published —
-source PDFs, performance reports, and tutor tooling stay local via `.gitignore`.
+Served via GitHub Pages from the repo **root** — the tracked files listed above
+are what students load, and everything tracked is world-readable. (`github_pages/`
+is a local mirror that has never been committed; it is not the deploy.)
+
+Publication is allow-listed in `.gitignore`: source PDFs, performance reports,
+per-student ledgers, and class notes stay local, at any depth in the tree. The
+challenge-set tooling (`build_challenge_set.py`, `CHALLENGE_SETS_RUNBOOK.md`) **is**
+published, so it survives a fresh clone — it holds no credentials, but it does
+carry student roster keys. See the note at the foot of `.gitignore`.
+
+## Multiple students
+This suite serves several students; the folder it lives in is named after one of
+them for historical reasons only. Nothing student-specific belongs in the app
+itself — per-student material is keyed at runtime (`shared/gate.js` roster,
+`Challenge_App`'s `CHALLENGE_ROSTER`), and tutor-facing notes are never tracked.

@@ -1,10 +1,21 @@
 # ───────────────────────────────────────────────────────────────────
-# Allow-list deploy. NOTHING in this folder is published to GitHub Pages
-# unless it is explicitly listed below. So any PDFs, reports, notes, or
-# scratch files you keep here stay on your computer and never reach the
-# public site — even ones you add later.
+# THIS REPO IS THE PUBLIC SITE. GitHub Pages serves the repo ROOT — the
+# files listed below are the ones students load, and everything tracked
+# here is world-readable at a stable URL. (`github_pages/` is a local
+# mirror that has never been committed; it is not the deploy.)
+#
+# Allow-list deploy. NOTHING in this folder is published unless it is
+# explicitly listed below. So any PDFs, reports, notes, or scratch files
+# you keep here stay on your computer — even ones you add later.
 #
 # To publish a new top-level file/folder, add another "!/name" line.
+#
+# THIS IS A MULTI-STUDENT APP. It lives in a folder named after one
+# student, and that is an accident of history, not a scope. Several
+# students use it, more will, and each one accumulates tutor-facing
+# material — a ledger, a shortlist, a report, class notes. Section 5 is
+# what keeps that material out of the public site NO MATTER WHERE IT IS
+# PUT. Read it before adding a file about a student anywhere in this tree.
 # ───────────────────────────────────────────────────────────────────
 
 # 1) Ignore everything at the project root by default
@@ -49,7 +60,59 @@
 .DS_Store
 Thumbs.db
 
-# NOTE: this repo IS the public site (Pages serves the root), so anything
-# tracked here is world-readable. Never allow-list a file holding a password,
-# a key, or student data. Tutor-side tooling (build_challenge_set.py, the
-# runbooks) is deliberately NOT published — it stays local.
+# ───────────────────────────────────────────────────────────────────
+# 5) TUTOR-FACING MATERIAL — never tracked, at ANY depth.
+#
+# Rules 1–4 are an allow-list, and an allow-list only guards the ROOT. Put a
+# LEDGER.md inside shared/ or any *_App/ — a folder that is already published —
+# and it ships to the public site. That hole was open: `shared/LEDGER.md`,
+# `Linear_Equations_App/LEDGER.md` and `Challenge_App/notes.md` were all
+# publishable. These patterns close it wherever the file lands.
+#
+# This matters more as the roster grows. Root rule 6 of the house rules: never
+# write an assessment of a student into a file the student can read — and every
+# file below is world-readable the moment it is tracked. A ledger says what a
+# named minor cannot do yet. A shortlist is a list of what they keep getting
+# wrong. Neither belongs at a public URL.
+#
+# These are DENY rules placed last, so they beat every "!" above. If you ever
+# need one of these published, do not delete the pattern — that silently opens
+# it for every student. Add a single targeted "!" line and say why.
+# ───────────────────────────────────────────────────────────────────
+
+# Per-student ledgers — the tutor's record of what is taught, shaky, and due.
+LEDGER.md
+*LEDGER.md
+*ledger.md
+
+# Challenge shortlists — literally "what this named student keeps missing".
+challenge_shortlist_*.md
+
+# Class notes, session plans, and performance reports, wherever they are kept.
+Class Summaries/
+*Session_Plan*.html
+*Performance Report*
+*performance_report*
+
+# A general escape hatch: name anything tutor-only with this suffix and it can
+# never be published by accident, wherever you put it.
+*.tutor.md
+*.tutor.json
+
+# ───────────────────────────────────────────────────────────────────
+# WHAT IS ACTUALLY PUBLISHED, and one thing to decide
+#
+# Tracked here = world-readable. Never allow-list a file holding a password or
+# a key.
+#
+# Note the tutor tooling in rule 3 (build_challenge_set.py,
+# CHALLENGE_SETS_RUNBOOK.md) IS published — it is allow-listed above. An earlier
+# version of this note claimed it "stays local", and README.md still says the
+# same; both were wrong and reassuring in the wrong direction. The tooling holds
+# no credentials, but it does carry a student roster key and display name, so it
+# names students on the public site.
+#
+# That is a live decision, not a bug to fix silently: either keep it tracked so
+# it survives a fresh clone (today's behaviour) or drop the two "!" lines in
+# rule 3 and keep it local. Tutor's call.
+# ───────────────────────────────────────────────────────────────────
