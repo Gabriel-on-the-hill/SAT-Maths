@@ -43,11 +43,46 @@ SOURCE_APPS = {
 # Logins live in shared/gate.js as SHA-256 hashes; keep plaintext out of this repo,
 # which is the public site.
 STUDENTS = {
+    # Jeffrey's set is pinned rather than seed-generated. Seeds pick the highest-
+    # ranked hard item in an archetype, which is not the same as picking the item
+    # that matches the miss; every id below is chosen against a recorded miss or a
+    # hard-module family with no coverage at all. Seeds are kept as the fallback
+    # for a future rebuild that raises `target` and wants siblings from the same
+    # families -- they do not fire while len(force_ids) >= target.
     "jeffrey": {
         "display": "Jeffrey",
-        "seeds": ["factor", "expand", "zero", "intercept", "discriminant",
-                  "solution", "percent", "triangle", "mean", "median", "histogram"],
-        "force_ids": [], "per_seed": 4, "target": 28,
+        "seeds": ["build a linear function", "line meets parabola", "vertex form",
+                  "exponential", "random sample", "margin of error", "sohcahtoa",
+                  "number of solutions", "no solution", "mean, median"],
+        "force_ids": [
+            # -- Tiered-rate modelling: first n units at one price, the rest at
+            # another. Missed three times in class (2 Aug museum + backhoe,
+            # 12 Aug base-hours). bbf9e5ce and be9cb6a2 ARE those two questions.
+            "bbf9e5ce", "be9cb6a2", "a7e2859a", "76f29fa5",
+            # -- Exponential growth/decay: a 3% rise means multiplying by 1.03,
+            # not by 0.03. No coverage anywhere in the record; one rule, and it
+            # appears on nearly every Module 2.
+            "b73ee6cf", "9afe2370",
+            # -- What a random sample licenses, and what it does not. Practice 8
+            # Q22 (poll proportions) was this. Never taught. No computation.
+            "aa43b41f", "9ba3e283", "4a422e3e", "85939da5",
+            # -- Standard deviation as spread. Taught from scratch 2 Aug and
+            # needed the whole explanation. Medium: the bank holds no hard item.
+            "3f2ee20a", "25fc031a",
+            # -- Complementary-angle trig, sin(x) = cos(90 - x). The 12 Aug
+            # confusion was ratio placement, not SOHCAHTOA itself.
+            "14e7c1f4", "6933b3d9",
+            # -- Parameter conditions on solution count ("for what value of k").
+            # Carried over from the July set, progress intact.
+            "e6cb2402", "e2e3942f",
+            # -- Line meets parabola at exactly one point (discriminant = 0),
+            # and the vertex y-value read as a maximum in context.
+            "fc3d783a", "a7711fe8",
+            # -- Median and mean from a table. PS&Data is the only bar never to
+            # reach full (5/7 -> 6/7 -> 6/7). Carried over.
+            "9d935bd8", "1e8ccffd",
+        ],
+        "per_seed": 4, "target": 20,
     },
 }
 
