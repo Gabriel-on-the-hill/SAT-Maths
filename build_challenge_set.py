@@ -49,61 +49,39 @@ STUDENTS = {
     # hard-module family with no coverage at all. Seeds are kept as the fallback
     # for a future rebuild that raises `target` and wants siblings from the same
     # families -- they do not fire while len(force_ids) >= target.
+    # Rebuilt 30 August 2026; the 21 August set is retired to _archive/. Every
+    # item in that set had been served once, so it could no longer distinguish a
+    # method that works from a worked example remembered. The archetype families
+    # below are unchanged -- only the items are new, drawn as unseen siblings
+    # from the same pools. No id here appears in the retired set.
     "jeffrey": {
         "display": "Jeffrey",
-        "seeds": ["build a linear function", "line meets parabola", "vertex form",
-                  "exponential", "random sample", "margin of error", "sohcahtoa",
-                  "number of solutions", "no solution", "mean, median"],
+        "seeds": ["vertex form", "line meets parabola", "exponential",
+                  "sohcahtoa", "random sample", "percent in a real-world",
+                  "interpret slope", "slope-intercept", "median",
+                  "number of solutions"],
         "force_ids": [
-            # ---- Tier 1: the twenty that answer a recorded miss or a family
-            # with no coverage at all. These are the priority; everything in
-            # tier 2 is depth behind them.
-            #
-            # Tiered-rate modelling: first n units at one price, the rest at
-            # another. Missed three times in class (2 Aug museum + backhoe,
-            # 12 Aug base-hours). bbf9e5ce and be9cb6a2 ARE those two questions.
-            "bbf9e5ce", "be9cb6a2", "a7e2859a", "76f29fa5",
-            # Exponential growth/decay: a 3% rise means multiplying by 1.03,
-            # not by 0.03. No coverage anywhere in the record; one rule, and it
-            # appears on nearly every Module 2.
-            "b73ee6cf", "9afe2370",
-            # What a random sample licenses, and what it does not. Practice 8
-            # Q22 (poll proportions) was this. Never taught. No computation.
-            "aa43b41f", "9ba3e283", "4a422e3e", "85939da5",
-            # Standard deviation as spread. Taught from scratch 2 Aug and
-            # needed the whole explanation. Medium: the bank holds no hard item.
-            "3f2ee20a", "25fc031a",
-            # Complementary-angle trig, sin(x) = cos(90 - x). The 12 Aug
-            # confusion was ratio placement, not SOHCAHTOA itself.
-            "14e7c1f4", "6933b3d9",
-            # Parameter conditions on solution count ("for what value of k").
-            # Carried over from the July set, progress intact.
-            "e6cb2402", "e2e3942f",
-            # Line meets parabola at exactly one point (discriminant = 0), and
-            # the vertex y-value read as a maximum in context.
-            "fc3d783a", "a7711fe8",
-            # Median and mean from a table. PS&Data is the only bar never to
-            # reach full (5/7 -> 6/7 -> 6/7). Carried over.
-            "9d935bd8", "1e8ccffd",
-
-            # ---- Tier 2: siblings of the same families, added once the set
-            # was allowed past twenty. Depth, not new diagnosis. NOTE: the
-            # module shuffles within a segment, so these are drawn with equal
-            # probability to tier 1 -- size is the only priority lever there is.
-            #
-            # Two more of each family above that had a second good item.
-            "1697ffcf", "4661e2a9",          # line meets parabola
-            "d139cf4b",                      # vertex form by completing the square
-            "84dd43f8",                      # exponential decay, grid-in
-            "f75bd744", "ac472881",          # solution count, incl. the 120s item
-            "af2ba762",                      # what the constant term represents
-            "308084c5",                      # margin of error and sample size
-            "98958ae8", "94237701",          # mean and median, grid-in
-            # The two survivors of the old eight-item percent block and the
-            # rate-vs-starting-value pair. Kept for coverage, not as targets.
-            "2e92cc21", "daad7c32",
+            # Advanced Math -- the heaviest domain on the section. Vertex form
+            # and line-meets-parabola had no unseen items left on this key.
+            "bba18ecb", "7eed640d", "84e8cc72", "ebed7dc6",   # quadratic in vertex form
+            "2c5c22d0", "e9349667", "7dbd46d9", "30281058",   # system: line meets parabola
+            "43926bd9", "ce579859", "263f9937",               # exponential growth or decay
+            "466b87e3",                                       # number of solutions
+            # Geometry and Trigonometry -- the complementary-angle identity,
+            # sin(x) = cos(90 - x). Four unseen siblings.
+            "6ab30ce3", "0e709a29", "a67b9f88", "1429dcdf",   # right triangle trig
+            # Algebra -- a rate read against a starting value: the linear half
+            # of the modelling families.
+            "b988eeec", "16889ef3",                           # interpret slope or intercept
+            "0b0fa68b", "023c0a8d",                           # slope-intercept form
+            "e1248a5c",                                       # number of solutions
+            # Problem-Solving and Data Analysis -- what a random sample
+            # licenses, and which base a percent is taken against.
+            "7ce2830a", "6fca0144", "7d68096f",               # random sample -> generalise
+            "4ff597db", "d3b9c8d8",                           # mean, median, mode
+            "8c5dbd3e", "65c49824",                           # percent in a real-world context
         ],
-        "per_seed": 4, "target": 32,
+        "per_seed": 4, "target": 28,
     },
 }
 
